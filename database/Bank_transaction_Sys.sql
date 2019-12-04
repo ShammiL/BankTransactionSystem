@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2019 at 04:30 PM
+-- Generation Time: Dec 04, 2019 at 05:20 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -145,6 +145,17 @@ CREATE TABLE `customer` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customerlogin`
+--
+
+CREATE TABLE `customerlogin` (
+  `customerID` varchar(10) DEFAULT NULL,
+  `username` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `depositreceipt`
 --
 
@@ -170,6 +181,17 @@ CREATE TABLE `employee` (
   `designation` varchar(10) DEFAULT NULL,
   `salary` decimal(8,2) DEFAULT NULL,
   `branchID` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employeelogin`
+--
+
+CREATE TABLE `employeelogin` (
+  `employeeID` varchar(10) DEFAULT NULL,
+  `username` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -223,12 +245,65 @@ CREATE TABLE `loan` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `loanrequest`
+--
+
+CREATE TABLE `loanrequest` (
+  `requestID` varchar(10) NOT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `date_` date DEFAULT NULL,
+  `approved` tinyint(1) DEFAULT NULL,
+  `loanOfficerID` varchar(10) DEFAULT NULL,
+  `approvedBy` varchar(10) DEFAULT NULL,
+  `branchID` varchar(10) DEFAULT NULL,
+  `customerID` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `username` varchar(10) NOT NULL,
+  `password` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `manager`
 --
 
 CREATE TABLE `manager` (
   `employeeID` varchar(10) NOT NULL,
   `branchID` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `monthlyinstallment`
+--
+
+CREATE TABLE `monthlyinstallment` (
+  `paymentID` varchar(15) NOT NULL,
+  `loanNum` varchar(10) DEFAULT NULL,
+  `month` varchar(10) DEFAULT NULL,
+  `year` varchar(4) DEFAULT NULL,
+  `datePaid` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offlineloan`
+--
+
+CREATE TABLE `offlineloan` (
+  `loanNumber` varchar(10) NOT NULL,
+  `requestID` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -359,6 +434,13 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`customerID`);
 
 --
+-- Indexes for table `customerlogin`
+--
+ALTER TABLE `customerlogin`
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `customerID` (`customerID`);
+
+--
 -- Indexes for table `depositreceipt`
 --
 ALTER TABLE `depositreceipt`
@@ -370,6 +452,13 @@ ALTER TABLE `depositreceipt`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`employeeID`),
   ADD KEY `branchID` (`branchID`);
+
+--
+-- Indexes for table `employeelogin`
+--
+ALTER TABLE `employeelogin`
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `employeeID` (`employeeID`);
 
 --
 -- Indexes for table `fixeddeposit`
@@ -392,11 +481,41 @@ ALTER TABLE `loan`
   ADD KEY `customerID` (`customerID`);
 
 --
+-- Indexes for table `loanrequest`
+--
+ALTER TABLE `loanrequest`
+  ADD PRIMARY KEY (`requestID`),
+  ADD KEY `approvedBy` (`approvedBy`),
+  ADD KEY `branchID` (`branchID`),
+  ADD KEY `customerID` (`customerID`),
+  ADD KEY `loanOfficerID` (`loanOfficerID`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`username`);
+
+--
 -- Indexes for table `manager`
 --
 ALTER TABLE `manager`
   ADD PRIMARY KEY (`employeeID`),
   ADD KEY `branchID` (`branchID`);
+
+--
+-- Indexes for table `monthlyinstallment`
+--
+ALTER TABLE `monthlyinstallment`
+  ADD PRIMARY KEY (`paymentID`),
+  ADD KEY `loanNum` (`loanNum`);
+
+--
+-- Indexes for table `offlineloan`
+--
+ALTER TABLE `offlineloan`
+  ADD PRIMARY KEY (`loanNumber`),
+  ADD KEY `requestID` (`requestID`);
 
 --
 -- Indexes for table `onlineloan`
@@ -474,6 +593,13 @@ ALTER TABLE `companycustomer`
   ADD CONSTRAINT `companycustomer_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customer` (`customerID`);
 
 --
+-- Constraints for table `customerlogin`
+--
+ALTER TABLE `customerlogin`
+  ADD CONSTRAINT `customerlogin_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customer` (`customerID`),
+  ADD CONSTRAINT `customerlogin_ibfk_2` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
+
+--
 -- Constraints for table `depositreceipt`
 --
 ALTER TABLE `depositreceipt`
@@ -484,6 +610,13 @@ ALTER TABLE `depositreceipt`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branchID`) REFERENCES `branch` (`branchID`);
+
+--
+-- Constraints for table `employeelogin`
+--
+ALTER TABLE `employeelogin`
+  ADD CONSTRAINT `employeelogin_ibfk_1` FOREIGN KEY (`employeeID`) REFERENCES `employee` (`employeeID`),
+  ADD CONSTRAINT `employeelogin_ibfk_2` FOREIGN KEY (`username`) REFERENCES `login` (`username`);
 
 --
 -- Constraints for table `fixeddeposit`
@@ -504,11 +637,33 @@ ALTER TABLE `loan`
   ADD CONSTRAINT `loan_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customer` (`customerID`);
 
 --
+-- Constraints for table `loanrequest`
+--
+ALTER TABLE `loanrequest`
+  ADD CONSTRAINT `loanrequest_ibfk_1` FOREIGN KEY (`approvedBy`) REFERENCES `manager` (`employeeID`),
+  ADD CONSTRAINT `loanrequest_ibfk_2` FOREIGN KEY (`branchID`) REFERENCES `branch` (`branchID`),
+  ADD CONSTRAINT `loanrequest_ibfk_3` FOREIGN KEY (`customerID`) REFERENCES `customer` (`customerID`),
+  ADD CONSTRAINT `loanrequest_ibfk_4` FOREIGN KEY (`loanOfficerID`) REFERENCES `employee` (`employeeID`);
+
+--
 -- Constraints for table `manager`
 --
 ALTER TABLE `manager`
   ADD CONSTRAINT `manager_ibfk_1` FOREIGN KEY (`employeeID`) REFERENCES `employee` (`employeeID`),
   ADD CONSTRAINT `manager_ibfk_2` FOREIGN KEY (`branchID`) REFERENCES `branch` (`branchID`);
+
+--
+-- Constraints for table `monthlyinstallment`
+--
+ALTER TABLE `monthlyinstallment`
+  ADD CONSTRAINT `monthlyinstallment_ibfk_1` FOREIGN KEY (`loanNum`) REFERENCES `loan` (`loanNum`);
+
+--
+-- Constraints for table `offlineloan`
+--
+ALTER TABLE `offlineloan`
+  ADD CONSTRAINT `offlineloan_ibfk_1` FOREIGN KEY (`loanNumber`) REFERENCES `loan` (`loanNum`),
+  ADD CONSTRAINT `offlineloan_ibfk_2` FOREIGN KEY (`requestID`) REFERENCES `loanrequest` (`requestID`);
 
 --
 -- Constraints for table `onlineloan`
