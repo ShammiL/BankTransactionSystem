@@ -1,5 +1,6 @@
 EmployeeModel = require("./employeesModel.js");
 const jwt = require("jsonwebtoken")
+const uuidv4 = require('uuid/v4');
 
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
@@ -41,6 +42,7 @@ exports.delete = (req, res) => {
 
 exports.insert = (req, res) => {
     console.log("BODY", req.body);
+    req.body.employeeID = uuidv4()
     EmployeeModel.insert(req.body)
         .then((result) => {
             res.status(200).send(result);
