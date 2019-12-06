@@ -24,6 +24,16 @@ async function companycustomerLogin(data) {
     return result
 }
 
-
+async function managerRegisterProcedure(data) {
+    console.log("Finally in pro", data)
+    console.log("call " + eventNames.managerRegister + "(" + data + ")")
+    // console.log("Pro", data)
+    const result = await connection.query("call " + eventNames.managerRegister + "(" + data + ")");
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+module.exports.managerRegisterProcedure = managerRegisterProcedure;
 module.exports.individualCustomerLogin = individualCustomerLogin;
 module.exports.companycustomerLogin = companycustomerLogin;

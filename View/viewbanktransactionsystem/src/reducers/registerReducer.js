@@ -14,7 +14,10 @@ const initialState = {
     city: [''],
     error: [''],
     type: ['individual'],
-    companyName: ['']
+    companyName: [''],
+    salary: [''],
+    designation: ['manager'],
+    branchID: ['']
 }
 
 export default function (state = initialState, action) {

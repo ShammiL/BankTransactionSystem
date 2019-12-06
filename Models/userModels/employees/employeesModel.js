@@ -1,4 +1,5 @@
 Db = require("../../../Core/DB.js");
+customerProcedures = require('../../../Core/databaseEvents/procedures/procedures')
 
 var table = "employee";
 var ID = "employeeID";//primary key
@@ -51,7 +52,7 @@ exports.delete = (id) => {
 
 exports.insert = (data) => {
     console.log("data", data);
-    
+
     return Db.insert(table, data).then((results) => {
 
         return results;
@@ -59,3 +60,12 @@ exports.insert = (data) => {
 
 };
 // this.insert([4, 'a', 'b', 'a', 'b', 'a', 'b', 'd']);
+
+exports.managerRegisterProcedure = (data) => {
+    console.log("data", data);
+
+    return customerProcedures.managerRegisterProcedure(data).then((results) => {
+        return results;
+    });
+
+};
