@@ -6,7 +6,8 @@ import axios from 'axios'
 export const fetchLoggedUser = (username, password) => dispatch => {
     axios.post('http://localhost:5000/login', { username: username, password: password }).
         then(res => {
-            console.log("RESPONSE", res.data)
+            console.log("RESPONSE", res);
+            // console.log("RESPONSE", res.data)
             dispatch({
                 type: FETCHED_LOGGED_USER,
                 payload: res.data

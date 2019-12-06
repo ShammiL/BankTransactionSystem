@@ -5,7 +5,7 @@ import store from './store'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import Dashpage from './components/Dashpage'
 import EmployeeRegister from './components/EmployeeRegister'
-import CustomerRegister from './components/CustomerRegister'
+import IndividualCustomerRegister from './components/Register/individualCustomerRegistration/IndividualCustomerRegister'
 import Register from './components/Register'
 import Home from './components/Home'
 
@@ -15,7 +15,7 @@ function App() {
       <Provider store={store}>
         <Router>
           <Route exact path="/" component={Dashpage} />
-          <Route exact path="/customer/register" component={CustomerRegister} />
+          <Route exact path="/customer/register/individual" component={IndividualCustomerRegister} />
           <Route exact path="/employee/register" component={EmployeeRegister} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/home" component={Home} />

@@ -1,6 +1,7 @@
 CustomerModel = require("./customersModel.js");
 const jwt = require("jsonwebtoken")
 const uuidv4 = require('uuid/v4');
+customerProcedures = require('../../../Core/databaseEvents/procedures/procedures')
 
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
@@ -41,11 +42,43 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-    console.log("BODY", req.body);
+    // console.log(req);
     req.body.customerID = uuidv4()
-    CustomerModel.insert(req.body)
-        .then((result) => {
-            res.status(200).send(result);
-        });
+    data = "\'" + req.body.details.email + "\'"
+        + "," +
+        "\'" + req.body.details.phoneNumber + "\'"
+        + "," +
+        "\'" + req.body.details.buildingNumber + "\'"
+        + "," +
+        "\'" + req.body.details.streetName + "\'"
+        + ","
+        + "\'" + req.body.details.city + "\'"
+        + ","
+        + "\'" + req.body.details.username + "\'"
+        + ","
+        + "\'" + req.body.details.password + "\'"
+    if (req.body.details.type == "individual") {
+        data = "\'" + req.body.customerID + "\'"
+            + "," +
+            "\'" + req.body.details.firstName + "\'"
+            + "," +
+            "\'" + req.body.details.lastName + "\'"
+            + "," +
+            "\'" + req.body.details.nic + "\'"
+            + "," + data
+
+        console.log(data)
+        customerProcedures.individualCustomerLogin(data)
+            .then((result) => {
+                console.log("RE", result)
+                res.status(200).send(result);
+            });
+    }
+    else {
+        data = data + "," +
+            "\'" + req.body.details.companyName + "\'"
+    }
+    // console.log(data)
+
 };
 

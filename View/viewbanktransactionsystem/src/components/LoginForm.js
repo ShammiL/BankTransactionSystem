@@ -24,9 +24,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-
             <div>
-
                 <form onSubmit={this.submit}>
                     <h5>Username: </h5>
                     <input onChange={this.usernamechange} name="username" type="text" placeholder="Username" />
@@ -37,13 +35,22 @@ class LoginForm extends Component {
                 <div>
                     {this.props.code == 204 ? <p> {this.props.success} </p> : ''}
                 </div>
-                <Link to={'/register'}>
-                    Register
+                <Link to={'/employee/register'}>
+                    <button>
+                        Register as a employee
+                    </button>
+
                 </Link>
                 <div>
-
+                    <Link to={'/customer/register/individual'}>
+                        <button>
+                            Register as a customer
+                        </button>
+                    </Link>
                 </div>
 
+                <div>
+                </div>
             </div >
         )
     }

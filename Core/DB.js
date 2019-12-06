@@ -114,7 +114,7 @@ async function updateAdata(table, data, params) {
 }
 
 
-
+module.exports.mysqlConnection = mysqlConnection;
 module.exports.insert = insertAdata;
 module.exports.getAll = getAllData;
 module.exports.getByColumn = getByColumn;
