@@ -31,8 +31,8 @@ class IndividualCustomerRegister extends Component {
         return (
             <div>
                 <form onSubmit={this.submit}>
-                    <input type="radio" name="type" value="individual" onChange={this.change} defaultChecked /> Male
-                    <input type="radio" name="type" value="company" onChange={this.change} /> Female
+                    <input type="radio" name="type" value="individual" onChange={this.change} defaultChecked /> Person
+                    <input type="radio" name="type" value="company" onChange={this.change} /> Company
                     {this.props.type[0] == "individual" ? <div>
                         <h5>FirstName: </h5>
                         <input onChange={this.change} name="firstName" type="text" placeholder="FirstName" />

@@ -75,8 +75,17 @@ exports.insert = (req, res) => {
             });
     }
     else {
-        data = data + "," +
+        data = data = "\'" + req.body.customerID + "\'"
+            + "," +
             "\'" + req.body.details.companyName + "\'"
+            + "," + data
+        console.log(data)
+        customerProcedures.companycustomerLogin(data)
+            .then((result) => {
+                console.log("RE", result)
+                res.status(200).send(result);
+            });
+
     }
     // console.log(data)
 
