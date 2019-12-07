@@ -66,6 +66,8 @@ exports.insert = (req, res) => {
             + "," +
             "\'" + req.body.details.nic + "\'"
             + "," + data
+            +","+
+            "\'" + req.body.details.type + "\'"
 
         console.log(data)
         customerProcedures.individualCustomerLogin(data)
@@ -79,6 +81,8 @@ exports.insert = (req, res) => {
             + "," +
             "\'" + req.body.details.companyName + "\'"
             + "," + data
+            +","+
+            "\'" + req.body.details.type + "\'"
         console.log(data)
         customerProcedures.companycustomerLogin(data)
             .then((result) => {

@@ -19,7 +19,7 @@ class LoginForm extends Component {
         e.preventDefault();
         console.log("TYPED", { username: this.props.username, password: this.props.password })
         this.props.fetchLoggedUser(this.props.username, this.props.password)
-
+        // localStorage.setItem('usertoken', res.data)
     }
 
     render() {

@@ -57,7 +57,7 @@ class EmployeeRegister extends Component {
                     <input onChange={this.change} name="city" type="text" />
                     <div>
                         <h5>Designation: </h5>
-                        <input type="radio" name="type" value="designation" onChange={this.change} defaultChecked /> Manager
+                        <input type="radio" name="type" value="manager" onChange={this.change} /> Manager
                     </div>
                     <div>
                         <h5>Salary: </h5>

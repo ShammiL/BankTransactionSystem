@@ -75,6 +75,8 @@ exports.insert = (req, res) => {
             "\'" + req.body.details.username + "\'"
             + "," +
             "\'" + req.body.details.password + "\'"
+            + "," +
+            "\'" + req.body.details.type + "\'"
 
 
 

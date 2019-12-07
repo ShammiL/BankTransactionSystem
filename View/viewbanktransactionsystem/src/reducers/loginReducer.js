@@ -1,4 +1,4 @@
-import { FETCHED_LOGGED_USER, TYPE_USERNAME, TYPE_PASSWORD } from '../actions/types'
+import { FETCHED_ERROR_USER, TYPE_USERNAME, TYPE_PASSWORD } from '../actions/types'
 
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case FETCHED_LOGGED_USER:
+        case FETCHED_ERROR_USER:
             return {
                 ...state,
                 result: action.payload.success,

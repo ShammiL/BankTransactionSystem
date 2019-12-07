@@ -13,11 +13,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-
-
-
-
 const loginRouter = require('./Models/userModels/userLoginModels/routes.config');
 const employeeRouter = require('./Models/userModels/employees/routes.config');
 const customerRouter = require('./Models/userModels/customers/routes.config');

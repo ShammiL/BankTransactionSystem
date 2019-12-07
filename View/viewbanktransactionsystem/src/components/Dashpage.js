@@ -8,7 +8,7 @@ class Dashpage extends Component {
         return (
             <div>
                 <div className='container'>
-                    {this.props.code == 200 ? <Home /> : <LoginForm />}
+                    {localStorage.usertoken ? <Home /> : <LoginForm />}
                 </div>
             </div>
         )
@@ -17,7 +17,7 @@ class Dashpage extends Component {
 
 const mapStatesToProps = state => ({
 
-    code: state.loginUser.code
+    logged: state.activeUser.type
 })
 const mapActionToProps = state => ({
 
