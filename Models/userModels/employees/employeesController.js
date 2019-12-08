@@ -1,6 +1,7 @@
 EmployeeModel = require("./employeesModel.js");
 const jwt = require("jsonwebtoken")
 const uuidv4 = require('uuid/v4');
+names = require("../../../Config/userTypeNames");
 
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
@@ -47,7 +48,7 @@ exports.insert = (req, res) => {
     //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
 
     var data = '';
-    if (req.body.details.designation == 'manager') {
+    if (req.body.details.designation == names.manageremployee) {
         data = "\'" + req.body.employeeID + "\'"
             + "," +
             "\'" + req.body.details.firstName + "\'"

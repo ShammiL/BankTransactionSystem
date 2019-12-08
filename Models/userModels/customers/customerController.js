@@ -2,6 +2,7 @@ CustomerModel = require("./customersModel.js");
 const jwt = require("jsonwebtoken")
 const uuidv4 = require('uuid/v4');
 customerProcedures = require('../../../Core/databaseEvents/procedures/procedures')
+names = require("../../../Config/userTypeNames")
 
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
@@ -57,7 +58,7 @@ exports.insert = (req, res) => {
         + "\'" + req.body.details.username + "\'"
         + ","
         + "\'" + req.body.details.password + "\'"
-    if (req.body.details.type == "individual") {
+    if (req.body.details.type == names.individualcustomer) {
         data = "\'" + req.body.customerID + "\'"
             + "," +
             "\'" + req.body.details.firstName + "\'"
@@ -66,7 +67,7 @@ exports.insert = (req, res) => {
             + "," +
             "\'" + req.body.details.nic + "\'"
             + "," + data
-            +","+
+            + "," +
             "\'" + req.body.details.type + "\'"
 
         console.log(data)
@@ -81,7 +82,7 @@ exports.insert = (req, res) => {
             + "," +
             "\'" + req.body.details.companyName + "\'"
             + "," + data
-            +","+
+            + "," +
             "\'" + req.body.details.type + "\'"
         console.log(data)
         customerProcedures.companycustomerLogin(data)

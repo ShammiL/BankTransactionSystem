@@ -1,42 +1,39 @@
 company = require("./companyCustomer.js");
 individual = require("./individualCustomer.js");
 manager = require("./manager.js");
+names = require("../../Config/userTypeNames")
 
 exports.type = (data, type) => {
-    console.log(type, data)
-    if (type == "manager") {
+    if (type == names.manageremployee) {
         return manager.getByUsername({ "username": data }).then((results) => {
             results[0][0] = {
                 ...results[0][0],
                 customerID: '',
                 error: '',
-                type: 'manager',
+                type: names.manageremployee,
 
             }
             return results;
         });
     }
-    if (type == "individual") {
-        console.log('index')
+    if (type == names.individualcustomer) {
         return individual.getByUsername({ "username": data }).then((results) => {
             results[0][0] = {
                 ...results[0][0],
                 employeeID: '',
                 error: '',
-                type: 'company',
+                type: names.individualcustomer,
                 companyName: '',
                 salary: '',
                 designation: '',
                 branchID: ''
 
             }
-            console.log("mmmmmmmm", results[0][0])
             return results;
         });
     }
-    if (type == "company") {
+    if (type == names.companycustomer) {
         return company.getByUsername({ "username": data }).then((results) => {
-
             results[0][0] = {
                 ...results[0][0],
                 companyName: results[0][0].name,
@@ -45,13 +42,11 @@ exports.type = (data, type) => {
                 lastName: '',
                 nic: '',
                 error: '',
-                type: 'individual',
+                type: names.companycustomer,
                 salary: '',
                 designation: '',
                 branchID: ''
-
             }
-
             return results;
         });
     }
