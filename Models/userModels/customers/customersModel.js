@@ -10,7 +10,7 @@ exports.getAll = () => {
 
 };
 
-
+//abc
 exports.getById = (id) => {
     return Db.getByColumn(table, { "column": ID, "body": id }).then((results) => {
 
