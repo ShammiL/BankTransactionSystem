@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Home from './Home'
+import Home from './Home/Home'
 import LoginForm from './LoginForm'
 import { connect } from 'react-redux'
 

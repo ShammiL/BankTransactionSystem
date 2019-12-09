@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { typeUsername, typePassword, fetchLoggedUser } from '../actions/loginAction'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Home from './Home'
+import Home from './Home/Home'
 
 
 class LoginForm extends Component {

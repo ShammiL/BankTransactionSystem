@@ -7,7 +7,7 @@ import Dashpage from './components/Dashpage'
 import EmployeeRegister from './components/Register/EmployeeRegistration/EmployeeRegister'
 import IndividualCustomerRegister from './components/Register/CustomerRegistration/IndividualCustomerRegister'
 import Register from './components/Register'
-import Home from './components/Home'
+import Home from './components/Home/Home'
 
 function App() {
   return (
