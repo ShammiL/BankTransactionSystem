@@ -20,6 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import Profile from './Profile'
+import { homeTitle } from '../../Constants/constants'
 
 const drawerWidth = 240;
 
@@ -112,8 +113,8 @@ export default function PersistentDrawerLeft(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Persistent drawer
-          </Typography>
+                        {homeTitle}
+                    </Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
