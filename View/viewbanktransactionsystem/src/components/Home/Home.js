@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import jwt_decode from 'jwt-decode'
+import AppbarDrawer from './AppbarDrawer'
 
-import { Link } from 'react-router-dom'
 
 export default class Home extends Component {
 
@@ -16,21 +16,16 @@ export default class Home extends Component {
         const token = localStorage.usertoken
         const decoded = jwt_decode(token)
         console.log(decoded)
-
     }
 
 
     render() {
         return (
             <div>
-                <h1>Welcome to Bank Transaction System!</h1>
+                <AppbarDrawer
+                    logout={this.logout}
 
-                <div>
-                    <Link to={'/'}>
-                        <button onClick={this.logout}>Logout</button>
-                    </Link>
-                </div>
-
+                />
             </div >
         )
     }
