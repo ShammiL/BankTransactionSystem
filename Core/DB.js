@@ -97,7 +97,6 @@ async function insertAdata(table, data) {
 }
 
 async function updateAdata(table, data, params) {
-
     query = '';
     columns = Object.keys(data),
         data = Object.values(data);

@@ -1,11 +1,34 @@
-make deposites :- recept, depositerecipt table account balance 
-make offline withdrawal - recipt , withdrawal recipt, bankwithdrawal *****
-create account -account , checking/saving 
-assist for loan request - loan request , accept kalama=>loan,offline loan
-enter fd installement - amount=>monthly loan installement 
-create FD - fD , check same account has saving accoung 
-view trans - recipt table search , branch or thaman interact karapu aya both manager n employee
 
-online transfer - acc salli => recive valide table recipt n transfer
-online loan = fd eka cusgeda=>amount eka fd eke 0.6ta adu da. hari nm loan table ekai online table 1i
+
+
+
+
+
+
+
+
+///want to discuss
+
+view trans - recipt table search , branch or thaman interact karapu aya both manager n employee
+FD amount and account balance
+
+//bageta
+
+
+
+//////////
+
+make deposites :- recept, depositerecipt table account balance
+assist for loan request - loan request , accept kalama=>loan,offline loan
+create account -account , checking/saving 
+enter loan installement - amount=>monthly loan installement
+create FD - fD , check same account has saving accoung ****
+online loan = fd eka cusgeda=>amount eka fd eke 0.6ta adu da. hari nm loan table ekai online table 1i**(check tika ok dana tika na)
+make offline withdrawal - recipt , withdrawal recipt, bankwithdrawal *****(dana tika ok check na)
+
+
+
+to//
+create FD - fD , check same account has saving accoung 
 approve loan manager - active loan reqs balala accept,reject
+
