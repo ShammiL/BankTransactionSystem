@@ -17,7 +17,7 @@ const loginRouter = require('./Models/userModels/userLoginModels/routes.config')
 const employeeRouter = require('./Models/userModels/employees/routes.config');
 const customerRouter = require('./Models/userModels/customers/routes.config');
 const managerRouter = require('./Models/userModels/managerModel/route.config');
-
+const accountRouter = require('./Models/accountModel/router.config');
 
 app.use(bodyParser.json());
 // AuthorizationRouter.routesConfig(app);
@@ -25,6 +25,7 @@ loginRouter.routesConfig(app);
 employeeRouter.routesConfig(app);
 customerRouter.routesConfig(app);
 managerRouter.routesConfig(app);
+accountRouter.routesConfig(app);
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });

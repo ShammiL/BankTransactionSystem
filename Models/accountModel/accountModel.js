@@ -6,8 +6,21 @@ var ID = "accountNum";//primary key
 
 
 exports.getByID = (id) => {
-    
+
     return Db.getByColumn(table, { "column": ID, "body": id }).then((results) => {
+
+        return results;
+    });
+
+};
+
+
+
+
+
+exports.getDetails = (id) => {
+
+    return Db.getAll(table).then((results) => {
 
         return results;
     });
