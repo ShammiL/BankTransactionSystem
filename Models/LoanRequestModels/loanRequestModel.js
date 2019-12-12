@@ -12,7 +12,6 @@ exports.getAll = () => {
 
 //abc
 exports.getById = (id) => {
-    console.log("CUSTOMER SEARCHING ID", id)
     return Db.getByColumn(table, { "column": ID, "body": id }).then((results) => {
 
         return results;

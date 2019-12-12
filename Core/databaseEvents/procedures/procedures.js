@@ -50,10 +50,8 @@ async function addOnlineLoan(data1, data2, data3, data4, data5, data6, data7) {
     console.log("RES", result)
     return result
 }
-async function approveLoan(data) {
-    console.log("call " + eventNames.approveLoan + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.approveLoan + "(" + data + ")");
+async function approveLoan(data1, data2, data3, data4, data5, data6, data7, data8) {
+    const result = await connection.query("call " + eventNames.approveLoan + "(?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -77,10 +75,8 @@ async function makeOfflineDeposite(data1, data2, data3, data4, data5, data6) {
     console.log("RES", result)
     return result
 }
-async function onlineTransfer(data) {
-    console.log("call " + eventNames.onlineTransfer + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.onlineTransfer + "(" + data + ")");
+async function onlineTransfer(data1, data2, data3, data4, data5, data6, data7, data8) {
+    const result = await connection.query("call " + eventNames.onlineTransfer + "(?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)

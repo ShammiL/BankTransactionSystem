@@ -222,6 +222,7 @@ exports.requestOfflineLoan = (req, res) => {
     var loanOfficerID = req.body.details.loanOfficerID
     var branchname = req.body.details.branchID
     var customerID = req.body.details.customerID
+    var amount = req.body.details.amount
 
     CustomerModel.getById(customerID)
         .then((result) => {
@@ -258,12 +259,14 @@ exports.requestOfflineLoan = (req, res) => {
                                             {
                                                 "requestID": req.body.requestID,
                                                 "description": description,
+                                                "amount": amount,
                                                 "date_": null,
                                                 "approved": false,
                                                 "loanOfficerID": loanOfficerID,
                                                 "approvedBy": "7f177d91-c",
                                                 "branchID": result[0].branchID,
                                                 "customerID": customerID
+
                                             }
                                         )
                                             .then((result) => {
