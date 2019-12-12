@@ -1,4 +1,4 @@
-Db = require("../../Core/DB");
+
 AccountModel = require("./accountModel")
 
 exports.getAll = (req, res) => {

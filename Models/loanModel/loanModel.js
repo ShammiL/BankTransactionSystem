@@ -2,6 +2,7 @@ Db = require("../../Core/DB.js");
 
 var table = "loan";
 var ID = "loanNum";//primary key
+functions = require("../../Core/databaseEvents/procedures/functions")
 
 exports.getAll = () => {
     return Db.getAll(table).then((results) => {
@@ -20,6 +21,14 @@ exports.getById = (id) => {
 
 };
 // this.getById(7);
+
+exports.getRemainingLoanAmount = (id) => {
+    return functions.checkRemainingLoanAmount(id).then((results) => {
+
+        return results;
+    });
+
+};
 
 exports.getByEmail = (email) => {
     return Db.getByColumn(table, { "column": 'email', "body": email }).then((results) => {

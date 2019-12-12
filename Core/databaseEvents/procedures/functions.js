@@ -5,9 +5,7 @@ var connection = Db.mysqlConnection
 // var procedureName = eventNames.checkRemainingLoanAmount;
 
 async function checkRemainingLoanAmount(data) {
-    console.log("select " + eventNames.checkRemainingLoanAmount + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("select " + eventNames.checkRemainingLoanAmount + "(" + data + ")");
+    const result = await connection.query("select " + eventNames.checkRemainingLoanAmount + "(?)", [data]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", Object.values(result[0][0])[0]);
