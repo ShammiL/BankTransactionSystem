@@ -151,35 +151,31 @@ exports.requestOnlineLoan = (req, res) => {
 
 exports.onlineTransfer = (req, res) => {
     // console.log("BODY", req.body);
-    req.body.reciptnumber = uuidv4()
+    var reciptnumber = uuidv4()
     var amount = req.body.details.amount
     var account = req.body.details.accountID
+    var recAccount = req.body.details.recAccount
     //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
     accountModel.getByID(account)
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "success": "AccountNumber doesn't exists",
+                    "success": "Sender accountNumber doesn't exists",
                     "code": 200
                 })
             }
             else {
-                console.log("RESULT", result)
-                var balance_ = parseFloat(result[0].balance) + parseFloat(amount);
-                console.log("balance", result[0].balance, parseFloat(amount), balance_)
-                console.log(req.body.reciptnumber, amount, account, new Date().toString(), new Date().toString(), balance_)
-
-                procedures.makeOfflineDeposite(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_)
+                accountModel.getByID(recAccount)
                     .then((result) => {
-                        res.status(200).send(result);
+                        if (result <= 0) {
+                            res.send({
+                                "success": "Reciever accountNumber doesn't exists",
+                                "code": 200
+                            })
+                        }
                     });
-
             }
-
-
         });
-
-
 
 };
 
