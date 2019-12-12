@@ -1,5 +1,5 @@
 Db = require("../../../Core/DB.js");
-customerProcedures = require('../../../Core/databaseEvents/procedures/procedures')
+employeeProcedure = require('../../../Core/databaseEvents/procedures/procedures')
 
 var table = "employee";
 var ID = "employeeID";//primary key
@@ -64,7 +64,15 @@ exports.insert = (data) => {
 exports.managerRegisterProcedure = (data) => {
     console.log("data", data);
 
-    return customerProcedures.managerRegisterProcedure(data).then((results) => {
+    return employeeProcedure.managerRegisterProcedure(data).then((results) => {
+        return results;
+    });
+
+};
+exports.makeOfflineDeposite = (data) => {
+    console.log("data", data);
+
+    return employeeProcedure.makeOfflineDeposite(data).then((results) => {
         return results;
     });
 

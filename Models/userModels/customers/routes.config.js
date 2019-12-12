@@ -21,6 +21,13 @@ exports.routesConfig = function (app) {
     app.delete('/customer/delete/:userId', [
         CustomerController.delete
     ]);
+    app.post('/customer/requestOnlineLoan', [
+        CustomerController.requestOnlineLoan
+    ]);
+    app.post('/customer/onlineTransfer', [
+        CustomerController.onlineTransfer
+    ]);
+
 
 
 };

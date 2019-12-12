@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 loginRouter.routesConfig(app);
 employeeRouter.routesConfig(app);
 customerRouter.routesConfig(app);
-
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });

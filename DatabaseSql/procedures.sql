@@ -42,3 +42,34 @@ end//
 DELIMITER ;
 
 -- call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
+
+
+BEGIN
+set AUTOCOMMIT = 0;
+    DELETE FROM individualcustomer where customerID = customerIDnumber;
+    DELETE FROM login  where username = (select username from customer where customerID = customerIDnumber);
+	DELETE FROM customer where customerID = customerIDnumber;
+    commit;
+end
+
+DELIMITER $$
+CREATE PROCEDURE `individualcustomerUpdate`(IN `customerIDnumber` VARCHAR(40), IN `firstname` VARCHAR(50), IN `lastname` VARCHAR(50), IN `NIC` VARCHAR(50), IN `email` VARCHAR(50), IN `phoneNumber` VARCHAR(15), IN `buildingNumber` VARCHAR(50), IN `streetName` VARCHAR(50), IN `city` VARCHAR(50), IN `nameuser` VARCHAR(100), IN `pass` VARCHAR(100), IN `type` VARCHAR(50))
+BEGIN
+set AUTOCOMMIT = 0;
+	call `individualcustomerDelete`(`customerIDnumber`);
+	call `individualcustomerLogin`(`customerIDnumber`,`firstname`,`lastname`,`NIC`, `email`,`phoneNumber`,`buildingNumber`, `streetName` , `city`,`nameuser`,`pass`,`type`);
+    
+    commit;
+end$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `managerRegisterUpdate`(IN `employeeIDnum` VARCHAR(40), IN `firstName` VARCHAR(50), IN `lastName` VARCHAR(50), IN `nic` VARCHAR(11), IN `email` VARCHAR(50), IN `phoneNumber` VARCHAR(15), IN `buildingNumber` VARCHAR(50), IN `streetName` VARCHAR(50), IN `city` VARCHAR(50), IN `salary` VARCHAR(10), IN `designation` VARCHAR(50), IN `branchID` VARCHAR(10), IN `nameuser` VARCHAR(50), IN `pass` VARCHAR(50), IN `type` VARCHAR(50))
+BEGIN
+set AUTOCOMMIT = 0;
+		call deleteManager(employeeIDnum);
+		call `managerRegister`(`employeeIDnum`,`firstName`,`lastName`,`nic`,`email`,`phoneNumber`,`buildingNumber`, `streetName`,`city`,`salary`,`designation` , `branchID`,`nameuser` ,`pass`,`type`);
+    commit;
+end$$
+DELIMITER ;

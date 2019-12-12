@@ -9,7 +9,12 @@ exports.createFDaccount = 'createFDaccount'
 exports.makeOfflineDeposite = 'makeOfflineDeposite'
 exports.onlineTransfer = 'onlineTransfer'
 exports.withdrawalAccount = 'withdrawalAccount'
-
+exports.deleteCompanyCustomer = 'deleteCompanyCustomer'
+exports.deleteManager = 'deleteManager'
+exports.individualcustomerDelete = 'individualcustomerDelete'
+exports.companycustomerUpdate = 'companycustomerUpdate'
+exports.individualcustomerUpdate = 'individualcustomerUpdate'
+exports.managerRegisterUpdate = 'managerRegisterUpdate'
 //views
 
 exports.individualCustomerview = 'getalldataofindividualcustomer'

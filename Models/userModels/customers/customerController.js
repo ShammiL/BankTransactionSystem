@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken")
 const uuidv4 = require('uuid/v4');
 customerProcedures = require('../../../Core/databaseEvents/procedures/procedures')
 names = require("../../../Config/userTypeNames")
+FDModel = require("../../FDModel/FDModel")
+functions = require("../../../Core/databaseEvents/procedures/functions")
 
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
@@ -95,4 +97,91 @@ exports.insert = (req, res) => {
     // console.log(data)
 
 };
+
+exports.requestOnlineLoan = (req, res) => {
+
+    var loanNum = uuidv4()
+    var customerID = req.body.details.customerID
+    var amount = parseFloat(req.body.details.amount)
+    var monthlyInstallment = req.body.details.monthlyInstallment
+    var duration = req.body.details.duration
+
+    CustomerModel.getById(customerID)
+        .then((result) => {
+            if (result <= 0) {
+                res.send({
+                    "successs": "User doesn't Exists",
+                    "code": 204
+                })
+            }
+            else {
+                console.log(customerID, amount)
+                functions.checkForonlineLoan(customerID, amount)
+                    .then((result) => {
+
+                        if (result == "error") {
+                            res.send({
+                                "successs": "You havent valid FD account to take this loan",
+                                "code": 204
+                            })
+                        }
+                        else {
+                            console.log(result)
+                            customerProcedures.addOnlineLoan(
+                                loanNum, customerID, amount, null, monthlyInstallment, duration, result
+                            )
+                                .then((result) => {
+                                    res.send({
+                                        "successs": "Done",
+                                        "code": 200,
+                                        result: result
+                                    })
+
+                                })
+
+                        }
+
+                    })
+
+            }
+
+
+        });
+};
+
+exports.onlineTransfer = (req, res) => {
+    // console.log("BODY", req.body);
+    req.body.reciptnumber = uuidv4()
+    var amount = req.body.details.amount
+    var account = req.body.details.accountID
+    //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
+    accountModel.getByID(account)
+        .then((result) => {
+            if (result <= 0) {
+                res.send({
+                    "success": "AccountNumber doesn't exists",
+                    "code": 200
+                })
+            }
+            else {
+                console.log("RESULT", result)
+                var balance_ = parseFloat(result[0].balance) + parseFloat(amount);
+                console.log("balance", result[0].balance, parseFloat(amount), balance_)
+                console.log(req.body.reciptnumber, amount, account, new Date().toString(), new Date().toString(), balance_)
+
+                procedures.makeOfflineDeposite(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_)
+                    .then((result) => {
+                        res.status(200).send(result);
+                    });
+
+            }
+
+
+        });
+
+
+
+};
+
+
 

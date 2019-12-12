@@ -16,9 +16,7 @@ async function checkRemainingLoanAmount(data) {
 // checkRemainingLoanAmount('1234');
 
 async function checkFDInstallment(data) {
-    console.log("select " + eventNames.checkFDInstallment + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("select " + eventNames.checkFDInstallment + "(" + data + ")");
+    const result = await connection.query("select " + eventNames.checkFDInstallment + "(?)", [data]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", Object.values(result[0][0])[0]);
@@ -29,9 +27,8 @@ async function checkFDInstallment(data) {
 // // checkFDInstallment('"45880c14-a"');
 // checkFDInstallment('"45880c4-a"');
 
-async function checkForonlineLoan(data) {
-    console.log("select " + eventNames.checkForonlineLoan + "(" + data + ")");
-    const result = await connection.query("select " + eventNames.checkForonlineLoan + "(" + data + ")");
+async function checkForonlineLoan(data1, data2) {
+    const result = await connection.query("select " + eventNames.checkForonlineLoan + "(?,?)", [data1, data2]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", Object.values(result[0][0])[0]);

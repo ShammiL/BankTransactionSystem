@@ -34,20 +34,17 @@ async function managerRegisterProcedure(data) {
     console.log("RES", result)
     return result
 }
-async function createAccountCustomer(data) {
-    console.log("call " + eventNames.accountForCustomer + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.accountForCustomer + "(" + data + ")");
+async function createAccountCustomer(data1, data2, data3, data4, data5 = 0, data6 = 0) {
+
+    const result = await connection.query("call " + eventNames.accountForCustomer + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
     return result
 }
 // createAccountCustomer("'27', 'checking', 'child', '66b1811b-f','',''")
-async function addOnlineLoan(data) {
-    console.log("call " + eventNames.addOnlineLoan + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.addOnlineLoan + "(" + data + ")");
+async function addOnlineLoan(data1, data2, data3, data4, data5, data6, data7) {
+    const result = await connection.query("call " + eventNames.addOnlineLoan + "(?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -62,10 +59,8 @@ async function approveLoan(data) {
     console.log("RES", result)
     return result
 }
-async function createFDaccount(data) {
-    console.log("call " + eventNames.createFDaccount + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.createFDaccount + "(" + data + ")");
+async function createFDaccount(data1, data2, data3, data4, data5, data6) {
+    const result = await connection.query("call " + eventNames.createFDaccount + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -73,10 +68,10 @@ async function createFDaccount(data) {
 }
 
 
-async function makeOfflineDeposite(data) {
-    console.log("call " + eventNames.makeOfflineDeposite + "(" + data + ")")
+async function makeOfflineDeposite(data1, data2, data3, data4, data5, data6) {
+    console.log("call " + eventNames.makeOfflineDeposite + "(?)")
     // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.makeOfflineDeposite + "(" + data + ")");
+    const result = await connection.query("call " + eventNames.makeOfflineDeposite + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -92,10 +87,10 @@ async function onlineTransfer(data) {
     return result
 }
 
-async function withdrawalAccount(data) {
-    console.log("call " + eventNames.withdrawalAccount + "(" + data + ")")
+async function withdrawalAccount(data1, data2, data3, data4, data5, data6) {
+    console.log("call " + eventNames.withdrawalAccount + "(?)")
     // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.withdrawalAccount + "(" + data + ")");
+    const result = await connection.query("call " + eventNames.withdrawalAccount + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -110,7 +105,7 @@ module.exports.companycustomerLogin = companycustomerLogin;
 module.exports.createAccountCustomer = createAccountCustomer
 module.exports.addOnlineLoan = addOnlineLoan;
 module.exports.approveLoan = approveLoan;
-module.exports.createFDaccount = createFDaccount;
+module.exports.createFD = createFDaccount;
 module.exports.makeOfflineDeposite = makeOfflineDeposite;
 module.exports.onlineTransfer = onlineTransfer;
 module.exports.withdrawalAccount = withdrawalAccount;

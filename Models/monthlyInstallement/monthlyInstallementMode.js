@@ -1,7 +1,7 @@
-Db = require("../../../Core/DB.js");
+Db = require("../../Core/DB.js");
 
-var table = "customer";
-var ID = "customerID";//primary key
+var table = "monthlyinstallment";
+var ID = "paymentID";//primary key
 
 exports.getAll = () => {
     return Db.getAll(table).then((results) => {

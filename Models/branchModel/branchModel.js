@@ -1,7 +1,7 @@
-Db = require("../../../Core/DB.js");
+Db = require("../../Core/DB.js");
 
-var table = "customer";
-var ID = "customerID";//primary key
+var table = "branch";
+var ID = "branchID";//primary key
 
 exports.getAll = () => {
     return Db.getAll(table).then((results) => {
@@ -21,8 +21,8 @@ exports.getById = (id) => {
 };
 // this.getById(7);
 
-exports.getByEmail = (email) => {
-    return Db.getByColumn(table, { "column": 'email', "body": email }).then((results) => {
+exports.getByName = (name) => {
+    return Db.getByColumn(table, { "column": 'name', "body": name }).then((results) => {
 
         return results;
     });
