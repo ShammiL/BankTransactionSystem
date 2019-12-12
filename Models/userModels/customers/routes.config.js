@@ -15,7 +15,7 @@ exports.routesConfig = function (app) {
     app.get('/customer/email/:email', [
         CustomerController.getByEmail
     ]);
-    app.put('/customer/update/:userId', [
+    app.put('/customer/update', [
         CustomerController.update
     ]);
     app.delete('/customer/delete/:userId', [

@@ -94,7 +94,27 @@ async function withdrawalAccount(data1, data2, data3, data4, data5, data6) {
 }
 // withdrawalAccount("'9989',170024 ,'9', '','' ,170024")
 
-
+async function updateIndividualCustomer(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12) {
+    const result = await connection.query("call " + eventNames.individualcustomerUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+async function managerRegisterUpdate(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12,data13,data14,data15) {
+    const result = await connection.query("call " + eventNames.managerRegisterUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12,data13,data14,data15]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+async function companycustomerUpdate(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10) {
+    const result = await connection.query("call " + eventNames.companycustomerUpdate + "(?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
 module.exports.managerRegisterProcedure = managerRegisterProcedure;
 module.exports.individualCustomerLogin = individualCustomerLogin;
 module.exports.companycustomerLogin = companycustomerLogin;
@@ -105,3 +125,6 @@ module.exports.createFD = createFDaccount;
 module.exports.makeOfflineDeposite = makeOfflineDeposite;
 module.exports.onlineTransfer = onlineTransfer;
 module.exports.withdrawalAccount = withdrawalAccount;
+module.exports.updateIndividualCustomer = updateIndividualCustomer;
+module.exports.managerRegisterUpdate = managerRegisterUpdate;
+module.exports.companycustomerUpdate=companycustomerUpdate;

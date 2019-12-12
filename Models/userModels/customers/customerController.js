@@ -6,6 +6,7 @@ names = require("../../../Config/userTypeNames")
 FDModel = require("../../FDModel/FDModel")
 functions = require("../../../Core/databaseEvents/procedures/functions")
 interest = require("../../../interestRates/loanTimes")
+config = require("../../../Config/userTypeNames")
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
         .then((result) => {
@@ -29,11 +30,24 @@ exports.getByEmail = (req, res) => {
 
 
 exports.update = (req, res) => {
-    console.log(req.params);
-    CustomerModel.update(req.body, req.params.userId)
-        .then((result) => {
-            res.status(200).send(result);
-        });
+
+    if (req.body.type = config.individualcustomer) {
+        customerProcedures.updateIndividualCustomer(
+            req.body.customerID, req.body.firstname, req.body.lastname, req.body.NIC, req.body.email, req.body.phoneNumber, req.body.buildingNumber, req.body.streetName, req.body.city, req.body.username, req.body.password, req.body.type
+        )
+            .then((result) => {
+                res.status(200).send(result);
+            });
+    }
+    if (req.body.type = config.companycustomer) {
+        customerProcedures.companycustomerUpdate(
+            req.body.customerID, req.body.companyName, req.body.email, req.body.phoneNumber, req.body.buildingNumber, req.body.streetName, req.body.city, req.body.username, req.body.password, req.body.type
+        )
+            .then((result) => {
+                res.status(200).send(result);
+            });
+    }
+
 };
 
 

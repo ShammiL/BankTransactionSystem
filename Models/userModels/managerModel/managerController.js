@@ -37,4 +37,5 @@ exports.approveLoan = (req, res) => {
             }
         })
 
-}
+};
+

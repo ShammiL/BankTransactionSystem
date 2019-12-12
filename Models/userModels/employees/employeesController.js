@@ -11,6 +11,7 @@ MonthlyInstallment = require("../../monthlyInstallement/monthlyInstallementMode"
 interest = require("../../../interestRates/interestRates")
 SavingsAccountModel = require("../../savingsaccountModel/savingsaccountModel")
 functions = require("../../../Core/databaseEvents/procedures/functions")
+config = require("../../../Config/userTypeNames")
 
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
@@ -35,11 +36,16 @@ exports.getByEmail = (req, res) => {
 
 
 exports.update = (req, res) => {
-    console.log(req.params);
-    EmployeeModel.update(req.body, req.params.userId)
-        .then((result) => {
-            res.status(200).send(result);
-        });
+
+    if (req.body.type = config.manageremployee) {
+        customerProcedures.managerRegisterUpdate(
+            req.body.employeeID, req.body.firstname, req.body.lastname, req.body.NIC, req.body.email, req.body.phoneNumber, req.body.buildingNumber, req.body.streetName, req.body.city, req.body.salary, req.body.designation, req.body.branchID, req.body.username, req.body.password, req.body.type
+        )
+            .then((result) => {
+                res.status(200).send(result);
+            });
+    }
+
 };
 
 

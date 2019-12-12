@@ -42,6 +42,9 @@ exports.routesConfig = function (app) {
     app.post('/employee/createFD', [
         EmployeeController.createFD
     ]);
+    app.put('/manager/update', [
+        EmployeeController.update
+    ]);
 
 
 };
