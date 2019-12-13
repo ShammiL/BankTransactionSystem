@@ -95,7 +95,8 @@ async function insertAdata(table, data) {
 
 async function updateAdata(table, data, params) {
 
-
+    console.log("data", data);
+    console.log("params", params);
     query = '';
     columns = Object.keys(data),
         data = Object.values(data);
@@ -110,6 +111,27 @@ async function updateAdata(table, data, params) {
     }
     return result[0];
 }
+async function update(table, data) {
+    var values = Object.values(data.body);
+    var keys = Object.keys(data.body);
+    var length = values.length;
+    values.push(data.value)
+    var columns = ""
+    for (i = 0; i < length; i++) {
+        columns = columns + "," + keys[i] + " = " + "?"
+    }
+    columns = columns.slice(1);
+    console.log("QUERY", "UPDATE " + table + " SET " + columns + " WHERE " + data.column + " = ?");
+    console.log(values)
+    const result = await mysqlConnection.query("UPDATE " + table + " SET " + columns + " WHERE " + data.column + " = ?;", values);
+    if (result.length < 1) {
+        throw new Error('Error occur when try to get data by filtering ' + param.body);
+    }
+    return result[0];
+
+}
+
+
 
 
 module.exports.mysqlConnection = mysqlConnection;
@@ -118,6 +140,7 @@ module.exports.getAll = getAllData;
 module.exports.getByColumn = getByColumn;
 module.exports.delete = deleteAdata;
 module.exports.update = updateAdata;
+module.exports.updatedata = update;
 
 
 

@@ -19,6 +19,7 @@ const customerRouter = require('./Models/userModels/customers/routes.config');
 const managerRouter = require('./Models/userModels/managerModel/route.config');
 const accountRouter = require('./Models/accountModel/router.config');
 const LoanRouter = require('./Models/loanModel/router.config');
+const FDRouter = require('./Models/FDModel/route.config');
 
 app.use(bodyParser.json());
 // AuthorizationRouter.routesConfig(app);
@@ -28,6 +29,7 @@ customerRouter.routesConfig(app);
 LoanRouter.routesConfig(app);
 managerRouter.routesConfig(app);
 accountRouter.routesConfig(app);
+FDRouter.routesConfig(app);
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });

@@ -4,6 +4,12 @@ var table = "fixeddeposit";
 var ID = "FDNumber";//primary key
 
 
+exports.getAll = () => {
+    return Db.getAll(table).then((results) => {
+        return results;
+    });
+
+};
 
 exports.getByID = (id) => {
 
@@ -13,6 +19,13 @@ exports.getByID = (id) => {
     });
 
 };
-// this.getByUsername(7);
+exports.update = (id, data) => {
+
+    return Db.updatedata(table, { "column": ID, "value": id, "body": data }).then((results) => {
+
+        return results;
+    });
+
+};
 
 
