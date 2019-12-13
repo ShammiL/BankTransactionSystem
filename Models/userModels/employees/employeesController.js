@@ -38,7 +38,7 @@ exports.getByEmail = (req, res) => {
 exports.update = (req, res) => {
 
     if (req.body.type = config.manageremployee) {
-        customerProcedures.managerRegisterUpdate(
+        procedures.managerRegisterUpdate(
             req.body.employeeID, req.body.firstname, req.body.lastname, req.body.NIC, req.body.email, req.body.phoneNumber, req.body.buildingNumber, req.body.streetName, req.body.city, req.body.salary, req.body.designation, req.body.branchID, req.body.username, req.body.password, req.body.type
         )
             .then((result) => {
@@ -57,46 +57,13 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-    // console.log("BODY", req.body);
+    console.log(req.body)
     req.body.employeeID = uuidv4()
-
-    //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
-
-    var data = '';
     if (req.body.details.designation == names.manageremployee) {
-        data = "\'" + req.body.employeeID + "\'"
-            + "," +
-            "\'" + req.body.details.firstName + "\'"
-            + "," +
-            "\'" + req.body.details.lastName + "\'"
-            + "," +
-            "\'" + req.body.details.nic + "\'"
-            + "," +
-            "\'" + req.body.details.email + "\'"
-            + "," +
-            "\'" + req.body.details.phoneNumber + "\'"
-            + "," +
-            "\'" + req.body.details.buildingNumber + "\'"
-            + "," +
-            "\'" + req.body.details.streetName + "\'"
-            + "," +
-            "\'" + req.body.details.city + "\'"
-            + "," +
-            "\'" + req.body.details.salary + "\'"
-            + "," +
-            "\'" + req.body.details.designation + "\'"
-            + "," +
-            "\'" + req.body.details.branchID + "\'"
-            + "," +
-            "\'" + req.body.details.username + "\'"
-            + "," +
-            "\'" + req.body.details.password + "\'"
-            + "," +
-            "\'" + req.body.details.type + "\'"
 
-
-
-        EmployeeModel.managerRegisterProcedure(data)
+        procedures.managerRegisterProcedure(
+            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+        )
             .then((result) => {
                 res.status(200).send(result);
             });

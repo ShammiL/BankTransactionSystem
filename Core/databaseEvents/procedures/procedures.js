@@ -4,38 +4,31 @@ eventNames = require('../eventNames/eventNames')
 var connection = Db.mysqlConnection
 // var procedureName = eventNames.individualcustomerLogin;
 
-async function individualCustomerLogin(data) {
-    console.log("call " + eventNames.individualcustomerLogin + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.individualcustomerLogin + "(" + data + ")");
+async function individualCustomerLogin(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12) {
+    const result = await connection.query("call " + eventNames.individualcustomerLogin + "(?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
     return result
 }
 
-async function companycustomerLogin(data) {
-    console.log("call " + eventNames.companycustomerLogin + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.companycustomerLogin + "(" + data + ")");
+async function companycustomerLogin(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10) {
+    const result = await connection.query("call " + eventNames.companycustomerLogin + "(?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
     return result
 }
 
-async function managerRegisterProcedure(data) {
-    console.log("Finally in pro", data)
-    console.log("call " + eventNames.managerRegister + "(" + data + ")")
-    // console.log("Pro", data)
-    const result = await connection.query("call " + eventNames.managerRegister + "(" + data + ")");
+async function managerRegisterProcedure(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15) {
+    console.log(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15)
+    const result = await connection.query("call " + eventNames.managerRegister + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
     return result
 }
 async function createAccountCustomer(data1, data2, data3, data4, data5 = 0, data6 = 0) {
-
     const result = await connection.query("call " + eventNames.accountForCustomer + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
@@ -67,8 +60,6 @@ async function createFDaccount(data1, data2, data3, data4, data5, data6) {
 
 
 async function makeOfflineDeposite(data1, data2, data3, data4, data5, data6) {
-    console.log("call " + eventNames.makeOfflineDeposite + "(?)")
-    // console.log("Pro", data)
     const result = await connection.query("call " + eventNames.makeOfflineDeposite + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
@@ -84,15 +75,12 @@ async function onlineTransfer(data1, data2, data3, data4, data5, data6, data7, d
 }
 
 async function withdrawalAccount(data1, data2, data3, data4, data5, data6) {
-    console.log("call " + eventNames.withdrawalAccount + "(?)")
-    // console.log("Pro", data)
     const result = await connection.query("call " + eventNames.withdrawalAccount + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
     return result
 }
-// withdrawalAccount("'9989',170024 ,'9', '','' ,170024")
 
 async function updateIndividualCustomer(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12) {
     const result = await connection.query("call " + eventNames.individualcustomerUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12]);
@@ -101,8 +89,8 @@ async function updateIndividualCustomer(data1, data2, data3, data4, data5, data6
     console.log("RES", result)
     return result
 }
-async function managerRegisterUpdate(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12,data13,data14,data15) {
-    const result = await connection.query("call " + eventNames.managerRegisterUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12,data13,data14,data15]);
+async function managerRegisterUpdate(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15) {
+    const result = await connection.query("call " + eventNames.managerRegisterUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -127,4 +115,4 @@ module.exports.onlineTransfer = onlineTransfer;
 module.exports.withdrawalAccount = withdrawalAccount;
 module.exports.updateIndividualCustomer = updateIndividualCustomer;
 module.exports.managerRegisterUpdate = managerRegisterUpdate;
-module.exports.companycustomerUpdate=companycustomerUpdate;
+module.exports.companycustomerUpdate = companycustomerUpdate;

@@ -61,55 +61,26 @@ exports.delete = (req, res) => {
 exports.insert = (req, res) => {
     // console.log(req);
     req.body.customerID = uuidv4()
-    data = "\'" + req.body.details.email + "\'"
-        + "," +
-        "\'" + req.body.details.phoneNumber + "\'"
-        + "," +
-        "\'" + req.body.details.buildingNumber + "\'"
-        + "," +
-        "\'" + req.body.details.streetName + "\'"
-        + ","
-        + "\'" + req.body.details.city + "\'"
-        + ","
-        + "\'" + req.body.details.username + "\'"
-        + ","
-        + "\'" + req.body.details.password + "\'"
     if (req.body.details.type == names.individualcustomer) {
-        data = "\'" + req.body.customerID + "\'"
-            + "," +
-            "\'" + req.body.details.firstName + "\'"
-            + "," +
-            "\'" + req.body.details.lastName + "\'"
-            + "," +
-            "\'" + req.body.details.nic + "\'"
-            + "," + data
-            + "," +
-            "\'" + req.body.details.type + "\'"
+        customerProcedures.individualCustomerLogin(
+            req.body.customerID, req.body.details.firstname, req.body.details.lastname, req.body.details.NIC, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
 
-        console.log(data)
-        customerProcedures.individualCustomerLogin(data)
+        )
             .then((result) => {
-                console.log("RE", result)
                 res.status(200).send(result);
             });
     }
-    else {
-        data = data = "\'" + req.body.customerID + "\'"
-            + "," +
-            "\'" + req.body.details.companyName + "\'"
-            + "," + data
-            + "," +
-            "\'" + req.body.details.type + "\'"
-        console.log(data)
-        customerProcedures.companycustomerLogin(data)
+    if (req.body.details.type == names.companycustomer) {
+        customerProcedures.companycustomerLogin(
+            req.body.customerID, req.body.details.companyName, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
+
+        )
             .then((result) => {
                 console.log("RE", result)
                 res.status(200).send(result);
             });
 
     }
-    // console.log(data)
-
 };
 
 exports.requestOnlineLoan = (req, res) => {
