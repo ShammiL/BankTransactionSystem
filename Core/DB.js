@@ -29,7 +29,7 @@ function getdatabaseObject(mysql) {
 async function getColumns(table) {
 
     var coloum_list = '';
-    const result = await mysqlConnection.query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = " + "\'" + table + "\'" + " and table_schema = " + "\'" + database_Details.databaseName + "\'");
+    const result = await mysqlConnection.query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? and table_schema = ?", [table, database_Details.databaseName]);
     if (result[0].length < 1) {
         throw new Error('Error occur when try to get all details');
     }
@@ -54,9 +54,6 @@ async function getAllData(table) {
 }
 
 async function getByColumn(table, param) {
-
-    console.log(table + " ");
-    console.log(param);
     const result = await mysqlConnection.query("Select * from " + table + " where " + param.column + "= ?", [param.body]);
 
     if (result.length < 1) {
@@ -77,18 +74,18 @@ async function deleteAdata(table, param) {
 
 async function insertAdata(table, data) {
 
-    console.log("Go to add");
-    console.log(data);
-    console.log("Go to add");
-    var data__ = '';
-    var data_ = Object.values(data);
-    var rows = await getColumns(table);
-    for (i = 0; i < rows.length; i++) {
-        data__ += "," + "\'" + data_[i] + "\'";
+    var values = Object.values(data);
+    var keys = Object.keys(data);
+    var length = values.length;
+    var ques = ""
+    var columns = ""
+    for (i = 0; i < length; i++) {
+        columns = columns + "," + keys[i];
+        ques = ques + "," + "?";
     }
-    data__ = data__.slice(1);
-    console.log("INSERT INTO " + table + " ( " + rows.names + " ) VALUES (" + data__ + " )");
-    const result = await mysqlConnection.query("INSERT INTO " + table + " ( " + rows.names + " ) VALUES (" + data__ + " )");
+    ques = ques.slice(1);
+    columns = columns.slice(1);
+    const result = await mysqlConnection.query("INSERT INTO " + table + " ( " + columns + " ) VALUES (" + ques + ")", values);
     if (result.length < 1) {
         throw new Error('Error occur when try to insert ' + param.body);
     }
@@ -97,6 +94,8 @@ async function insertAdata(table, data) {
 }
 
 async function updateAdata(table, data, params) {
+
+
     query = '';
     columns = Object.keys(data),
         data = Object.values(data);
