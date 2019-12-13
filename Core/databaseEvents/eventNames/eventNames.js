@@ -15,6 +15,7 @@ exports.individualcustomerDelete = 'individualcustomerDelete'
 exports.companycustomerUpdate = 'companycustomerUpdate'
 exports.individualcustomerUpdate = 'individualcustomerUpdate'
 exports.managerRegisterUpdate = 'managerRegisterUpdate'
+exports.childCustomerRegister = 'childCustomerRegister'
 //views
 
 exports.individualCustomerview = 'getalldataofindividualcustomer'

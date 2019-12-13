@@ -12,6 +12,8 @@ interest = require("../../../interestRates/interestRates")
 SavingsAccountModel = require("../../savingsaccountModel/savingsaccountModel")
 functions = require("../../../Core/databaseEvents/procedures/functions")
 config = require("../../../Config/userTypeNames")
+branchModel = require("../../branchModel/branchModel")
+Guardian = require("../individualCustomer/individualCustomerModel")
 
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
@@ -116,19 +118,30 @@ exports.offlineWithdrawal = (req, res) => {
             if (result <= 0) {
                 res.send({
                     "success": "AccountNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
                 console.log("RESULT", result)
                 var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
-                console.log("balance", result[0].balance, parseFloat(amount), balance_)
-                console.log(req.body.reciptnumber, amount, account, new Date().toString(), new Date().toString(), balance_)
+                if (balance_ < 0) {
+                    res.send({
+                        "success": "Insufficent balance",
+                        "code": 204
+                    })
+                }
+                else {
+                    procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
+                        .then((result) => {
+                            res.status(200).send(
+                                {
+                                    "result": result,
+                                    "code": 200
+                                }
+                            );
+                        });
+                }
 
-                procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_)
-                    .then((result) => {
-                        res.status(200).send(result);
-                    });
 
             }
 
@@ -141,10 +154,12 @@ exports.offlineWithdrawal = (req, res) => {
 
 exports.createSavingAccount = (req, res) => {
     // console.log("BODY", req.body);
+    var branchname = req.body.details.branchID;
     req.body.accountID = uuidv4()
     var type = req.body.details.type
     var accountType = req.body.details.accountType
     var customerID = req.body.details.customerID
+    var guardianID = req.body.details.guardianID
     CustomerModel.getById(customerID)
         .then((result) => {
             if (result <= 0) {
@@ -154,19 +169,46 @@ exports.createSavingAccount = (req, res) => {
                 })
             }
             else {
+                branchModel.getByName(branchname).then((branch) => {
+                    if (branch < 0) {
+                        res.send({
+                            "successs": "branch doesn't Exists",
+                            "code": 204
+                        })
+                    }
+                    else {
+                        Guardian.getByID(guardianID)
+                            .then((guardian) => {
+                                if (guardian < 0) {
+                                    res.send({
+                                        "successs": "guardian hasn't a account",
+                                        "code": 204
+                                    })
 
-                procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID)
-                    .then((result) => {
-                        res.status(200).send(result);
-                    });
+                                }
+                                else {
+                                    console.log(guardian)
+                                    procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
+                                        .then((result) => {
+                                            res.status(200).send(result);
+                                        });
+                                }
+                            });
 
+
+                    }
+                })
             }
 
+
         });
-};
+}
+
+
 
 exports.createCheckingAccount = (req, res) => {
     req.body.accountID = uuidv4()
+    var branchname = req.body.branchID;
     var type = req.body.details.type
     var customerID = req.body.details.customerID
     CustomerModel.getById(customerID)
@@ -178,7 +220,6 @@ exports.createCheckingAccount = (req, res) => {
                 })
             }
             else {
-
                 procedures.createAccountCustomer(req.body.accountID, type, '', customerID)
                     .then((result) => {
                         res.status(200).send(result);

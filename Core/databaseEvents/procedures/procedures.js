@@ -12,6 +12,14 @@ async function individualCustomerLogin(data1, data2, data3, data4, data5, data6,
     return result
 }
 
+async function childCustomerLogin(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12) {
+    const result = await connection.query("call " + eventNames.childCustomerRegister + "(?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+
 async function companycustomerLogin(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10) {
     const result = await connection.query("call " + eventNames.companycustomerLogin + "(?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]);
     if (!result.length)
@@ -28,8 +36,8 @@ async function managerRegisterProcedure(data1, data2, data3, data4, data5, data6
     console.log("RES", result)
     return result
 }
-async function createAccountCustomer(data1, data2, data3, data4, data5 = 0, data6 = 0) {
-    const result = await connection.query("call " + eventNames.accountForCustomer + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
+async function createAccountCustomer(data1, data2, data3, data4, data5 = 0, data6 = 0, data7, data8, data9) {
+    const result = await connection.query("call " + eventNames.accountForCustomer + "(?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -74,8 +82,8 @@ async function onlineTransfer(data1, data2, data3, data4, data5, data6, data7, d
     return result
 }
 
-async function withdrawalAccount(data1, data2, data3, data4, data5, data6) {
-    const result = await connection.query("call " + eventNames.withdrawalAccount + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
+async function withdrawalAccount(data1, data2, data3, data4, data5, data6, data7) {
+    const result = await connection.query("call " + eventNames.withdrawalAccount + "(?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
@@ -116,3 +124,4 @@ module.exports.withdrawalAccount = withdrawalAccount;
 module.exports.updateIndividualCustomer = updateIndividualCustomer;
 module.exports.managerRegisterUpdate = managerRegisterUpdate;
 module.exports.companycustomerUpdate = companycustomerUpdate;
+module.exports.childCustomerLogin = childCustomerLogin;

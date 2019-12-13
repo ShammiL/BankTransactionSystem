@@ -7,6 +7,9 @@ FDModel = require("../../FDModel/FDModel")
 functions = require("../../../Core/databaseEvents/procedures/functions")
 interest = require("../../../interestRates/loanTimes")
 config = require("../../../Config/userTypeNames")
+IndividualCustomerViewModel = require("../..//viewModels/individualCustomer")
+
+
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
         .then((result) => {
@@ -59,7 +62,8 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-    // console.log(req);
+
+    // console.log(req.body)
     req.body.customerID = uuidv4()
     if (req.body.details.type == names.individualcustomer) {
         customerProcedures.individualCustomerLogin(
@@ -79,6 +83,35 @@ exports.insert = (req, res) => {
                 console.log("RE", result)
                 res.status(200).send(result);
             });
+
+    }
+    if (req.body.details.type == names.childcustomer) {
+
+        IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
+
+            console.log(result[0][0])
+            if (result <= 0) {
+                res.send({
+                    "success": "Guardian doesn't exists",
+                    "code": 204
+                })
+            }
+            else {
+
+                customerProcedures.childCustomerLogin(
+                    req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
+
+                )
+                    .then((result) => {
+                        res.status(200).send(result);
+                    });
+            }
+
+        }
+
+
+        )
+
 
     }
 };

@@ -6,7 +6,7 @@ var connection = Db.mysqlConnection
 
 async function individualCustomerview(data = { "username": "true" }) {
     console.log(eventNames.individualCustomerview, Object.keys(data), Object.values(data))
-    const result = await connection.query("select * from " + eventNames.individualCustomerview + " where " + Object.keys(data)[0] + " = " + "\'" + Object.values(data)[0] + "\'");
+    const result = await connection.query("select * from " + eventNames.individualCustomerview + " where " + Object.keys(data)[0] + " = ?", [Object.values(data)[0]]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     return result
