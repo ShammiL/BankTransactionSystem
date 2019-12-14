@@ -14,6 +14,7 @@ functions = require("../../../Core/databaseEvents/procedures/functions")
 config = require("../../../Config/userTypeNames")
 branchModel = require("../../branchModel/branchModel")
 Guardian = require("../individualCustomer/individualCustomerModel")
+FDModel__ = require("../../FixedDepositType/fixedDepositTypeModel")
 
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
@@ -356,15 +357,13 @@ exports.createFD = (req, res) => {
     var customerID = req.body.details.customerID
     var accountNumber = req.body.details.accountID
     var amount = req.body.details.amount
-    var duration = req.body.details.duration
-    var interest_ = interest.FD;
-    //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
+    var FDType = req.body.details.FDType
     SavingsAccountModel.getByID(accountNumber)
         .then((result) => {
             if (result <= 0) {
                 res.send({
                     "success": "AccountNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
@@ -373,14 +372,28 @@ exports.createFD = (req, res) => {
                         if (res_ == 0) {
                             res.send({
                                 "success": "You haven't a Saving Account",
-                                "code": 200
+                                "code": 204
                             })
                         }
                         else {
-                            procedures.createFD(accountNumber, amount, FDNumber, duration, null, interest_)
-                                .then((result) => {
-                                    res.status(200).send(result);
-                                });
+                            FDModel__.getByType(FDType)
+                                .then((results) => {
+                                    console.log(results)
+                                    if (results.length <= 0) {
+                                        res.send({
+                                            "success": "Invalid FD Type",
+                                            "code": 204
+                                        })
+                                    }
+                                    else {
+                                        procedures.createFD(accountNumber, amount, FDNumber, null, FDType)
+                                            .then((result) => {
+                                                res.status(200).send(result);
+                                            });
+                                    }
+                                })
+
+
 
                         }
                     })

@@ -58,8 +58,8 @@ async function approveLoan(data1, data2, data3, data4, data5, data6, data7, data
     console.log("RES", result)
     return result
 }
-async function createFDaccount(data1, data2, data3, data4, data5, data6) {
-    const result = await connection.query("call " + eventNames.createFDaccount + "(?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6]);
+async function createFDaccount(data1, data2, data3, data4, data5) {
+    const result = await connection.query("call " + eventNames.createFDaccount + "(?,?,?,?,?)", [data1, data2, data3, data4, data5]);
     if (!result.length)
         throw new Errors.NotFound('Error');
     console.log("RES", result)
