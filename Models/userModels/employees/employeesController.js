@@ -16,6 +16,10 @@ branchModel = require("../../branchModel/branchModel")
 Guardian = require("../individualCustomer/individualCustomerModel")
 FDModel__ = require("../../FixedDepositType/fixedDepositTypeModel")
 savingViewModel = require("../../viewModels/savingView/savingViewModel")
+childModel = require("../childCustomers/childModel")
+
+
+
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
         .then((result) => {
@@ -216,25 +220,54 @@ exports.createSavingAccount = (req, res) => {
                         })
                     }
                     else {
-                        Guardian.getByID(guardianID)
-                            .then((guardian) => {
-                                if (guardianID != '' && guardian[0].length < 0) {
-                                    res.send({
-                                        "successs": "guardian hasn't a account",
-                                        "code": 204
-                                    })
 
-                                }
-                                else {
-                                    console.log(guardian)
-                                    procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-                                }
-                            });
+                        if (accountType != "Child") {
+                            procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, '')
+                                .then((result) => {
+                                    res.status(200).send(result);
+                                });
+
+                        }
+                        else {
+                            Guardian.getByID(guardianID)
+                                .then((guardian) => {
+                                    console.log("Child", result)
+                                    console.log("GUARDIAN", guardian)
+                                    if (guardian[0].length <= 0) {
+                                        res.send({
+                                            "successs": "guardian hasn't a account",
+                                            "code": 204
+                                        })
+
+                                    }
+                                    else {
+
+                                        childModel.getById(customerID).then((child) => {
+                                            if (child.length <= 0) {
+                                                res.send({
+                                                    "successs": "Please Register as a child",
+                                                    "code": 204
+                                                })
+                                            }
+                                            else {
+                                                console.log(child)
+                                                procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
+                                                    .then((result) => {
+                                                        res.status(200).send(result);
+                                                    });
+                                            }
 
 
+                                        })
+                                        {
+
+
+
+                                        }
+                                    }
+                                });
+
+                        }
                     }
                 })
             }
