@@ -195,30 +195,97 @@ exports.onlineTransfer = (req, res) => {
                             })
                         }
                         else {
+
+
                             var recBal = parseFloat(result_[0].balance) + parseFloat(amount)
                             var senBal = result[0].balance - parseFloat(amount)
-                            console.log("value", result[0].balance, senBal, result_[0].balance, recBal, parseFloat(amount))
-                            if (senBal < 0) {
-                                res.send({
-                                    "success": "You haven't sufficient Balance",
-                                    "code": 204
-                                })
-                            }
-                            else {
-                                customerProcedures.onlineTransfer(
-                                    reciptnumber, amount, account, null, null, recAccount, senBal, recBal
-                                ).then((result) => {
-                                    if (result) {
-                                        res.send({
-                                            "success": "Transfer done successfully",
-                                            "code": 204
-                                        })
+                            savingViewModel.getByID(account)
+                                .then((details) => {
+                                    if (details.length > 0) {
+                                        console.log("RESULT", result)
+                                        console.log("minimum", details[0].minimumAmount)
+                                        console.log("Customer remaining", recBal)
+                                        console.log("Sender remaining", senBal)
+
+                                        if (senBal < details[0].minimumAmount) {
+                                            res.send({
+                                                "success": "Insufficent balance",
+                                                "code": 204
+                                            })
+                                        }
+                                        // else if (details[0].withdrawlsRemaining <= 0) {
+                                        //     res.send({
+                                        //         "success": "Withdrawal limit exceed",
+                                        //         "code": 204
+                                        //     })
+                                        // }
+                                        else {
+                                            customerProcedures.onlineTransfer(
+                                                reciptnumber, amount, account, null, null, recAccount, senBal, recBal
+                                            ).then((result) => {
+                                                if (result) {
+                                                    res.send({
+                                                        "success": "Transfer done successfully",
+                                                        "code": 204
+                                                    })
+                                                }
+                                            });
+                                        }
                                     }
-                                });
+                                    else {
 
-                            }
+                                        if (senBal < 0) {
+                                            res.send({
+                                                "success": "Insufficent balance",
+                                                "code": 204
+                                            })
+                                        }
+                                        else {
+
+                                            customerProcedures.onlineTransfer(
+                                                reciptnumber, amount, account, null, null, recAccount, senBal, recBal
+                                            ).then((result) => {
+                                                if (result) {
+                                                    res.send({
+                                                        "success": "Transfer done successfully",
+                                                        "code": 204
+                                                    })
+                                                }
+                                            });
+                                        }
+                                    }
+                                })
 
 
+
+
+
+
+                            /*
+                                                        var recBal = parseFloat(result_[0].balance) + parseFloat(amount)
+                                                        var senBal = result[0].balance - parseFloat(amount)
+                                                        console.log("value", result[0].balance, senBal, result_[0].balance, recBal, parseFloat(amount))
+                                                        if (senBal < 0) {
+                                                            res.send({
+                                                                "success": "You haven't sufficient Balance",
+                                                                "code": 204
+                                                            })
+                                                        }
+                                                        else {
+                                                            customerProcedures.onlineTransfer(
+                                                                reciptnumber, amount, account, null, null, recAccount, senBal, recBal
+                                                            ).then((result) => {
+                                                                if (result) {
+                                                                    res.send({
+                                                                        "success": "Transfer done successfully",
+                                                                        "code": 204
+                                                                    })
+                                                                }
+                                                            });
+                            
+                                                        }
+                            
+                            */
                         }
                     })
 
