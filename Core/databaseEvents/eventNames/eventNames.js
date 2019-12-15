@@ -18,6 +18,7 @@ exports.individualcustomerUpdate = 'individualcustomerUpdate'
 exports.managerRegisterUpdate = 'managerRegisterUpdate'
 exports.childCustomerRegister = 'childCustomerRegister'
 exports.atmwithdrawalAccount = "atmwithdrawalAccount"
+exports.otherEmployeeRegisterUpdate = "otherEmployeeRegisterUpdate"
 //views
 
 exports.individualCustomerview = 'getalldataofindividualcustomer'
