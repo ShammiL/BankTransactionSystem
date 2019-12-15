@@ -114,7 +114,7 @@ exports.offlineWithdrawal = (req, res) => {
     var amount = req.body.details.amount
     var account = req.body.details.accountID
     //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
-    savingViewModel.getByID(account)
+    accountModel.getByID(account)
         .then((result) => {
             if (result <= 0) {
                 res.send({
@@ -124,7 +124,7 @@ exports.offlineWithdrawal = (req, res) => {
             }
             else {
                 var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
-                savingViewModel.getRestrictions(account)
+                savingViewModel.getByID(account)
                     .then((details) => {
                         if (details.length > 0) {
                             console.log("RESULT", result)
@@ -136,7 +136,7 @@ exports.offlineWithdrawal = (req, res) => {
                                     "code": 204
                                 })
                             }
-                            else if (result[0].withdrawlsRemaining <= 0) {
+                            else if (details[0].withdrawlsRemaining <= 0) {
                                 res.send({
                                     "success": "Withdrawal limit exceed",
                                     "code": 204
