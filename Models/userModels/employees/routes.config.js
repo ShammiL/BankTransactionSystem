@@ -45,6 +45,9 @@ exports.routesConfig = function (app) {
     app.put('/manager/update', [
         EmployeeController.update
     ]);
+    app.put('/employee/update', [
+        EmployeeController.update
+    ]);
 
 
 };
