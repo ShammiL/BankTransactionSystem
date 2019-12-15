@@ -15,7 +15,7 @@ config = require("../../../Config/userTypeNames")
 branchModel = require("../../branchModel/branchModel")
 Guardian = require("../individualCustomer/individualCustomerModel")
 FDModel__ = require("../../FixedDepositType/fixedDepositTypeModel")
-
+savingViewModel = require("../../viewModels/savingView/savingViewModel")
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
         .then((result) => {
@@ -114,7 +114,7 @@ exports.offlineWithdrawal = (req, res) => {
     var amount = req.body.details.amount
     var account = req.body.details.accountID
     //call managerRegister('employeeIDnum','firstName','lastName','nic','email','phoneNumber','buildingNumber','streetName','city','salary','designation','branchID','nameuser','pass')
-    accountModel.getByID(account)
+    savingViewModel.getByID(account)
         .then((result) => {
             if (result <= 0) {
                 res.send({
@@ -123,25 +123,53 @@ exports.offlineWithdrawal = (req, res) => {
                 })
             }
             else {
-                console.log("RESULT", result)
                 var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
-                if (balance_ < 0) {
-                    res.send({
-                        "success": "Insufficent balance",
-                        "code": 204
+                savingViewModel.getRestrictions(account)
+                    .then((details) => {
+                        if (details.length > 0) {
+                            console.log("RESULT", result)
+                            console.log("minimum", details[0].minimumAmount)
+                            console.log("remaining", balance_)
+                            if (balance_ < details[0].minimumAmount) {
+                                res.send({
+                                    "success": "Insufficent balance",
+                                    "code": 204
+                                })
+                            }
+                            else if (result[0].withdrawlsRemaining <= 0) {
+                                res.send({
+                                    "success": "Withdrawal limit exceed",
+                                    "code": 204
+                                })
+                            }
+                            else {
+                                procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
+                                    .then((result) => {
+                                        res.send(
+                                            {
+                                                "result": result,
+                                                "code": 200
+                                            }
+                                        );
+                                    });
+                            }
+                        }
+                        else {
+                            procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
+                                .then((result) => {
+                                    res.status(200).send(
+                                        {
+                                            "result": result,
+                                            "code": 200
+                                        }
+                                    );
+                                });
+                        }
                     })
-                }
-                else {
-                    procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
-                        .then((result) => {
-                            res.status(200).send(
-                                {
-                                    "result": result,
-                                    "code": 200
-                                }
-                            );
-                        });
-                }
+
+
+
+
 
 
             }
@@ -180,7 +208,7 @@ exports.createSavingAccount = (req, res) => {
                     else {
                         Guardian.getByID(guardianID)
                             .then((guardian) => {
-                                if (guardian < 0) {
+                                if (guardianID != '' && guardian[0].length < 0) {
                                     res.send({
                                         "successs": "guardian hasn't a account",
                                         "code": 204
