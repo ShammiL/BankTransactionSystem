@@ -155,15 +155,25 @@ exports.offlineWithdrawal = (req, res) => {
                             }
                         }
                         else {
-                            procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
-                                .then((result) => {
-                                    res.status(200).send(
-                                        {
-                                            "result": result,
-                                            "code": 200
-                                        }
-                                    );
-                                });
+
+                            if (balance_ < 0) {
+                                res.send({
+                                    "success": "Insufficent balance",
+                                    "code": 204
+                                })
+                            }
+                            else {
+
+                                procedures.withdrawalAccount(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, result[0].branchID)
+                                    .then((result) => {
+                                        res.status(200).send(
+                                            {
+                                                "result": result,
+                                                "code": 200
+                                            }
+                                        );
+                                    });
+                            }
                         }
                     })
 

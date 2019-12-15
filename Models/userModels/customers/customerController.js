@@ -243,42 +243,115 @@ exports.atmWithdrawal = (req, res) => {
                 })
             }
             else {
-                console.log("RESULT", result)
-                var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
-                if (balance_ < 0) {
-                    res.send({
-                        "success": "Insufficent balance",
-                        "code": 204
-                    })
-                }
-                else {
-
-                    ATMModel.getBYId(ATMID)
-                        .then((atm) => {
-                            console.log("ATM", ATMID)
-                            if (atm.length <= 0 || atm[0].cashReserve < amount) {
-                                res.send({
-                                    "success": "Atm hasn't enough money",
-                                    "code": 204
+                ATMModel.getBYId(ATMID)
+                    .then((atm) => {
+                        console.log("ATM", ATMID)
+                        if (atm.length <= 0 || atm[0].cashReserve < amount) {
+                            res.send({
+                                "success": "Atm hasn't enough money",
+                                "code": 204
+                            })
+                        }
+                        else {
+                            var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
+                            savingViewModel.getByID(account)
+                                .then((details) => {
+                                    if (details.length > 0) {
+                                        console.log("RESULT", result)
+                                        console.log("minimum", details[0].minimumAmount)
+                                        console.log("remaining", balance_)
+                                        if (balance_ < details[0].minimumAmount) {
+                                            res.send({
+                                                "success": "Insufficent balance",
+                                                "code": 204
+                                            })
+                                        }
+                                        else if (details[0].withdrawlsRemaining <= 0) {
+                                            res.send({
+                                                "success": "Withdrawal limit exceed",
+                                                "code": 204
+                                            })
+                                        }
+                                        else {
+                                            var atmbalance = parseFloat(atm[0].cashReserve) - parseFloat(amount);
+                                            procedures.atmwithdrawal(reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, ATMID, atmbalance)
+                                                .then((result) => {
+                                                    res.status(200).send(
+                                                        {
+                                                            "result": result,
+                                                            "code": 200
+                                                        }
+                                                    );
+                                                });
+                                        }
+                                    }
+                                    else {
+                                        if (balance_ < 0) {
+                                            res.send({
+                                                "success": "Insufficent balance",
+                                                "code": 204
+                                            })
+                                        }
+                                        else {
+                                            var atmbalance = parseFloat(atm[0].cashReserve) - parseFloat(amount);
+                                            procedures.atmwithdrawal(reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, ATMID, atmbalance)
+                                                .then((result) => {
+                                                    res.status(200).send(
+                                                        {
+                                                            "result": result,
+                                                            "code": 200
+                                                        }
+                                                    );
+                                                });
+                                        }
+                                    }
                                 })
-                            }
-                            else {
-                                var atmbalance = parseFloat(atm[0].cashReserve) - parseFloat(amount);
-                                procedures.atmwithdrawal(reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, ATMID, atmbalance)
-                                    .then((result) => {
-                                        res.status(200).send(
-                                            {
-                                                "result": result,
-                                                "code": 200
-                                            }
-                                        );
-                                    });
-
-                            }
-                        })
 
 
-                }
+                        }
+                    })
+
+
+                // console.log("RESULT", result)
+                // var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
+                // if (balance_ < 0) {
+                //     res.send({
+                //         "success": "Insufficent balance",
+                //         "code": 204
+                //     })
+                // }
+                // else {
+
+                //     // ATMModel.getBYId(ATMID)
+                //     //     .then((atm) => {
+                //     //         console.log("ATM", ATMID)
+                //     //         if (atm.length <= 0 || atm[0].cashReserve < amount) {
+                //     //             res.send({
+                //     //                 "success": "Atm hasn't enough money",
+                //     //                 "code": 204
+                //     //             })
+                //     //         }
+                //     //         else {
+
+
+
+
+                //     //             // var atmbalance = parseFloat(atm[0].cashReserve) - parseFloat(amount);
+                //     //             // procedures.atmwithdrawal(reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, ATMID, atmbalance)
+                //     //             //     .then((result) => {
+                //     //             //         res.status(200).send(
+                //     //             //             {
+                //     //             //                 "result": result,
+                //     //             //                 "code": 200
+                //     //             //             }
+                //     //             //         );
+                //     //             //     });
+
+                //     //         }
+                //     //     })
+
+
+                // }
 
 
             }
