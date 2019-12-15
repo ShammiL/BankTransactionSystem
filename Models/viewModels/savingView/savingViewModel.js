@@ -1,9 +1,28 @@
 Db = require("../../../Core/DB");
 
-var table = "FDAccountDetails";
-var ID = "FDNumber";//primary key
+var table = "viewallsavingaccountsdetails";
+var ID = "accountNum";//primary key
 
 
+
+exports.getAll = () => {
+
+    return Db.getAll(table).then((results) => {
+
+        return results;
+    });
+
+};
+
+
+exports.getByCustomer = (id) => {
+
+    return Db.getByColumn(table, { "column": "customerID", "body": id }).then((results) => {
+
+        return results;
+    });
+
+};
 
 exports.getByID = (id) => {
 
@@ -15,7 +34,7 @@ exports.getByID = (id) => {
 };
 exports.getByType = (id) => {
 
-    return Db.getByColumn(table, { "column": "FDType", "body": id }).then((results) => {
+    return Db.getByColumn(table, { "column": "accountType", "body": id }).then((results) => {
 
         return results;
     });
