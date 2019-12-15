@@ -40,6 +40,15 @@ exports.getByType = (id) => {
     });
 
 };
-// this.getByUsername(7);
+
+exports.getRestrictions = (accountNum) => {
+
+    return Db.getColumns(table, ["withdrawlsRemaining", "minimumAmount"], { "column": "accountNum", "body": accountNum }).then((results) => {
+
+        return results;
+    });
+
+};
+
 
 
