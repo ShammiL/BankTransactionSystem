@@ -75,6 +75,16 @@ exports.insert = (req, res) => {
                 res.status(200).send(result);
             });
     }
+    else {
+
+        procedures.otherEmployeeRegisterProcedure(
+            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+        )
+            .then((result) => {
+                res.status(200).send(result);
+            });
+
+    }
 };
 
 

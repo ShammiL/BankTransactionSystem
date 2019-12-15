@@ -36,6 +36,15 @@ async function managerRegisterProcedure(data1, data2, data3, data4, data5, data6
     console.log("RES", result)
     return result
 }
+async function otherEmployeeRegisterProcedure(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15) {
+    console.log(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15)
+    const result = await connection.query("call " + eventNames.otherEmployeeRegisterProcedure + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+
 async function createAccountCustomer(data1, data2, data3, data4, data5 = 0, data6 = 0, data7, data8, data9) {
     const result = await connection.query("call " + eventNames.accountForCustomer + "(?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9]);
     if (!result.length)
@@ -135,3 +144,4 @@ module.exports.updateIndividualCustomer = updateIndividualCustomer;
 module.exports.managerRegisterUpdate = managerRegisterUpdate;
 module.exports.companycustomerUpdate = companycustomerUpdate;
 module.exports.childCustomerLogin = childCustomerLogin;
+module.exports.otherEmployeeRegisterProcedure = otherEmployeeRegisterProcedure;

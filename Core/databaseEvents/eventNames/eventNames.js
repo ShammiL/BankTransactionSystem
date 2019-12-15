@@ -2,6 +2,7 @@
 exports.individualcustomerLogin = 'individualcustomerLogin'
 exports.companycustomerLogin = 'companycustomerLogin'
 exports.managerRegister = 'managerRegister'
+exports.otherEmployeeRegisterProcedure = 'otherEmployeeRegisterProcedure'
 exports.accountForCustomer = 'accountForCustomer'
 exports.addOnlineLoan = 'addOnlineLoan'
 exports.approveLoan = 'approveLoan'
