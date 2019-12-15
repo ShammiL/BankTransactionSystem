@@ -121,6 +121,14 @@ async function companycustomerUpdate(data1, data2, data3, data4, data5, data6, d
     return result
 }
 
+async function otherEmployeeRegisterUpdate(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15) {
+    const result = await connection.query("call " + eventNames.otherEmployeeRegisterUpdate + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13, data14, data15]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+
 async function atmwithdrawal(data1, data2, data3, data4, data5, data6, data7, data8) {
     const result = await connection.query("call " + eventNames.atmwithdrawalAccount + "(?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8]);
     if (!result.length)
@@ -145,3 +153,4 @@ module.exports.managerRegisterUpdate = managerRegisterUpdate;
 module.exports.companycustomerUpdate = companycustomerUpdate;
 module.exports.childCustomerLogin = childCustomerLogin;
 module.exports.otherEmployeeRegisterProcedure = otherEmployeeRegisterProcedure;
+module.exports.otherEmployeeRegisterUpdate = otherEmployeeRegisterUpdate;
