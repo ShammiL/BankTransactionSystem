@@ -12,6 +12,15 @@ exports.getByType = (id) => {
     });
 
 };
+
+exports.update = (data,id) => {
+    return Db.update(table, data,{"column":ID,"body":id}).then((results) => {
+
+        return results;
+    });
+
+};
+
 // this.getByUsername(7);
 
 

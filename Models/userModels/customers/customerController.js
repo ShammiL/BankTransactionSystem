@@ -8,6 +8,7 @@ functions = require("../../../Core/databaseEvents/procedures/functions")
 interest = require("../../../interestRates/loanTimes")
 config = require("../../../Config/userTypeNames")
 IndividualCustomerViewModel = require("../..//viewModels/individualCustomer")
+ATMModel = require("../../atmModel/atmModel")
 
 
 exports.getById = (req, res) => {
@@ -224,6 +225,68 @@ exports.onlineTransfer = (req, res) => {
 
             }
         });
+
+};
+
+
+exports.atmWithdrawal = (req, res) => {
+    var reciptnumber = uuidv4()
+    var amount = req.body.details.amount
+    var account = req.body.details.accountID
+    var ATMID = req.body.details.ATMID
+    accountModel.getByID(account)
+        .then((result) => {
+            if (result <= 0) {
+                res.send({
+                    "success": "AccountNumber doesn't exists",
+                    "code": 204
+                })
+            }
+            else {
+                console.log("RESULT", result)
+                var balance_ = parseFloat(result[0].balance) - parseFloat(amount);
+                if (balance_ < 0) {
+                    res.send({
+                        "success": "Insufficent balance",
+                        "code": 204
+                    })
+                }
+                else {
+
+                    ATMModel.getBYId(ATMID)
+                        .then((atm) => {
+                            console.log("ATM", ATMID)
+                            if (atm.length <= 0 || atm[0].cashReserve < amount) {
+                                res.send({
+                                    "success": "Atm hasn't enough money",
+                                    "code": 204
+                                })
+                            }
+                            else {
+                                var atmbalance = parseFloat(atm[0].cashReserve) - parseFloat(amount);
+                                procedures.atmwithdrawal(reciptnumber, amount, account, Date().toString(), Date().toString(), balance_, ATMID, atmbalance)
+                                    .then((result) => {
+                                        res.status(200).send(
+                                            {
+                                                "result": result,
+                                                "code": 200
+                                            }
+                                        );
+                                    });
+
+                            }
+                        })
+
+
+                }
+
+
+            }
+
+
+        });
+
+
 
 };
 

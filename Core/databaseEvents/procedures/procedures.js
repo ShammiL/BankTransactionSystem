@@ -111,6 +111,16 @@ async function companycustomerUpdate(data1, data2, data3, data4, data5, data6, d
     console.log("RES", result)
     return result
 }
+
+async function atmwithdrawal(data1, data2, data3, data4, data5, data6, data7, data8) {
+    const result = await connection.query("call " + eventNames.atmwithdrawalAccount + "(?,?,?,?,?,?,?,?)", [data1, data2, data3, data4, data5, data6, data7, data8]);
+    if (!result.length)
+        throw new Errors.NotFound('Error');
+    console.log("RES", result)
+    return result
+}
+
+module.exports.atmwithdrawal = atmwithdrawal
 module.exports.managerRegisterProcedure = managerRegisterProcedure;
 module.exports.individualCustomerLogin = individualCustomerLogin;
 module.exports.companycustomerLogin = companycustomerLogin;

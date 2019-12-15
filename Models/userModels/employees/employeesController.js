@@ -209,7 +209,7 @@ exports.createSavingAccount = (req, res) => {
 
 exports.createCheckingAccount = (req, res) => {
     req.body.accountID = uuidv4()
-    var branchname = req.body.branchID;
+    var branchname = req.body.details.branchID;
     var type = req.body.details.type
     var customerID = req.body.details.customerID
     CustomerModel.getById(customerID)
@@ -221,10 +221,26 @@ exports.createCheckingAccount = (req, res) => {
                 })
             }
             else {
-                procedures.createAccountCustomer(req.body.accountID, type, '', customerID)
-                    .then((result) => {
-                        res.status(200).send(result);
-                    });
+
+                branchModel.getByName(branchname).then((branch) => {
+                    if (branch.length <= 0) {
+                        res.send({
+                            "successs": "branch doesn't Exists",
+                            "code": 204
+                        })
+                    }
+
+                    else {
+                        console.log(branch)
+                        procedures.createAccountCustomer(req.body.accountID, type, '', customerID, 0, 0, branch[0].branchID, 0, 0)
+                            .then((result) => {
+                                res.status(200).send(result);
+                            });
+
+
+                    }
+                })
+
 
             }
 

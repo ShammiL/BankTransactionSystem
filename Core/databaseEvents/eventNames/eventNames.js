@@ -16,15 +16,19 @@ exports.companycustomerUpdate = 'companycustomerUpdate'
 exports.individualcustomerUpdate = 'individualcustomerUpdate'
 exports.managerRegisterUpdate = 'managerRegisterUpdate'
 exports.childCustomerRegister = 'childCustomerRegister'
+exports.atmwithdrawalAccount = "atmwithdrawalAccount"
 //views
 
 exports.individualCustomerview = 'getalldataofindividualcustomer'
 exports.companyCustomerview = 'getalldataofcompanycustomer'
 exports.managerview = 'getalldataofmanager'
 exports.allcheckingaccountofacustomerHide = 'allcheckingaccountofacustomerHide'
-exports.allsavingsaccountofacustomer = 'allsavingsaccountofacustomer'
 exports.depositereceiptsHide = 'depositereceiptsHide'
 exports.transferreceiptsHide = 'transferreceiptsHide'
+exports.viewallsavingaccountsdetails = "viewallsavingaccountsdetails"
+exports.fdaccountdetails = "fdaccountdetails"
+
+
 
 //funcs
 

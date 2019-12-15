@@ -27,6 +27,10 @@ exports.routesConfig = function (app) {
     app.post('/customer/onlineTransfer', [
         CustomerController.onlineTransfer
     ]);
+    app.post('/customer/atmWithdrawal', [
+        CustomerController.atmWithdrawal
+    ]);
+
 
 
 

@@ -20,10 +20,12 @@ const managerRouter = require('./Models/userModels/managerModel/route.config');
 const accountRouter = require('./Models/accountModel/router.config');
 const LoanRouter = require('./Models/loanModel/router.config');
 const FDRouter = require('./Models/FDModel/route.config');
+const transactionRouter = require('./Models/viewModels/transActionView/router.config');
 
 app.use(bodyParser.json());
 // AuthorizationRouter.routesConfig(app);
 loginRouter.routesConfig(app);
+transactionRouter.routesConfig(app);
 employeeRouter.routesConfig(app);
 customerRouter.routesConfig(app);
 LoanRouter.routesConfig(app);
