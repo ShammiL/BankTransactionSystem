@@ -64,6 +64,19 @@ async function getByColumn(table, param) {
     return result[0];
 }
 
+
+async function getColumnResults(table, columns, param) {
+    columns = columns.concat();
+    const result = await mysqlConnection.query("Select " + columns + " from " + table + " where " + param.column + "= ?", [param.body]);
+
+    if (result.length < 1) {
+        throw new Error('Error occur when try to get data by filtering ' + param.body);
+    }
+    console.log("Select " + columns + " from " + table)
+    console.log(result[0])
+    return result[0];
+}
+
 async function deleteAdata(table, param) {
 
     const result = await mysqlConnection.query("delete from " + table + " where " + param.column + "= ?", [param.body]);
@@ -143,6 +156,8 @@ module.exports.getByColumn = getByColumn;
 module.exports.delete = deleteAdata;
 module.exports.update = updateAdata;
 module.exports.updatedata = update;
+module.exports.getColumns = getColumnResults;
+
 
 
 
