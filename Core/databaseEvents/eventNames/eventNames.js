@@ -37,5 +37,5 @@ exports.fdaccountdetails = "fdaccountdetails"
 exports.checkFDInstallment = 'checkFDInstallment'
 exports.checkForonlineLoan = 'checkForonlineLoan'
 exports.checkRemainingLoanAmount = 'checkRemainingLoanAmount'
-
+exports.checkValidateOfRegister = 'checkValidateOfRegister'
 //triggers

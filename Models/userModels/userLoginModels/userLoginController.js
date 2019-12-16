@@ -73,3 +73,60 @@ exports.login = function (req, res) {
 exports.logout = function (req, res) {
     res.send("deleted user");
 }
+
+
+exports.changePassword = (req, res) => {
+
+    var username = req.body.details.username;
+    var password = req.body.details.password;
+    var newpassword = req.body.details.newpassword;
+    var confirm = req.body.details.confirm;
+    if (newpassword === confirm) {
+
+        UserModel.getByUsername(username)
+            .then((user) => {
+                console.log("user", user)
+                if (user.length <= 0) {
+                    res.send({
+                        "code": 204,
+                        "success": "Username doesn't match"
+                    });
+
+                }
+                else {
+                    hashFunctions.checkhash(password, user[0].password).then((result) => {
+                        if (!result) {
+                            res.send({
+                                "code": 204,
+                                "success": "Password doesn't match"
+                            });
+                        }
+                        else {
+                            hashFunctions.hashPassword(newpassword).then((hash) => {
+                                UserModel.update(user[0].username,
+                                    {
+                                        "password": hash
+                                    }).then((result) => {
+                                        res.send({
+                                            result
+                                        })
+                                    })
+                            })
+
+
+                        }
+                    })
+                }
+            })
+
+    }
+    else {
+
+        res.send({
+            "code": 204,
+            "success": "Password and confirm password doesn't match"
+        });
+
+    }
+
+}

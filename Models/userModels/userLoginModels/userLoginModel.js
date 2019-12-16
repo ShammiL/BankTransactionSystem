@@ -15,3 +15,11 @@ exports.getByUsername = (id) => {
 // this.getByUsername(7);
 
 
+exports.update = (id, data) => {
+
+    return Db.updatedata(table, { "column": ID, "value": id, "body": data }).then((results) => {
+
+        return results;
+    });
+
+};
