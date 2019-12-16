@@ -9,7 +9,7 @@ interest = require("../../../interestRates/loanTimes")
 config = require("../../../Config/userTypeNames")
 IndividualCustomerViewModel = require("../..//viewModels/individualCustomer")
 ATMModel = require("../../atmModel/atmModel")
-
+hashFunction = require("../../../Functions/functions")
 
 exports.getById = (req, res) => {
     CustomerModel.getById(req.params.userId)
@@ -34,6 +34,8 @@ exports.getByEmail = (req, res) => {
 
 
 exports.update = (req, res) => {
+
+    
 
     if (req.body.type = config.individualcustomer) {
         customerProcedures.updateIndividualCustomer(
@@ -64,57 +66,63 @@ exports.delete = (req, res) => {
 
 exports.insert = (req, res) => {
 
-    // console.log(req.body)
-    req.body.customerID = uuidv4()
-    if (req.body.details.type == names.individualcustomer) {
-        customerProcedures.individualCustomerLogin(
-            req.body.customerID, req.body.details.firstname, req.body.details.lastname, req.body.details.NIC, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
+    hashFunction.hashPassword(req.body.details.password)
+        .then((hash) => {
+            console.log("hashregister", hash)
+            req.body.details.password = hash
 
-        )
-            .then((result) => {
-                res.status(200).send(result);
-            });
-    }
-    if (req.body.details.type == names.companycustomer) {
-        customerProcedures.companycustomerLogin(
-            req.body.customerID, req.body.details.companyName, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
-
-        )
-            .then((result) => {
-                console.log("RE", result)
-                res.status(200).send(result);
-            });
-
-    }
-    if (req.body.details.type == names.childcustomer) {
-
-        IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
-
-            console.log(result[0][0])
-            if (result <= 0) {
-                res.send({
-                    "success": "Guardian doesn't exists",
-                    "code": 204
-                })
-            }
-            else {
-
-                customerProcedures.childCustomerLogin(
-                    req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
+            // console.log(req.body)
+            req.body.customerID = uuidv4()
+            if (req.body.details.type == names.individualcustomer) {
+                customerProcedures.individualCustomerLogin(
+                    req.body.customerID, req.body.details.firstname, req.body.details.lastname, req.body.details.NIC, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
 
                 )
                     .then((result) => {
                         res.status(200).send(result);
                     });
             }
+            if (req.body.details.type == names.companycustomer) {
+                customerProcedures.companycustomerLogin(
+                    req.body.customerID, req.body.details.companyName, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
 
-        }
+                )
+                    .then((result) => {
+                        console.log("RE", result)
+                        res.status(200).send(result);
+                    });
+
+            }
+            if (req.body.details.type == names.childcustomer) {
+
+                IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
+
+                    console.log(result[0][0])
+                    if (result <= 0) {
+                        res.send({
+                            "success": "Guardian doesn't exists",
+                            "code": 204
+                        })
+                    }
+                    else {
+
+                        customerProcedures.childCustomerLogin(
+                            req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
+
+                        )
+                            .then((result) => {
+                                res.status(200).send(result);
+                            });
+                    }
+
+                }
 
 
-        )
+                )
 
 
-    }
+            }
+        })
 };
 
 exports.requestOnlineLoan = (req, res) => {

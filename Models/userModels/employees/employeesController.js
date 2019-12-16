@@ -17,7 +17,7 @@ Guardian = require("../individualCustomer/individualCustomerModel")
 FDModel__ = require("../../FixedDepositType/fixedDepositTypeModel")
 savingViewModel = require("../../viewModels/savingView/savingViewModel")
 childModel = require("../childCustomers/childModel")
-
+hashFunction = require("../../../Functions/functions")
 
 
 
@@ -75,30 +75,36 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-    console.log(req.body)
-    req.body.employeeID = uuidv4()
 
+    hashFunction.hashPassword(req.body.details.password)
+        .then((hash) => {
+            console.log("hashregister", hash)
+            req.body.details.password = hash
+            console.log(req.body)
+            req.body.employeeID = uuidv4()
 
+            if (req.body.details.designation == names.manageremployee) {
 
-    if (req.body.details.designation == names.manageremployee) {
+                procedures.managerRegisterProcedure(
+                    req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                )
+                    .then((result) => {
+                        res.status(200).send(result);
+                    });
+            }
+            else {
 
-        procedures.managerRegisterProcedure(
-            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-        )
-            .then((result) => {
-                res.status(200).send(result);
-            });
-    }
-    else {
+                procedures.otherEmployeeRegisterProcedure(
+                    req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                )
+                    .then((result) => {
+                        res.status(200).send(result);
+                    });
 
-        procedures.otherEmployeeRegisterProcedure(
-            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-        )
-            .then((result) => {
-                res.status(200).send(result);
-            });
+            }
 
-    }
+        })
+
 };
 
 
