@@ -20,6 +20,7 @@ childModel = require("../childCustomers/childModel")
 
 
 
+
 exports.getById = (req, res) => {
     EmployeeModel.getById(req.params.userId)
         .then((result) => {
@@ -52,6 +53,16 @@ exports.update = (req, res) => {
                 res.status(200).send(result);
             });
     }
+    else {
+
+        procedures.otherEmployeeRegisterUpdate(
+            req.body.employeeID, req.body.firstname, req.body.lastname, req.body.NIC, req.body.email, req.body.phoneNumber, req.body.buildingNumber, req.body.streetName, req.body.city, req.body.salary, req.body.designation, req.body.branchID, req.body.username, req.body.password, req.body.type
+        )
+            .then((result) => {
+                res.status(200).send(result);
+            });
+
+    }
 
 };
 
@@ -66,6 +77,9 @@ exports.delete = (req, res) => {
 exports.insert = (req, res) => {
     console.log(req.body)
     req.body.employeeID = uuidv4()
+
+
+
     if (req.body.details.designation == names.manageremployee) {
 
         procedures.managerRegisterProcedure(
