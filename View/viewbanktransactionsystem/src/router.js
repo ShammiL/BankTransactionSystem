@@ -5,9 +5,10 @@ import EmployeeRegister from './components/Register/EmployeeRegistration/Employe
 import IndividualCustomerRegister from './components/Register/CustomerRegistration/IndividualCustomerRegister'
 import Register from './components/Register'
 import Home from './components/Home/Home'
+import Profile from './components/Home/Profile'
 import { fetchLoggedUser } from './actions/activeUserActions'
 import { connect } from 'react-redux'
-
+import AppBar from "./components/Home/AppbarDrawer"
 
 class router extends Component {
     render() {
@@ -17,13 +18,20 @@ class router extends Component {
             this.props.fetchLoggedUser(token)
         }
         return (
-            <Router>
-                <Route exact path="/" component={Dashpage} />
-                <Route exact path="/customer/register/individual" component={IndividualCustomerRegister} />
-                <Route exact path="/employee/register" component={EmployeeRegister} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/home" component={Home} />
-            </Router>
+            <div>
+
+                <Router>
+                    <AppBar />
+                    <Route exact path="/" component={Dashpage} />
+
+                    <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/customer/register/individual" component={IndividualCustomerRegister} />
+                    <Route exact path="/employee/register" component={EmployeeRegister} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/home" component={Home} />
+                </Router>
+            </div>
+
         )
     }
 }

@@ -5,9 +5,7 @@ import jwt_decode from 'jwt-decode'
 
 
 export const fetchLoggedUser = (token) => dispatch => {
-    console.log("OKKKKK")
     const decoded = jwt_decode(token)
-    console.log("DECCODED DTA", decoded)
     dispatch({
         type: FETCHED_LOGGED_USER,
         payload: decoded
@@ -15,4 +13,13 @@ export const fetchLoggedUser = (token) => dispatch => {
 
     return null;
 }
+export const logout = (e) => dispatch => {
+    e.preventDefault()
+    console.log('object remove')
+    localStorage.removeItem('usertoken')
+    window.location.assign("http://localhost:3000");
+    // this.props.history.push("/")
+}
+
+
 

@@ -7,8 +7,6 @@ import Home from './Home/Home'
 
 class LoginForm extends Component {
 
-
-
     usernamechange = e => {
         this.props.typeUsername(e.target.value); //connect connect this prop
     }

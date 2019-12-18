@@ -21,6 +21,14 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import Profile from './Profile'
 import { homeTitle } from '../../Constants/constants'
+import IndividualCustomerMenuButtons from "./Customer/IndividulMenuButtons"
+import CompanyMenuButtons from "./Customer/CompanyMenuButtons"
+import EmployeeMenuButton from "./Manager/MenuButtons"
+import OtherUserMenuButton from "./OtherEmployee/MenuButtons"
+import { connect } from 'react-redux'
+import { logout } from '../../actions/activeUserActions'
+
+
 
 const drawerWidth = 240;
 
@@ -80,14 +88,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-// const employeeButtons =
-
-// <Link to={'/'}>
-// <IconButton color='inherit' onClick={props.logout}>Logout</IconButton>
-// </Link>
 
 
-export default function PersistentDrawerLeft(props) {
+
+export function PersistentDrawerLeft(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -98,7 +102,23 @@ export default function PersistentDrawerLeft(props) {
 
     const handleDrawerClose = () => {
         setOpen(false);
-    };
+    }
+    var Buttons = null
+    if (props.userType == 'manager') {
+        Buttons = <EmployeeMenuButton />
+    }
+    else if (props.userType == 'individual') {
+        Buttons = <IndividualCustomerMenuButtons />
+    }
+    else if (props.userType == 'company') {
+        Buttons = <CompanyMenuButtons />
+    }
+    else if (props.userType == '') {
+        Buttons = null
+    }
+    else {
+        Buttons = <OtherUserMenuButton />
+    }
 
     return (
         <div className={classes.root}>
@@ -122,6 +142,9 @@ export default function PersistentDrawerLeft(props) {
                     <Typography variant="h6" noWrap>
                         {homeTitle}
                     </Typography>
+                    <Link to={'/'}>
+                        <IconButton color='White' onClick={props.userType != '' ? props.logout : null}>{props.userType != '' ? "LogOut" : ''}</IconButton>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -140,9 +163,7 @@ export default function PersistentDrawerLeft(props) {
                 </div>
                 <Divider />
                 <List>
-                    <Link to={'/'}>
-                        <IconButton color='inherit' onClick={props.logout}>Logout</IconButton>
-                    </Link>
+                    {Buttons}
                 </List>
             </Drawer>
             <main
@@ -151,10 +172,23 @@ export default function PersistentDrawerLeft(props) {
                 })}
             >
                 <div className={classes.drawerHeader} />
-                <div>
-                    <Profile />
-                </div>
+
             </main>
         </div>
     );
 }
+const mapStatesToProps = state => ({
+
+    userType: state.activeUser.type
+
+})
+const mapActionToProps = {
+    logout: logout,
+
+}
+
+export default connect(mapStatesToProps, mapActionToProps)(PersistentDrawerLeft)
+
+
+
+
