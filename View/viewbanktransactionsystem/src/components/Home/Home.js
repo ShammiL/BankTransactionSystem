@@ -24,7 +24,7 @@ export default class Home extends Component {
             <div>
                 <AppbarDrawer
                     logout={this.logout}
-
+                    
                 />
             </div >
         )

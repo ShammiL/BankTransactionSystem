@@ -26,6 +26,9 @@ export const fetchLoggedUser = (username, password) => dispatch => {
 
 
 }
+
+
+
 export const typeUsername = text => dispatch => {
     dispatch({
         type: TYPE_USERNAME,

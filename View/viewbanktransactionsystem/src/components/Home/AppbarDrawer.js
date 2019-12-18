@@ -80,6 +80,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+// const employeeButtons =
+
+// <Link to={'/'}>
+// <IconButton color='inherit' onClick={props.logout}>Logout</IconButton>
+// </Link>
+
+
 export default function PersistentDrawerLeft(props) {
     const classes = useStyles();
     const theme = useTheme();
@@ -134,10 +141,6 @@ export default function PersistentDrawerLeft(props) {
                 <Divider />
                 <List>
                     <Link to={'/'}>
-                        <IconButton color='inherit' onClick={props.logout}>Logout</IconButton>
-                    </Link>
-                    <Divider />
-                    <Link to={'/profile'}>
                         <IconButton color='inherit' onClick={props.logout}>Logout</IconButton>
                     </Link>
                 </List>
