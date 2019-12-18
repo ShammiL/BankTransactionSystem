@@ -24,15 +24,22 @@ exports.login = function (req, res) {
     UserModel.getByUsername(username)
         .then((results) => {
             if (results.length > 0) {
-                console.log("Login password", results[0].password)
+                // console.log("Login password", results[0].password)
                 hashFunctions.checkhash(password, results[0].password).then((result) => {
-                    console.log("RESULT", result)
+                    // console.log("RESULT", result)
                     if (result) {
                         const TOKEN_SECRECT = config.TOKEN_SECRECT;
                         userdata.type(results[0].username, results[0].accessType)
                             .then((result) => {
-                                var data = result[0][0]
-
+                                console.log("CONSOLE", result)
+                                var data = ''
+                                if (results[0].accessType == 'other') {
+                                    data = result[0]
+                                }
+                                else {
+                                    console.log("ACESSLEVEL 3 USER")
+                                    data = result[0][0]
+                                }
                                 let token = jwt.sign(data, TOKEN_SECRECT, {
                                     expiresIn: 1440
                                 });

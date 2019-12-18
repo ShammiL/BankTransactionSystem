@@ -28,6 +28,14 @@ exports.getByEmail = (email) => {
     });
 
 };
+exports.getByUsername = (username) => {
+    console.log("MOEL", username)
+    return Db.getByColumn(table, { "column": 'username', "body": username.username }).then((results) => {
+
+        return results;
+    });
+
+};
 // this.getByEmail('sasindu.17@cse.mrt.ac.lk');
 
 exports.update = (data, filter) => {
