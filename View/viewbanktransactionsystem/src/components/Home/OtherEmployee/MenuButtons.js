@@ -15,6 +15,10 @@ export class MenuButtons extends Component {
                 </Link>
                 <Divider />
                 <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Create Customer Profiles</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>Offline Deposite</IconButton>
                 </Link>
                 <Divider />
@@ -32,6 +36,14 @@ export class MenuButtons extends Component {
                 <Divider />
                 <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>Request Offline Loan</IconButton>
+                </Link>
+                <Divider/>
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Reset Password</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>View Transactions</IconButton>
                 </Link>
 
 

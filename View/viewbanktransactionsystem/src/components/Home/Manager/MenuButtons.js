@@ -15,6 +15,10 @@ export class MenuButtons extends Component {
                 </Link>
                 <Divider />
                 <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Create Customer Profiles</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>Offline Deposite</IconButton>
                 </Link>
                 <Divider />
@@ -41,11 +45,37 @@ export class MenuButtons extends Component {
                 <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>Create Fixed Deposit Account</IconButton>
                 </Link>
+                <Divider />
                 <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>View Loan</IconButton>
                 </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Update User Details</IconButton>
+                </Link>
+                <Divider />
                 <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>View/Change Interest Rates</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Reset Password</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Approve Loans</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>View Reports</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>Add/Change Employee Profiles</IconButton>
+                </Link>
+                <Divider />
+                <Link to={'/'}>
+                    <IconButton color='inherit' onClick={e => { }}>View Transactions</IconButton>
                 </Link>
 
             </div>

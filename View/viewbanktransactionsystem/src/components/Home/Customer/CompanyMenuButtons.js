@@ -11,28 +11,22 @@ export class MenuButtons extends Component {
         return (
             <div>
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Update User Details</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>Online Transfer</IconButton>
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Offline Deposite</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>Online Loan Request</IconButton>
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Offline Withdrawal</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>View account Details</IconButton>
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Create Saving Account</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>View/update profile</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Create Checking Account</IconButton>
-                </Link>
-                <Divider />
-                <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Request Offline Loan</IconButton>
-                </Link>
+
 
 
 
