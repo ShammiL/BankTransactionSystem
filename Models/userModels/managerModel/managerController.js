@@ -4,6 +4,7 @@ interest = require("../../../interestRates/loanTimes")
 procedure = require("../../../Core/databaseEvents/procedures/procedures")
 ManagerModel = require("./managerModel")
 FDTypeModel = require("../../FixedDepositType/fixedDepositTypeModel")
+
 exports.approveLoan = (req, res) => {
 
     var loanNumber = uuidv4()
