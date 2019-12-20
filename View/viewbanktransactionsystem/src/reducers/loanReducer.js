@@ -10,6 +10,7 @@ const initialState = {
     loanNum: [''],
     month: ['01'],
     year: [''],
+    customerID:['']
 }
 
 export default function (state = initialState, action) {

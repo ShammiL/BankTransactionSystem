@@ -1,6 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+// import { Link } from 'react-router-dom'
+import { typeDetails } from '../../actions/loanActions'
 
 export class requestOfflineLoan extends Component {
+
+
+    submit = e => {
+        e.preventDefault();
+    }
+    change = e => {
+        this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
+    }
+
+
 
     render() {
         return (
@@ -33,4 +46,17 @@ export class requestOfflineLoan extends Component {
 
 }
 
-export default requestOfflineLoan
+const mapStatesToProps = state => ({
+    loanOfficerID: state.loanReducer.loanOfficerID,
+    branchname: state.loanReducer.branchID,
+    customerID: state.loanReducer.customerID,
+    amount: state.loanReducer.amount,
+    description: state.loanReducer.description
+})
+const mapActionToProps = {
+    typeDetails: typeDetails,
+    // typePassword: typePassword,
+    // fetchLoggedUser: fetchLoggedUser
+}
+
+export default connect(mapStatesToProps, mapActionToProps)(requestOfflineLoan)

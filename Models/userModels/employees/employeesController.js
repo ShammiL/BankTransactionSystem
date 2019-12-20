@@ -413,7 +413,7 @@ exports.requestOfflineLoan = (req, res) => {
     var customerID = req.body.details.customerID
     var amount = req.body.details.amount
 
-    CustomerModel.getById(customerID)
+    CustomerModel.getByUsername(customerID)
         .then((result) => {
             if (result <= 0) {
                 res.send({

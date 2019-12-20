@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/newAccountReducer'
+import { typeDetails } from '../../actions/loanActions'
 
 export class payMonthlyInstallment extends Component {
 
