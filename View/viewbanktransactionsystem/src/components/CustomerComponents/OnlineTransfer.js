@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import { typeDetails } from '../../actions/transactionReducerActions'
 
-export class OfflineWithdrawal extends Component {
+export class OnlineTransfer extends Component {
 
     submit = e => {
         e.preventDefault();
@@ -27,8 +27,10 @@ export class OfflineWithdrawal extends Component {
                         <input onChange={this.change} name="accountNum" type="text" placeholder="Account Number" />
                         <h5>Amount: </h5>
                         <input onChange={this.change} name="amount" type="text" placeholder="Enter amount here" />
+                        <h5>Receiving AccountID: </h5>
+                        <input onChange={this.change} name="recieverAccountNum" type="text" placeholder="Enter amount here" />
                         <h1></h1>
-                        <button type="submit">Proceed Withdrawal</button>
+                        <button type="submit">Proceed Transfer</button>
                     </form>
                 </div>
             </div>
@@ -40,6 +42,7 @@ export class OfflineWithdrawal extends Component {
 const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
+    customer: state.activeUser.customerID
 
 })
 const mapActionToProps = {
@@ -48,4 +51,4 @@ const mapActionToProps = {
     // fetchLoggedUser: fetchLoggedUser
 }
 
-export default connect(mapStatesToProps, mapActionToProps)(OfflineWithdrawal)
+export default connect(mapStatesToProps, mapActionToProps)(OnlineTransfer)

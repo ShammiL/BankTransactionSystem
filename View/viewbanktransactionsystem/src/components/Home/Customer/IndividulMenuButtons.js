@@ -10,7 +10,7 @@ export class MenuButtons extends Component {
     render() {
         return (
             <div>
-                <Link to={'/'}>
+                <Link to={'/employee/onlineTransfer'}>
                     <IconButton color='inherit' onClick={e => { }}>Online Transfer</IconButton>
                 </Link>
                 <Divider />
