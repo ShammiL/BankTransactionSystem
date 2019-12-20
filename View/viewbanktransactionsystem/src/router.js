@@ -9,6 +9,8 @@ import Profile from './components/Home/Profile'
 import { fetchLoggedUser } from './actions/activeUserActions'
 import { connect } from 'react-redux'
 import AppBar from "./components/Home/AppbarDrawer"
+import OfflineWithdrawal from './components/EmployeeComponents/OfflineWithdrawal'
+import  offlineDeposite  from './components/EmployeeComponents/offlineDeposite'
 
 class router extends Component {
     render() {
@@ -29,6 +31,8 @@ class router extends Component {
                     <Route exact path="/employee/register" component={EmployeeRegister} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/home" component={Home} />
+                    <Route exact path="/employee/offlinewithdrawal" component={OfflineWithdrawal}></Route>
+                    <Route exact path="/employee/offlinedeposit" component={offlineDeposite}></Route>
                 </Router>
             </div>
 

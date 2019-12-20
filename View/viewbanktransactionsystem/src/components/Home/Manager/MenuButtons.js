@@ -14,15 +14,15 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>Update User Details</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/customer/register/individual'}>
                     <IconButton color='inherit' onClick={e => { }}>Create Customer Profiles</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/employee/offlinedeposit'}>
                     <IconButton color='inherit' onClick={e => { }}>Offline Deposite</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/employee/offlinewithdrawal'}>
                     <IconButton color='inherit' onClick={e => { }}>Offline Withdrawal</IconButton>
                 </Link>
                 <Divider />
@@ -51,10 +51,6 @@ export class MenuButtons extends Component {
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Update User Details</IconButton>
-                </Link>
-                <Divider />
-                <Link to={'/'}>
                     <IconButton color='inherit' onClick={e => { }}>View/Change Interest Rates</IconButton>
                 </Link>
                 <Divider />
@@ -70,7 +66,7 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>View Reports</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/employee/register'}>
                     <IconButton color='inherit' onClick={e => { }}>Add/Change Employee Profiles</IconButton>
                 </Link>
                 <Divider />
