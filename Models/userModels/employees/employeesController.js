@@ -264,8 +264,9 @@ exports.createSavingAccount = (req, res) => {
     var accountType = req.body.details.accountType
     var customerID = req.body.details.customerID
     var guardianID = req.body.details.guardianID
-    CustomerModel.getById(customerID)
+    CustomerModel.getByUsername(customerID)
         .then((result) => {
+
             if (result <= 0) {
                 res.send({
                     "successs": "User doesn't Exists",
@@ -273,6 +274,7 @@ exports.createSavingAccount = (req, res) => {
                 })
             }
             else {
+                var customerID = result[0].customerID;
                 branchModel.getByName(branchname).then((branch) => {
                     if (branch < 0) {
                         res.send({
@@ -312,6 +314,8 @@ exports.createSavingAccount = (req, res) => {
                                             }
                                             else {
                                                 console.log(child)
+                                                console.log(accountType)
+
                                                 procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
                                                     .then((result) => {
                                                         res.status(200).send(result);
@@ -344,7 +348,7 @@ exports.createCheckingAccount = (req, res) => {
     var branchname = req.body.details.branchID;
     var type = req.body.details.type
     var customerID = req.body.details.customerID
-    CustomerModel.getById(customerID)
+    CustomerModel.getByUsername(customerID)
         .then((result) => {
             if (result <= 0) {
                 res.send({
@@ -353,6 +357,7 @@ exports.createCheckingAccount = (req, res) => {
                 })
             }
             else {
+                var customerID = result[0].customerID;
 
                 branchModel.getByName(branchname).then((branch) => {
                     if (branch.length <= 0) {
@@ -506,47 +511,63 @@ exports.createFD = (req, res) => {
     var accountNumber = req.body.details.accountID
     var amount = req.body.details.amount
     var FDType = req.body.details.FDType
-    SavingsAccountModel.getByID(accountNumber)
-        .then((result) => {
-            if (result <= 0) {
+    CustomerModel.getByUsername(customerID)
+        .then((customer) => {
+            console.log("NEW CUSTOMER", customer)
+            if (customer.length <= 0) {
                 res.send({
-                    "success": "AccountNumber doesn't exists",
+                    "success": "username is incorrect",
                     "code": 204
                 })
             }
             else {
-                functions.checkFDInstallment(customerID)
-                    .then((res_) => {
-                        if (res_ == 0) {
+                var customerID = customer.customerID;
+
+                SavingsAccountModel.getByID(accountNumber)
+                    .then((result) => {
+                        if (result <= 0) {
                             res.send({
-                                "success": "You haven't a Saving Account",
+                                "success": "AccountNumber doesn't exists",
                                 "code": 204
                             })
                         }
                         else {
-                            FDModel__.getByType(FDType)
-                                .then((results) => {
-                                    console.log(results)
-                                    if (results.length <= 0) {
+                            functions.checkFDInstallment(customerID)
+                                .then((res_) => {
+                                    if (res_ == 0) {
                                         res.send({
-                                            "success": "Invalid FD Type",
+                                            "success": "You haven't a Saving Account",
                                             "code": 204
                                         })
                                     }
                                     else {
-                                        procedures.createFD(accountNumber, amount, FDNumber, null, FDType)
-                                            .then((result) => {
-                                                res.status(200).send(result);
-                                            });
+                                        FDModel__.getByType(FDType)
+                                            .then((results) => {
+                                                console.log(results)
+                                                if (results.length <= 0) {
+                                                    res.send({
+                                                        "success": "Invalid FD Type",
+                                                        "code": 204
+                                                    })
+                                                }
+                                                else {
+                                                    procedures.createFD(accountNumber, amount, FDNumber, null, FDType)
+                                                        .then((result) => {
+                                                            res.status(200).send(result);
+                                                        });
+                                                }
+                                            })
+
+
+
                                     }
                                 })
 
 
-
                         }
-                    })
 
 
+                    });
             }
 
 

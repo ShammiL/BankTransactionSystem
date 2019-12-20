@@ -12,6 +12,7 @@ import AppBar from "./components/Home/AppbarDrawer"
 import OfflineWithdrawal from './components/EmployeeComponents/OfflineWithdrawal'
 import offlineDeposite from './components/EmployeeComponents/offlineDeposite'
 import OnlineTransfer from './components/CustomerComponents/OnlineTransfer'
+import createFd from './components/EmployeeComponents/createFd'
 
 class router extends Component {
     render() {
@@ -35,6 +36,7 @@ class router extends Component {
                     <Route exact path="/employee/offlinewithdrawal" component={OfflineWithdrawal}></Route>
                     <Route exact path="/employee/offlinedeposit" component={offlineDeposite}></Route>
                     <Route exact path="/employee/onlineTransfer" component={OnlineTransfer}></Route>
+                    <Route exact path="/employee/createFd" component={createFd}></Route>
 
                 </Router>
             </div>

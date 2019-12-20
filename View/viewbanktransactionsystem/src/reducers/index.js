@@ -3,10 +3,13 @@ import loginReducer from './loginReducer'
 import registerReducer from './registerReducer'
 import activeUser from './activeReducer'
 import transactionReducer from './transactionReducer'
+import newAccountReducer from './newAccountReducer'
+
 
 export default combineReducers({
     registerReducer: registerReducer,
     loginUser: loginReducer,
     activeUser: activeUser,
-    transactionReducer: transactionReducer
+    transactionReducer: transactionReducer,
+    newAccountReducer: newAccountReducer
 })
