@@ -25,7 +25,11 @@ export class OfflineWithdrawal extends Component {
                     <form onSubmit={this.submit}>
                         <h5>Account Number: </h5>
                         <input onChange={this.change} name="accountNum" type="text" placeholder="Account Number" />
+                        <h5>Customer Username: </h5>
+                        <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
+
                         <h5>Amount: </h5>
+                        
                         <input onChange={this.change} name="amount" type="text" placeholder="Enter amount here" />
                         <h1></h1>
                         <button type="submit">Proceed Withdrawal</button>
@@ -40,6 +44,7 @@ export class OfflineWithdrawal extends Component {
 const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
+    amount: state.transactionReducer.customerID
 
 })
 const mapActionToProps = {

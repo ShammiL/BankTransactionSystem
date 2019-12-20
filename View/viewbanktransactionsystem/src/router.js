@@ -13,6 +13,11 @@ import OfflineWithdrawal from './components/EmployeeComponents/OfflineWithdrawal
 import offlineDeposite from './components/EmployeeComponents/offlineDeposite'
 import OnlineTransfer from './components/CustomerComponents/OnlineTransfer'
 import createFd from './components/EmployeeComponents/createFd'
+import createchecking from './components/EmployeeComponents/createCheckingAccount'
+import createsaving from './components/EmployeeComponents/createSavingAccount'
+import paymonthlyinstallment from './components/EmployeeComponents/payMonthlyInstallment'
+import requestofflineloan from './components/EmployeeComponents/requestOfflineLoan'
+
 
 class router extends Component {
     render() {
@@ -37,6 +42,11 @@ class router extends Component {
                     <Route exact path="/employee/offlinedeposit" component={offlineDeposite}></Route>
                     <Route exact path="/employee/onlineTransfer" component={OnlineTransfer}></Route>
                     <Route exact path="/employee/createFd" component={createFd}></Route>
+                    <Route exact path="/employee/createCheckingaccount" component={createchecking}></Route>
+                    <Route exact path="/employee/createsavingaccount" component={createsaving}></Route>
+                    <Route exact path="/employee/paymonthlyinstallement" component={paymonthlyinstallment}></Route>
+                    <Route exact path="/employee/requestofflineloan" component={requestofflineloan}></Route>
+
 
                 </Router>
             </div>

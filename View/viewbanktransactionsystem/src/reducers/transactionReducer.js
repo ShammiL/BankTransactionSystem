@@ -6,7 +6,8 @@ const initialState = {
     amount: [''],// password in text box
     recieverAccountNum: [''],//response success
     date: [''],//status code
-    time: [''] //type of user
+    time: [''],
+    customerID:[''] //type of user
 }
 
 export default function (state = initialState, action) {

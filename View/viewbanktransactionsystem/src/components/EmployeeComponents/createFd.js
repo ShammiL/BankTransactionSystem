@@ -13,14 +13,15 @@ export class createFD extends Component {
     }
 
 
-    /**
-     * FDType ekata dila thiyena options wala values hari ewa daanna
-     */
     render() {
         return (
             <div>
                 <h1>New Fixed Deposit Form</h1>
                 <form onSubmit={this.submit}>
+
+                    <h5>Customer Username: </h5>
+                    <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
+
 
                     <h5>Associated Savings Account Number: </h5>
                     <input onChange={this.change} type="text" name="accountID" placeholder="Account Number" />
