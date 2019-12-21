@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/loanActions'
+import { typeDetails, requestofflineloan } from '../../actions/loanActions'
 
 export class requestOfflineLoan extends Component {
 
@@ -10,11 +10,15 @@ export class requestOfflineLoan extends Component {
         e.preventDefault();
 
         var details = {
-            accountID: this.props.accountNum,
-            amount: this.props.amount
+            loanOfficerID: this.props.loanOfficerID,
+            branchID: this.props.branchname,
+            customerID: this.props.customerID,
+            amount: this.props.amount,
+            description: this.props.description
+
         }
 
-        this.props.offlineDeposite({ details })
+        this.props.requestofflineloan({ details })
 
     }
     change = e => {
@@ -33,7 +37,7 @@ export class requestOfflineLoan extends Component {
                         <input onChange={this.change} type="text" name="loanOfficerID" placeholder="Your Employee ID" />
 
                         <h5>Branch: </h5>
-                        <input onChange={this.change} type="text" name="branchID" placeholder="Branch name" />
+                        <input onChange={this.change} type="text" name="branchname" placeholder="Branch name" />
 
                         <h5>Customer ID: </h5>
                         <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
@@ -57,15 +61,17 @@ export class requestOfflineLoan extends Component {
 }
 
 const mapStatesToProps = state => ({
-    accountNum: state.transactionReducer.accountNum,
-    amount: state.transactionReducer.amount,
-    error: state.transactionReducer.error
+    loanOfficerID: state.loanReducer.loanOfficerID,
+    branchname: state.loanReducer.branchname,
+    customerID: state.loanReducer.customerID,
+    amount: state.loanReducer.amount,
+    description: state.loanReducer.description,
+    error: state.loanReducer.error
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    offlineDeposite: offlineDeposite
-    // typePassword: typePassword,
+    requestofflineloan: requestofflineloan,
     // fetchLoggedUser: fetchLoggedUser
 }
 

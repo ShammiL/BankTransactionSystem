@@ -410,7 +410,7 @@ exports.createCheckingAccount = (req, res) => {
         });
 };
 exports.requestOfflineLoan = (req, res) => {
-
+    console.log(req.body.details)
     req.body.requestID = uuidv4()
     var description = req.body.details.description
     var loanOfficerID = req.body.details.loanOfficerID
@@ -422,28 +422,29 @@ exports.requestOfflineLoan = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
             else {
-
-                EmployeeModel.getById(loanOfficerID)
+                var customerID = result[0].customerID
+                console.log("LOAN OFFICER", loanOfficerID)
+                EmployeeModel.getByUsername(loanOfficerID)
                     .then((result) => {
                         if (result <= 0) {
                             res.send({
-                                "successs": "Employee doesn't Exists",
+                                "success": "Employee doesn't Exists",
                                 "code": 204
                             })
                         }
                         else {
-
+                            var loanOfficerID = result[0].employeeID
                             BranchModel.getByName(branchname)
                                 .then((result) => {
 
                                     if (result <= 0) {
                                         res.send({
-                                            "successs": "Branch doesn't Exists",
+                                            "success": "Branch doesn't Exists",
                                             "code": 204
                                         })
                                     }
@@ -465,7 +466,7 @@ exports.requestOfflineLoan = (req, res) => {
                                         )
                                             .then((result) => {
                                                 res.send({
-                                                    "successs": "Done",
+                                                    "success": "Done",
                                                     "code": 200,
                                                     result: result
                                                 })

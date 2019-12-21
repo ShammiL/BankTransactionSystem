@@ -21,16 +21,17 @@ exports.getById = (id) => {
 };
 // this.getById(7);
 
-exports.getByEmail = (email) => {
-    return Db.getByColumn(table, { "column": 'email', "body": email }).then((results) => {
+// exports.getByUsername = (username) => {
+//     console.log("EMPLOYEE UERNAME", username)
+//     return Db.getByColumn(table, { "column": 'username', "body": username }).then((results) => {
 
-        return results;
-    });
+//         return results;
+//     });
 
-};
+// };
 exports.getByUsername = (username) => {
     console.log("MOEL", username)
-    return Db.getByColumn(table, { "column": 'username', "body": username.username }).then((results) => {
+    return Db.getByColumn(table, { "column": 'username', "body": username }).then((results) => {
 
         return results;
     });
