@@ -20,7 +20,7 @@ export class OnlineTransfer extends Component {
     render() {
         return (
             <div>
-                <h1>Offline Withdrawal Form</h1>
+                <h1>Online Money Transfer</h1>
                 <div>
                     <form onSubmit={this.submit}>
                         <h5>Account Number: </h5>

@@ -14,12 +14,15 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>Online Transfer</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/cusomer/online/loanRequest'}>
                     <IconButton color='inherit' onClick={e => { }}>Online Loan Request</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/customer/viewAccount'}>
                     <IconButton color='inherit' onClick={e => { }}>View account Details</IconButton>
+                </Link>
+                <Link to={'/customer/viewLoan'}>
+                    <IconButton color='inherit' onClick={e => { }}>View Loan Details</IconButton>
                 </Link>
                 <Divider />
                 <Link to={'/'}>
