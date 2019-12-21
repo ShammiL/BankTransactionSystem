@@ -176,7 +176,7 @@ exports.requestOnlineLoan = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -187,7 +187,7 @@ exports.requestOnlineLoan = (req, res) => {
 
                         if (result == "error") {
                             res.send({
-                                "successs": "You havent valid FD account to take this loan",
+                                "success": "You havent valid FD account to take this loan",
                                 "code": 204
                             })
                         }
@@ -198,7 +198,7 @@ exports.requestOnlineLoan = (req, res) => {
                             )
                                 .then((result) => {
                                     res.send({
-                                        "successs": "Done",
+                                        "success": "Done",
                                         "code": 200,
                                         result: result
                                     })

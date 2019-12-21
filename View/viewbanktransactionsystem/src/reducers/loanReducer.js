@@ -1,4 +1,4 @@
-import { TYPE_LOAN_DETAILS, FETCHED_ERROR_LOAN, FETCHED_REQUEST_LOAN, FETCHED_PAY_MONTHLY_INSTALLMENT } from '../actions/types'
+import { TYPE_LOAN_DETAILS, FETCHED_REQUEST_ONLINE_LOAN, FETCHED_ERROR_LOAN, FETCHED_REQUEST_LOAN, FETCHED_PAY_MONTHLY_INSTALLMENT } from '../actions/types'
 
 
 const initialState = {
@@ -31,6 +31,10 @@ export default function (state = initialState, action) {
                 ...state,
             };
         case FETCHED_PAY_MONTHLY_INSTALLMENT:
+            return {
+                ...state,
+            };
+        case FETCHED_REQUEST_ONLINE_LOAN:
             return {
                 ...state,
             };

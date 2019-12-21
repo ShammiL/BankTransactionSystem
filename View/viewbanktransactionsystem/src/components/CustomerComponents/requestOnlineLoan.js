@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/loanActions'
+import { typeDetails, requestonlineloan } from '../../actions/loanActions'
 
 export class requestOnlineLoan extends Component {
 
     submit = e => {
         e.preventDefault();
+
+        var details = {
+            customerID: this.props.customerID,
+            amount: this.props.amount,
+        }
+
+        this.props.requestonlineloan({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -22,6 +30,7 @@ export class requestOnlineLoan extends Component {
                     <h1></h1>
                     <button type="submit">Proceed Loan Request</button>
                 </form>
+                <p>{this.props.error}</p>
             </div>
         )
     }
@@ -30,11 +39,12 @@ export class requestOnlineLoan extends Component {
 
 const mapStatesToProps = state => ({
     amount: state.loanReducer.amount,
-    customerID: state.activeUser.customerID
+    customerID: state.activeUser.customerID,
+    error: state.loanReducer.error
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    requestonlineloan: requestonlineloan,
     // fetchLoggedUser: fetchLoggedUser
 }
 
