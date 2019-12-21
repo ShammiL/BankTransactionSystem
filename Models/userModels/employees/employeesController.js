@@ -295,7 +295,7 @@ exports.createSavingAccount = (req, res) => {
 
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -304,7 +304,7 @@ exports.createSavingAccount = (req, res) => {
                 branchModel.getByName(branchname).then((branch) => {
                     if (branch < 0) {
                         res.send({
-                            "successs": "branch doesn't Exists",
+                            "success": "branch doesn't Exists",
                             "code": 204
                         })
                     }
@@ -313,7 +313,10 @@ exports.createSavingAccount = (req, res) => {
                         if (accountType != "Child") {
                             procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, '')
                                 .then((result) => {
-                                    res.status(200).send(result);
+                                    res.send({
+                                        "result": result,
+                                        "code": 200
+                                    });
                                 });
 
                         }
@@ -324,7 +327,7 @@ exports.createSavingAccount = (req, res) => {
                                     console.log("GUARDIAN", guardian)
                                     if (guardian[0].length <= 0) {
                                         res.send({
-                                            "successs": "guardian hasn't a account",
+                                            "success": "guardian hasn't a account",
                                             "code": 204
                                         })
 
@@ -334,7 +337,7 @@ exports.createSavingAccount = (req, res) => {
                                         childModel.getById(customerID).then((child) => {
                                             if (child.length <= 0) {
                                                 res.send({
-                                                    "successs": "Please Register as a child",
+                                                    "success": "Please Register as a child",
                                                     "code": 204
                                                 })
                                             }
@@ -344,7 +347,10 @@ exports.createSavingAccount = (req, res) => {
 
                                                 procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
                                                     .then((result) => {
-                                                        res.status(200).send(result);
+                                                        res.send({
+                                                            "result": result,
+                                                            "code": 200
+                                                        });
                                                     });
                                             }
 
@@ -370,6 +376,7 @@ exports.createSavingAccount = (req, res) => {
 
 
 exports.createCheckingAccount = (req, res) => {
+    console.log(req.body)
     req.body.accountID = uuidv4()
     var branchname = req.body.details.branchID;
     var type = req.body.details.type
@@ -378,7 +385,7 @@ exports.createCheckingAccount = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -388,7 +395,7 @@ exports.createCheckingAccount = (req, res) => {
                 branchModel.getByName(branchname).then((branch) => {
                     if (branch.length <= 0) {
                         res.send({
-                            "successs": "branch doesn't Exists",
+                            "success": "branch doesn't Exists",
                             "code": 204
                         })
                     }
@@ -397,7 +404,11 @@ exports.createCheckingAccount = (req, res) => {
                         console.log(branch)
                         procedures.createAccountCustomer(req.body.accountID, type, '', customerID, 0, 0, branch[0].branchID, 0, 0)
                             .then((result) => {
-                                res.status(200).send(result);
+                                res.send({
+                                    "success": "OK",
+                                    "code": 200,
+                                    "result": result
+                                });
                             });
 
 
@@ -580,7 +591,10 @@ exports.createFD = (req, res) => {
                                                 else {
                                                     procedures.createFD(accountNumber, amount, FDNumber, null, FDType)
                                                         .then((result) => {
-                                                            res.status(200).send(result);
+                                                            res.send({
+                                                                "result": result,
+                                                                "code": 200
+                                                            });;
                                                         });
                                                 }
                                             })

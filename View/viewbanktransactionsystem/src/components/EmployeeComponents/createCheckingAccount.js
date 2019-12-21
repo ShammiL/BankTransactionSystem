@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/newAccountReducer'
+import { typeDetails, createcheckingaccount } from '../../actions/newAccountReducer'
 
 
 
 export class createCheckingAccount extends Component {
     submit = e => {
         e.preventDefault();
+
+        var details = {
+            customerID: this.props.customerID,
+            branchID: this.props.branchID,
+            type: 'checking'
+
+        }
+
+        this.props.createcheckingaccount({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -29,6 +39,7 @@ export class createCheckingAccount extends Component {
                         <h1></h1>
                         <button type="submit">Create Account</button>
                     </form>
+                    <p>{this.props.error}</p>
                 </div>
             </div>
         )
@@ -37,14 +48,15 @@ export class createCheckingAccount extends Component {
 }
 
 const mapStatesToProps = state => ({
-    branchID: state.newAccountReducer.branch,
-    customerID: state.newAccountReducer.customerID
+    branchID: state.newAccountReducer.branchID,
+    customerID: state.newAccountReducer.customerID,
+    error: state.newAccountReducer.error
 
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    createcheckingaccount: createcheckingaccount,
     // fetchLoggedUser: fetchLoggedUser
 }
 
