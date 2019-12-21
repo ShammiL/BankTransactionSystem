@@ -88,6 +88,7 @@ exports.changePassword = (req, res) => {
     var password = req.body.details.password;
     var newpassword = req.body.details.newpassword;
     var confirm = req.body.details.confirm;
+    console.log(req.body.details)
     if (newpassword === confirm) {
 
         UserModel.getByUsername(username)
@@ -115,7 +116,8 @@ exports.changePassword = (req, res) => {
                                         "password": hash
                                     }).then((result) => {
                                         res.send({
-                                            result
+                                            "code": 200,
+                                            "result": result
                                         })
                                     })
                             })
