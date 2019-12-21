@@ -65,7 +65,7 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-console.log(req.body.details)
+    console.log(req.body.details)
     var email = req.body.details.email;
     var username = req.body.details.username;
     var NIC = req.body.details.nic;
@@ -272,7 +272,7 @@ exports.onlineTransfer = (req, res) => {
                                                 if (result) {
                                                     res.send({
                                                         "success": "Transfer done successfully",
-                                                        "code": 204
+                                                        "code": 200
                                                     })
                                                 }
                                             });
@@ -294,7 +294,7 @@ exports.onlineTransfer = (req, res) => {
                                                 if (result) {
                                                     res.send({
                                                         "success": "Transfer done successfully",
-                                                        "code": 204
+                                                        "code": 200
                                                     })
                                                 }
                                             });

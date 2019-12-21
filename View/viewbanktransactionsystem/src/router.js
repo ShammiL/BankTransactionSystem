@@ -23,6 +23,7 @@ import ViewTrans from './components/EmployeeComponents/ViewTransaction'
 import ViewAccounts from './components/CustomerComponents/ViewAccounts'
 import ViewLoans from './components/CustomerComponents/ViewLoans'
 import OnlineLoan from './components/CustomerComponents/requestOnlineLoan'
+import simpleDashPage from './components/otherComponents/dashpage'
 
 class router extends Component {
     render() {
@@ -57,7 +58,10 @@ class router extends Component {
                     <Route exact path="/customer/viewAccount" component={ViewAccounts}></Route>
                     <Route exact path="/customer/viewLoan" component={ViewLoans}></Route>
                     <Route exact path="/cusomer/online/loanRequest" component={OnlineLoan}></Route>
+                    <Route exact path="/simpledashpage#/" component={simpleDashPage}></Route>
+
                 </Router>
+
             </div >
 
         )

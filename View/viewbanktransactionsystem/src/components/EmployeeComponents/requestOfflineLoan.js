@@ -8,6 +8,14 @@ export class requestOfflineLoan extends Component {
 
     submit = e => {
         e.preventDefault();
+
+        var details = {
+            accountID: this.props.accountNum,
+            amount: this.props.amount
+        }
+
+        this.props.offlineDeposite({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -39,6 +47,8 @@ export class requestOfflineLoan extends Component {
                         <h1></h1>
                         <button type="submit">Proceed Loan Request</button>
                     </form>
+                    <p>{this.props.error}</p>
+
                 </div>
             </div>
         )
@@ -47,14 +57,14 @@ export class requestOfflineLoan extends Component {
 }
 
 const mapStatesToProps = state => ({
-    loanOfficerID: state.loanReducer.loanOfficerID,
-    branchname: state.loanReducer.branchID,
-    customerID: state.loanReducer.customerID,
-    amount: state.loanReducer.amount,
-    description: state.loanReducer.description
+    accountNum: state.transactionReducer.accountNum,
+    amount: state.transactionReducer.amount,
+    error: state.transactionReducer.error
+
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
+    offlineDeposite: offlineDeposite
     // typePassword: typePassword,
     // fetchLoggedUser: fetchLoggedUser
 }

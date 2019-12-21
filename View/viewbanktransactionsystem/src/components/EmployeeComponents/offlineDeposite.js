@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/transactionReducerActions'
+import { typeDetails, offlineDeposite } from '../../actions/transactionReducerActions'
 
 
-export class offlineDeposite extends Component {
+export class offlineDeposite_ extends Component {
 
 
     submit = e => {
         e.preventDefault();
-        console.log("Depoesit Types", { username: this.props.accountNum, password: this.props.amount })
-        // this.props.fetchLoggedUser(this.props.username, this.props.password)
-        // localStorage.setItem('usertoken', res.data)
+
+        var details = {
+            accountID: this.props.accountNum,
+            amount: this.props.amount
+        }
+
+        this.props.offlineDeposite({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -28,6 +33,7 @@ export class offlineDeposite extends Component {
                     <input onChange={this.change} name="amount" type="text" />
                     <button>Deposit</button>
                 </form>
+                <p>{this.props.error}</p>
             </div>
         )
     }
@@ -37,13 +43,15 @@ export class offlineDeposite extends Component {
 const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
+    error: state.transactionReducer.error
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
+    offlineDeposite: offlineDeposite
     // typePassword: typePassword,
     // fetchLoggedUser: fetchLoggedUser
 }
 
-export default connect(mapStatesToProps, mapActionToProps)(offlineDeposite)
+export default connect(mapStatesToProps, mapActionToProps)(offlineDeposite_)
 

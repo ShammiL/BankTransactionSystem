@@ -150,7 +150,7 @@ exports.offlineDeposite = (req, res) => {
             if (result <= 0) {
                 res.send({
                     "success": "AccountNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
@@ -161,7 +161,11 @@ exports.offlineDeposite = (req, res) => {
 
                 procedures.makeOfflineDeposite(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_)
                     .then((result) => {
-                        res.status(200).send(result);
+                        res.send({
+                            "success": "OK",
+                            "code": 200,
+                            "result": result
+                        })
                     });
 
             }
@@ -175,6 +179,7 @@ exports.offlineDeposite = (req, res) => {
 
 exports.offlineWithdrawal = (req, res) => {
     // console.log("BODY", req.body);
+    console.log("PRINT", req.body)
     req.body.reciptnumber = uuidv4()
     var amount = req.body.details.amount
     var account = req.body.details.accountID
@@ -184,7 +189,7 @@ exports.offlineWithdrawal = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -194,7 +199,7 @@ exports.offlineWithdrawal = (req, res) => {
 
                 accountModel.getByID(account)
                     .then((result) => {
-                        if (result <= 0) {
+                        if (result.length <= 0) {
                             res.send({
                                 "success": "AccountNumber doesn't exists",
                                 "code": 204
