@@ -19,6 +19,8 @@ import paymonthlyinstallment from './components/EmployeeComponents/payMonthlyIns
 import requestofflineloan from './components/EmployeeComponents/requestOfflineLoan'
 import ResetPassword from './components/common components/ResetPassword'
 import ViewLoan from './components/EmployeeComponents/ViewLoan'
+import ViewTrans from './components/EmployeeComponents/ViewTransaction'
+
 
 
 class router extends Component {
@@ -50,6 +52,7 @@ class router extends Component {
                     <Route exact path="/user/changePassword" component={ResetPassword}></Route>
                     <Route exact path="/employee/requestofflineloan" component={requestofflineloan}></Route>
                     <Route exact path="/manager/viewLoanDetails" component={ViewLoan}></Route>
+                    <Route exact path="/manager/view/allAlTransactions" component={ViewTrans}></Route>
 
 
 
