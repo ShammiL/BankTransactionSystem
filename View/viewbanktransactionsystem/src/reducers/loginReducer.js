@@ -1,4 +1,4 @@
-import { FETCHED_ERROR_USER, TYPE_USERNAME, TYPE_PASSWORD } from '../actions/types'
+import { FETCHED_ERROR_USER, TYPE_USERNAME, TYPE_PASSWORD,TYPE_CONFIRM } from '../actions/types'
 
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
     result: '',//response success
     code: '',//status code
     type: '', //type of user
+    confirm: ''
 }
 
 export default function (state = initialState, action) {
@@ -26,6 +27,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 password: action.payload,
+            };
+        case TYPE_CONFIRM:
+            return {
+                ...state,
+                confirm: action.payload,
             };
 
         default: return state;

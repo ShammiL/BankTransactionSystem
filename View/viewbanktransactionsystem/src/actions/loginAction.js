@@ -1,4 +1,4 @@
-import { FETCHED_LOGGED_USER, TYPE_USERNAME, TYPE_PASSWORD, FETCHED_ERROR_USER } from './types'
+import { FETCHED_LOGGED_USER, TYPE_USERNAME, TYPE_PASSWORD, FETCHED_ERROR_USER,TYPE_CONFIRM } from './types'
 
 import axios from 'axios'
 
@@ -38,6 +38,12 @@ export const typeUsername = text => dispatch => {
 export const typePassword = text => dispatch => {
     dispatch({
         type: TYPE_PASSWORD,
+        payload: text
+    })
+}
+export const typeConfirm = text => dispatch => {
+    dispatch({
+        type: TYPE_CONFIRM,
         payload: text
     })
 }

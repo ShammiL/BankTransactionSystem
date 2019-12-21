@@ -54,7 +54,7 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>View/Change Interest Rates</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/user/changePassword'}>
                     <IconButton color='inherit' onClick={e => { }}>Reset Password</IconButton>
                 </Link>
                 <Divider />

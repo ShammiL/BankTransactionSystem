@@ -44,16 +44,6 @@ export default function (state = initialState, action) {
                 designation: action.payload.designation,
                 branchID: action.payload.branchID
             };
-        case TYPE_USERNAME:
-            return {
-                ...state,
-                username: action.payload,
-            };
-        case TYPE_PASSWORD:
-            return {
-                ...state,
-                password: action.payload,
-            };
 
         default: return state;
     }

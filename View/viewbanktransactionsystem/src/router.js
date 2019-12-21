@@ -17,6 +17,7 @@ import createchecking from './components/EmployeeComponents/createCheckingAccoun
 import createsaving from './components/EmployeeComponents/createSavingAccount'
 import paymonthlyinstallment from './components/EmployeeComponents/payMonthlyInstallment'
 import requestofflineloan from './components/EmployeeComponents/requestOfflineLoan'
+import ResetPassword from './components/common components/ResetPassword'
 
 
 class router extends Component {
@@ -45,7 +46,9 @@ class router extends Component {
                     <Route exact path="/employee/createCheckingaccount" component={createchecking}></Route>
                     <Route exact path="/employee/createsavingaccount" component={createsaving}></Route>
                     <Route exact path="/employee/paymonthlyinstallement" component={paymonthlyinstallment}></Route>
+                    <Route exact path="/user/changePassword" component={ResetPassword}></Route>
                     <Route exact path="/employee/requestofflineloan" component={requestofflineloan}></Route>
+
 
 
                 </Router>
