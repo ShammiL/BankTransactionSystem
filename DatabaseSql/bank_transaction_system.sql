@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2019 at 09:26 PM
+-- Generation Time: Dec 21, 2019 at 07:29 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -195,10 +195,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `onlineTransfer` (IN `receiptNum` VA
 BEGIN
 set AUTOCOMMIT = 0;
     	insert into receipt(receiptNum,amount,accountNum,date_,time_) values(receiptNum,amount,accountNumber,date,time);
-        insert into transferreceipt(receiptNum,receivingAccountID) values(receiptNum,receivingAccountID);
+             insert into transferreceipt(receiptNum,receivingAccountID) values(receiptNum,receivingAccountID);
         UPDATE account SET balance = sen where accountNum =accountNumber;
     UPDATE account SET balance = rec where accountNum =receivingAccountID;
-    
+  commit;  
+   
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `otherEmployeeRegisterProcedure` (IN `employeeIDnum` VARCHAR(40), IN `firstName` VARCHAR(50), IN `lastName` VARCHAR(50), IN `nic` VARCHAR(11), IN `email` VARCHAR(50), IN `phoneNumber` VARCHAR(15), IN `buildingNumber` VARCHAR(50), IN `streetName` VARCHAR(50), IN `city` VARCHAR(50), IN `salary` VARCHAR(10), IN `designation` VARCHAR(50), IN `branchID` VARCHAR(10), IN `nameuser` VARCHAR(50), IN `pass` VARCHAR(500), IN `type` VARCHAR(50))  BEGIN
@@ -436,32 +437,34 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `closed`) VALUES
 ('07748765-0', '98d1f210-8', '0.00', '1', 0),
 ('0d40e644-f', '98d1f210-8', '0.00', '2', 0),
-('1', 'b192b124-4', '80000.00', '1', 0),
+('1', 'b192b124-4', '100000.00', '1', 0),
 ('11582f45-9', '8116275a-c', '0.00', '1', 0),
 ('14681e95-5', 'a8f0ee6c-a', '44000.00', '2', 0),
 ('1c1b237b-4', '98d1f210-8', '0.00', '1', 0),
-('1ef40eb6-7', '45880c14-a', '10000.00', '2', 0),
+('1ef40eb6-7', '45880c14-a', '10154.30', '2', 0),
 ('1f925ffc-f', '98d1f210-8', '0.00', '2', 0),
-('2', 'b192b124-4', '1200.00', '1', 0),
-('22', '66b1811b-f', '100000.00', '1', 0),
-('23', '66b1811b-f', '150.00', '1', 0),
+('2', 'b192b124-4', '1214.19', '1', 0),
+('22', '66b1811b-f', '101423.50', '1', 0),
+('23', '66b1811b-f', '152.15', '1', 0),
 ('25', '66b1811b-f', '0.00', '1', 0),
 ('26', '66b1811b-f', '0.00', '1', 0),
 ('27', '66b1811b-f', '0.00', '1', 0),
 ('2877e9a8-e', 'a8f0ee6c-a', '0.00', '3', 0),
-('288affa1-4', '45880c14-a', '200000.00', '2', 0),
+('288affa1-4', '45880c14-a', '203086.03', '2', 0),
 ('2d1faa74-d', '98d1f210-8', '0.00', '2', 0),
+('2f41c323-8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '2', 0),
 ('2ff2d2ee-c', '98d1f210-8', '0.00', '2', 0),
-('3', 'b192b124-4', '-4778.00', '1', 0),
+('3', 'b192b124-4', '-4846.00', '1', 0),
 ('39d80de0-f', '98d1f210-8', '0.00', '2', 0),
-('3bd4adfb-e', '45880c14-a', '1000.00', '2', 0),
-('4', 'b192b124-4', '30000.00', '1', 0),
+('3bd4adfb-e', '45880c14-a', '1011.90', '2', 0),
+('4', 'b192b124-4', '30427.05', '1', 0),
 ('5', 'b192b124-4', '4.13', '1', 0),
 ('5328e043-1', '98d1f210-8', '0.00', '1', 0),
+('5cbe2178-f', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '2', 0),
 ('6', 'b192b124-4', '888888.88', '1', 0),
 ('6b1bbc44-0', '98d1f210-8', '0.00', '1', 0),
 ('6ce0f12e-c', 'a8f0ee6c-a', '0.00', '2', 0),
-('6dbb04b7-b', '45880c14-a', '200000.00', '2', 0),
+('6dbb04b7-b', '45880c14-a', '202369.77', '2', 0),
 ('7', 'b192b124-4', '4000.12', '1', 0),
 ('70c57223-5', '98d1f210-8', '0.00', '2', 0),
 ('7246bace-b', '45880c14-a', '0.00', '2', 0),
@@ -469,8 +472,8 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('7c2eb52a-e', '98d1f210-8', '0.00', '2', 0),
 ('8', '45880c14-a', '222.00', '1', 0),
 ('806d7376-3', '98d1f210-8', '0.00', '1', 0),
-('8854cc2a-9', '45880c14-a', '1000.00', '2', 0),
-('9', '45880c14-a', '90413.00', '1', 0),
+('8854cc2a-9', '45880c14-a', '1011.90', '2', 0),
+('9', '45880c14-a', '200000.00', '1', 0),
 ('90291d50-5', '98d1f210-8', '0.00', '1', 0),
 ('91b8b215-1', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '2', 0),
 ('9bba5cd8-d', '98d1f210-8', '0.00', '2', 0),
@@ -484,7 +487,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('c89ff408-3', '98d1f210-8', '0.00', '1', 0),
 ('c9b40683-8', '98d1f210-8', '0.00', '1', 0),
 ('d2cb9269-4', '98d1f210-8', '0.00', '2', 0),
-('d820d84e-a', '45880c14-a', '500.00', '2', 0),
+('d820d84e-a', '45880c14-a', '506.45', '2', 0),
 ('d8c4e353-0', '98d1f210-8', '0.00', '1', 0),
 ('dc6ed29e-f', '45880c14-a', '0.00', '2', 0),
 ('e22b718c-e', '98d1f210-8', '0.00', '2', 0),
@@ -520,6 +523,19 @@ INSERT INTO `accounttype` (`accountType`, `minimumAmount`, `interest`) VALUES
 ('Child', '0.00', '12.00'),
 ('Senior', '1000.00', '13.00'),
 ('Teen', '500.00', '11.00');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `activeaccount`
+-- (See below for the actual view)
+--
+CREATE TABLE `activeaccount` (
+`accountNum` varchar(10)
+,`customerID` varchar(100)
+,`balance` decimal(10,2)
+,`branchID` varchar(255)
+);
 
 -- --------------------------------------------------------
 
@@ -603,6 +619,7 @@ INSERT INTO `bankwithdrawl` (`receiptNum`, `branchID`) VALUES
 ('226695ad-6388-4484-87e5-2b427cce9254', '1'),
 ('2469de40-535c-4004-8f86-8caf470f6289', '1'),
 ('28931760-3eb6-405f-a81d-812a7be1cc27', '1'),
+('32323sdssafds', '1'),
 ('32df7922-8c1f-483d-957a-1a04bcd52804', '1'),
 ('33ff378e-41b5-4ddb-8dde-4922565e72c8', '1'),
 ('34d7262b-32e7-469d-b112-83b44adca29e', '1'),
@@ -690,6 +707,7 @@ INSERT INTO `checkingaccount` (`accountNum`) VALUES
 ('27'),
 ('2877e9a8-e'),
 ('5'),
+('5cbe2178-f'),
 ('6'),
 ('6ce0f12e-c'),
 ('7'),
@@ -759,8 +777,11 @@ INSERT INTO `companycustomer` (`customerID`, `name`) VALUES
 ('06b825a6-b', 'up4'),
 ('125d57f3-8', 'panycusreg'),
 ('24f03325-0162-4d46-815a-95ecf128344f', 'cuspopocuspopocuspopocusp'),
+('2e25389b-b962-450c-821d-daf08cf1c089', 'managerRegisteracomemploy'),
 ('424626e4-f', 'company'),
 ('8ea5c8ff-c420-46e6-8a90-0c1f177d438d', 'companywronghash'),
+('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom'),
+('a382076c-69ff-4a75-9476-e7c1e2d58735', 'lumindi'),
 ('a995c926-f', 'comcom'),
 ('b0620ab1-9', 'testprotest'),
 ('b192b124-4', 'WSO2'),
@@ -797,15 +818,20 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('1e3b68b2-5207-408c-9f75-fc62b99cf5c3', NULL, 'us111111er11use1rnsme', 'medan', 'this.props.buil', 'this.props.streetName[0]', 'this.props.city[0]'),
 ('24f03325-0162-4d46-815a-95ecf128344f', 'cuspopocuspopocuspopocuspopocuspopocuspo', 'cuspopocuspopocuspopocuspopocuspopocuspopocuspopo', '', '', '', ''),
 ('251b526a-1154-464d-976e-73d651240dbe', NULL, 'us111111erusernsme', 'medan', 'this.props.buil', 'this.props.streetName[0]', 'this.props.city[0]'),
+('2e25389b-b962-450c-821d-daf08cf1c089', 'managerRegisteracomemployeee', 'managerRegisteracomemployeee', '', '', '', ''),
+('392063fe-01a9-42d9-9abd-1563b135a050', 'managerRegisteraindiemployeee', 'managerRegisteraindiemployeee', '', '', '', ''),
 ('424626e4-f', 'company', 'company', 'company', 'company', 'company', 'company'),
 ('45880c14-a', 'fdfdfdfd', '', '', '', '', ''),
 ('47a013c3-6a65-4f9c-aa70-301dace37fc2', 'cuspopocuspopocuspopo', 'cuspopocuspopocuspopo', '', '', '', ''),
+('48557dc3-5b32-4982-9d4a-ebb0975376ad', 'sasindu', 'sasindu', 'sasindu', 'sasindu', 'sasindu', 'sasindu'),
 ('66b1811b-f', 'prerson', 'prerson', 'prerson', 'prerson', 'prerson', 'prerson'),
 ('7149327e-7c02-4856-9abb-a139c58f24ad', 'sasasasasindividualhash', 'asasas', '', '', '', ''),
 ('8116275a-c', 'individualcustomercus', 'individualcustomercus', 'individualcusto', 'individualcustomercus', 'individualcustomercus', 'individualcustomercus'),
 ('8ea5c8ff-c420-46e6-8a90-0c1f177d438d', 'companywronghash', 'companywronghash', '', '', '', ''),
 ('98d1f210-8', 'hellollollollollo', 'helloololol', 'azxcds', 'azxcds', 'azxcds', 'azxcds'),
 ('9d3f655b-3', 'updatedseconearly', 'updatedseconearly', 'updatedseconear', 'updatedseconearly', 'updatedseconearly', 'updatedseconearly'),
+('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom', 'comcomcom', '1236547891123', '1', 'Street Name', 'Angoda'),
+('a382076c-69ff-4a75-9476-e7c1e2d58735', 'lumindi', 'lumindi', '', '', '', ''),
 ('a44e49f4-0', 'nic', 'this.props.city[0]', 'NULL', 'medan', 'this.props.buildingNumber[0]', 'this.props.streetName[0]'),
 ('a8f0ee6c-a', 'azxcds', 'azxcds', 'azxcds', 'azxcds', 'azxcds', 'azxcds'),
 ('a995c926-f', 'comcom', 'comcom', 'comcom', 'comcom', 'comcom', 'comcom'),
@@ -860,28 +886,7 @@ CREATE TABLE `depositreceipt` (
 --
 
 INSERT INTO `depositreceipt` (`receiptNum`) VALUES
-('1'),
-('1001'),
-('204f1051-10dc-404a-a650-49a7b2edf064'),
-('211c82a8-9fbd-40df-9990-990afa605bd1'),
-('247a4ca1-aca2-45c5-a8d7-6db4f9e8c648'),
-('2d7d7feb-9475-42b2-9556-2b2c8223d604'),
-('37f7314a-0107-47da-bb89-745ab2eb4f6e'),
-('3d8fbb5f-1fbc-4917-8202-4fb04bea6fd7'),
-('45cecc93-b0c1-4b95-9685-8abfa162b790'),
-('7cf6594d-72f6-479f-aa95-f16853ddf3e4'),
-('802c3c0c-5b8e-4245-b947-561be247d93b'),
-('9516e901-d011-4397-9d38-bb7854c3e28b'),
-('99'),
-('999'),
-('9a361965-7bde-45c4-8e28-bd882c89b8ad'),
-('a6daed70-8446-416e-8ca3-9b2d1b7a350d'),
-('b08abc7b-3cce-4d18-b256-049987890ebf'),
-('c1f1145a-f357-45a2-85c2-6776428d751c'),
-('d5894bfe-7d08-46d8-969a-7a44a3763800'),
-('dc812248-03cf-4961-9ae3-299f79ba3098'),
-('ec8bedb4-b790-4b59-b7fc-6c408330dd95'),
-('sasas');
+('sdswqdqwd211212312');
 
 -- --------------------------------------------------------
 
@@ -921,10 +926,12 @@ INSERT INTO `employee` (`employeeID`, `firstName`, `lastName`, `username`, `emai
 ('3351d711-d19d-490d-a636-11f621567d2c', '112212121212', '', '112212121212', '112212121212', '', '', '', '', '', 'manager', '999999.99', '2'),
 ('3534bcf6-f546-46f5-a839-b235c536b1cd', 'nikanEmployee1', 'nikanEmployee1', 'nikanEmployee11111', 'nikanEmployee1111111', 'req.b', 'req.body.street', 'req.body.city', 'nikanEmployee', 'nikanEmploy', 'accountant', '1000.00', '2'),
 ('466590db-cd40-4ad8-8c40-57cd42fc4ed3', 'nikanEmployee', 'nikanEmployee', 'nikanEmployee', 'nikanEmployee', 'req.b', 'req.body.street', 'req.body.city', 'nikanEmployee', NULL, 'accountant', '1000.00', '2'),
-('537738af-2', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'mmmm', 'manager', '0.00', '1'),
+('4f4ffe8a-d4ed-4db1-8324-347e2244b89f', 'managerRegister', 'managerRegister', 'managerRegisteraemployeee', 'managerRegisteraemployeee', '', '', '', '', 'managerRegi', 'manager', '10000.00', '2'),
+('5ac6c6b4-1a79-4a00-b3f9-92155740fd28', 'sasiya', 'sasiya', 'sasiya', 'sasiysasiyaa', '', '', '', '', 'sasiyasasiy', 'manager', '1222.00', '1'),
 ('65cb8d25-11fd-4bc8-b6fe-13ba3a44a2d1', 'qwqwqasasdasd', 'qwqwqasasdasd', 'qwqwqasasdasd', 'qwqwqasasdasd', '', '', '', 'qwqwqasasdasd', 'qwqwqasasda', 'manager', '0.00', '2'),
 ('66a59db0-8c46-4155-abec-d1104490d3ba', '', '', 'mkmkmkjkjkj', 'mkmkmkjkjkj', '', '', '', '', '', 'manager', '0.00', '1'),
 ('724f6ac8-0213-4cf0-96c2-4910cb91a424', 'adacheck', 'adacheck', 'adacheck', 'adacheck', '', '', '', '', 'adacheck', 'manager', '111111.00', '1'),
+('7437395e-9e72-4a32-ac57-2b4efbff1a0a', 'shammi2', 'shammi2', 'shammi2', 'shammi2', '', '', '', '', 'shammi2', 'manager', '0.00', '2'),
 ('79bc2c5e-968c-4a6c-9fd4-da2394dc3e74', '', '', 'xxxxxxxxx', 'ssassxxx', '', '', '', '', 'shammi', 'manager', '0.00', '1'),
 ('8e6d6b1a-b', 'employeer', 'employeer', 'employeer', 'employeer', 'emplo', 'employeer', 'employeer', 'employeer', 'employeer', 'manager', '0.00', '1'),
 ('93e53359-71f5-48ac-bbdc-c6ca92da1f49', 'anotherHashChec', 'anotherHashChec', 'anotherHashCheck', 'anotherHashCheck', '', '', '', 'anotherHashChec', 'anotherHash', 'manager', '0.00', '2'),
@@ -986,36 +993,25 @@ CREATE TABLE `fixeddeposit` (
 --
 
 INSERT INTO `fixeddeposit` (`FDNumber`, `accountNum`, `amount`, `dateDeposited`, `FDType`) VALUES
-('2', '9', '300.00', '2019-12-16', 'A'),
-('2b83defa-d', '9', '12343209.00', '2019-12-16', 'C'),
-('3', '9', '100.00', '2019-12-16', 'B'),
-('333', '9', '5000.00', '2019-12-16', 'C'),
-('3333', '22', '26000.00', '2019-12-16', 'A'),
-('456a9bbc-6', '9', '111001.00', '2019-12-16', 'C'),
-('5d02e6da-3', '9', '99999999.99', NULL, 'C'),
-('67268873-b', '22', '100000.00', '2019-12-16', 'A'),
-('728b2cc7-5', '22', '5.00', '2019-12-16', 'B'),
-('8b9cc458-4', '9', '111001.00', NULL, 'C'),
-('8c374e7f-5', '9', '99999999.99', '2019-12-16', 'A'),
-('96b43baf-5', '9', '100000.00', '2019-12-16', 'C'),
-('d12a2614-2', '22', '5.00', '2019-12-16', 'C'),
-('d4e9715a-6', '9', '175.00', '2019-12-16', 'C'),
-('e487e6cc-4', '9', '12343209.00', '2019-12-16', 'C'),
-('e50fb9b2-0', '9', '918273.00', NULL, 'C'),
-('f603148e-2', '9', '111001.00', NULL, 'C'),
-('fcab1351-c', '22', '5.00', '2019-12-16', 'A'),
-('sadffr45rr', '9', '13000.00', '2019-12-16', 'B');
-
---
--- Triggers `fixeddeposit`
---
-DELIMITER $$
-CREATE TRIGGER `FDDeposittedDate` BEFORE INSERT ON `fixeddeposit` FOR EACH ROW BEGIN
- 	if new.dateDeposited <> CURRENT_DATE then set new.dateDeposited = CURRENT_DATE;
-    end if;
-  end
-$$
-DELIMITER ;
+('2', '9', '102.00', '2019-12-16', 'A'),
+('2b83defa-d', '9', '204.32', '2019-12-16', 'C'),
+('3', '9', '306.48', '2019-12-16', 'B'),
+('333', '9', '2.05', '2019-12-16', 'C'),
+('3333', '22', '9.26', '2019-12-16', 'A'),
+('456a9bbc-6', '9', '46.70', '2019-12-16', 'C'),
+('5d02e6da-3', '9', '42017.90', NULL, 'C'),
+('67268873-b', '22', '36.16', '2019-12-16', 'A'),
+('728b2cc7-5', '22', '0.00', '2019-12-16', 'B'),
+('8b9cc458-4', '9', '46.70', NULL, 'C'),
+('8c374e7f-5', '9', '36307.96', '2019-12-16', 'A'),
+('96b43baf-5', '9', '42.18', '2019-12-16', 'C'),
+('d12a2614-2', '22', '0.00', '2019-12-16', 'C'),
+('d4e9715a-6', '9', '0.07', '2019-12-16', 'C'),
+('e487e6cc-4', '9', '5186.36', '2019-12-16', 'C'),
+('e50fb9b2-0', '9', '386.01', NULL, 'C'),
+('f603148e-2', '9', '46.70', NULL, 'C'),
+('fcab1351-c', '22', '5091.63', '2019-12-16', 'A'),
+('sadffr45rr', '9', '4.99', '2019-12-16', 'B');
 
 -- --------------------------------------------------------
 
@@ -1120,8 +1116,10 @@ INSERT INTO `individualcustomer` (`customerID`, `firstName`, `lastName`, `NIC`) 
 ('006fab9e-0ef6-4438-8de0-c605f44f1b02', NULL, NULL, NULL),
 ('0710b619-e6c3-4e96-a143-3c9354420e51', NULL, NULL, NULL),
 ('0b2acfe9-7284-4c5b-863b-e22bd68afccc', NULL, NULL, NULL),
+('392063fe-01a9-42d9-9abd-1563b135a050', NULL, NULL, NULL),
 ('45880c14-a', 'dsdsd', 'dsdsds', 'dsdsdsd'),
 ('47a013c3-6a65-4f9c-aa70-301dace37fc2', NULL, NULL, NULL),
+('48557dc3-5b32-4982-9d4a-ebb0975376ad', NULL, NULL, NULL),
 ('66b1811b-f', 'prerson', 'prerson', 'prerson'),
 ('7149327e-7c02-4856-9abb-a139c58f24ad', NULL, NULL, NULL),
 ('8116275a-c', 'individualcusto', 'individualcusto', 'individualcusto'),
@@ -1173,18 +1171,6 @@ INSERT INTO `loan` (`loanNum`, `customerID`, `amount`, `dateTaken`, `monthlyInst
 ('SIXTH', '66b1811b-f', '100000.00', '0000-00-00', '3.00', 0),
 ('ThirdTRY', '45880c14-a', '6000.00', '0000-00-00', '112.00', 2);
 
---
--- Triggers `loan`
---
-DELIMITER $$
-CREATE TRIGGER `loanDateTaken` BEFORE INSERT ON `loan` FOR EACH ROW BEGIN
- 	if new.dateTaken <> CURRENT_DATE then set new.dateTaken = CURRENT_DATE;
-    end if;
-    
-  end
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -1220,17 +1206,6 @@ INSERT INTO `loanrequest` (`requestID`, `description`, `amount`, `date_`, `appro
 ('d34729dd-5', 'need for a loan', '400.00', NULL, 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
 ('f2fd8c16-2', 'description', '0.00', '0000-00-00', 0, '7f177d91-c', '7f177d91-c', '1', '1');
 
---
--- Triggers `loanrequest`
---
-DELIMITER $$
-CREATE TRIGGER `loanRequestDate` BEFORE INSERT ON `loanrequest` FOR EACH ROW BEGIN
- 	if new.date_ <> CURRENT_DATE then set new.date_ = CURRENT_DATE;
-    end if;
-  end
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -1262,6 +1237,7 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('azxcds', 'azxcds', 'individual'),
 ('bcrypthash', '$2a$10$XBh/YmF0F/BqfiD51E.jzuYNnDx2u.pZ2IEvXxrTimz', 'manager'),
 ('comcom', 'comcom', 'company'),
+('comcomcom', '$2a$10$LyQeR4hnpW9MXbwDddXS/.W.D/sP5KA9GbTmzpH8kawCoaMy2aGAq', 'company'),
 ('company', 'company', 'company'),
 ('companywronghash', 'companywronghash', 'company'),
 ('cuspopocuspopocuspopo', 'cuspopocuspopocuspopo', 'individual'),
@@ -1278,8 +1254,12 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('helloololol', 'azxcds', 'individual'),
 ('individualcustomercus', 'individualcustomercus', 'individual'),
 ('individualhash', 'individualhash', 'individual'),
+('lumindi', '$2a$10$nzpjBCmifSoGIn72q64BGemUY9YEnoMjEEz8YNVwyBEn66z1JLxAW', 'company'),
 ('m12m3m1m2m3', '$2a$10$L..eTgMsflmosH1Xw3cUWu.ZSbb7qiuJ5gfSm/0axZKGqPXlA.OvS', 'manager'),
 ('mamama', 'mamama', 'mamama'),
+('managerRegisteracomemployeee', '$2a$10$V3dL.NSGoydPmXV1lskFNOYa8v/0900VlZHTwCZDLHoazdCRmjh/m', 'company'),
+('managerRegisteraemployeee', '$2a$10$4vvrTfJ65puac4bOHER2Gukr71VyHklkOwuDEgltb8cMnyjn3k1bm', 'other'),
+('managerRegisteraindiemployeee', '$2a$10$vuAaj73vfZIFU1ncyUHU9elSnyop3KQlwj7uZhBzZUF9sbg9xIeFu', 'individual'),
 ('medan', 'medan', 'medan'),
 ('mkmkmkjkjkj', '$2a$10$vnhcPibbFxQSfFDoPWqa0uc.JrNHCUtdnJTMZdQTYda', 'manager'),
 ('mmmm', 'mmmm', 'manager'),
@@ -1294,7 +1274,9 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('q11', '$2a$10$HqKJDYijYHdJiyehY2NktOh5OdxqQBTJnyviAlPxH5SnuHQC0K3P2', 'individual'),
 ('qwqwqasasdasd', '$2a$10$NymtDDnycoi.BDrUHYvdEuaM6jxR1OtbbndIJPoGbRk12KsKbZD3K', 'manager'),
 ('req.body.username', 'req.body.password', 'accountant'),
+('sasindu', '$2a$10$roAooAjjYl1CgR9Y0b1ng.Nd0ARZhcYOs/ygVQFORB2FgMOwOgqRi', 'individual'),
 ('shammi', '$2a$10$6c8EEv/fK8l30Xj/bSgs5eA2.RlVMC06wN8U1xuMbdDP6dUJDQUji', 'manager'),
+('shammi2', '$2a$10$qGfe1nL3AwbeRH2K0K6tMuxIv/jJXSTld6hyMoOG/jhXNO/b20Wey', 'other'),
 ('testprotesttestprotest', 'testprotest', 'company'),
 ('this.props.city[0]', 'userusernsme', 'userusernsme'),
 ('up7', 'updatedThirdly', 'company'),
@@ -1333,14 +1315,18 @@ INSERT INTO `manager` (`employeeID`) VALUES
 ('1cb9a6d1-7b9b-45da-bf11-eb0613fe6aa7'),
 ('1ebaa105-4a15-4909-860b-91192431cbe7'),
 ('3351d711-d19d-490d-a636-11f621567d2c'),
+('4f4ffe8a-d4ed-4db1-8324-347e2244b89f'),
 ('537738af-2'),
+('5ac6c6b4-1a79-4a00-b3f9-92155740fd28'),
 ('65cb8d25-11fd-4bc8-b6fe-13ba3a44a2d1'),
 ('66a59db0-8c46-4155-abec-d1104490d3ba'),
 ('724f6ac8-0213-4cf0-96c2-4910cb91a424'),
+('7437395e-9e72-4a32-ac57-2b4efbff1a0a'),
 ('79bc2c5e-968c-4a6c-9fd4-da2394dc3e74'),
 ('7f177d91-c'),
 ('8e6d6b1a-b'),
 ('93e53359-71f5-48ac-bbdc-c6ca92da1f49'),
+('a0907b56-5cec-46de-b241-00af6bd7f34e'),
 ('a7b71973-0751-4e8c-81c0-25ebee397ad1'),
 ('ad3e9c28-4adf-4659-8ae6-9f34b17fd4a8'),
 ('b1a734fc-9830-411d-b059-f5552c023ae9'),
@@ -1380,17 +1366,6 @@ INSERT INTO `monthlyinstallment` (`paymentID`, `loanNum`, `month`, `year`, `date
 ('313deeb7-3758-4', 'f57c3c10-0', '5', '6', NULL),
 ('4', '1', NULL, NULL, NULL),
 ('962bf374-205e-4', '1234', 'jan', '1997', '0000-00-00');
-
---
--- Triggers `monthlyinstallment`
---
-DELIMITER $$
-CREATE TRIGGER `addDatePaid` BEFORE INSERT ON `monthlyinstallment` FOR EACH ROW BEGIN
- 	if new.datePaid <> CURRENT_DATE then set new.datePaid = CURRENT_DATE;
-    end if;
-  end
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1463,181 +1438,43 @@ CREATE TABLE `receipt` (
 --
 
 INSERT INTO `receipt` (`receiptNum`, `amount`, `accountNum`, `date_`, `time_`) VALUES
-('0172b0db-1969-4e33-a722-392ee7eaff9b', '900.00', '2', NULL, NULL),
-('0392a38a-7515-4f10-8e27-03cb52725313', '900.00', '1', NULL, NULL),
-('05d6d8a4-5c1e-40e5-80d9-80a4781a8e02', '900.00', '2', NULL, NULL),
-('06af6308-b3bf-4729-8313-27ac5c8a207b', '400000.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('07624f5f-a972-4a5a-b321-6e3717ec0fa9', '900.00', '1', NULL, NULL),
-('07e6bd1d-18d1-49c1-ac02-b568f87d6447', '1200.00', '2', '0000-00-00', '00:00:00'),
-('09ab123b-6540-4fdb-9420-0eb73e3b7b7e', '20000.00', '1', '0000-00-00', '00:00:00'),
-('1', '1.00', '1', '0000-00-00', '00:00:00'),
-('10', '200.00', '2', '0000-00-00', '00:00:00'),
-('1001', '11.00', '4', '0000-00-00', '00:00:00'),
-('1111', '100.00', '1', '0000-00-00', '00:00:00'),
-('1112', '1000.00', '1', '0000-00-00', '00:00:00'),
-('11sss', '11.00', '3', '0000-00-00', '00:00:00'),
-('12', '200.00', '2', '0000-00-00', '00:00:00'),
-('121121', '1.00', '4', '0000-00-00', '00:00:00'),
-('12121', '5000.00', '5', '0000-00-00', '00:00:00'),
-('1227848b-425e-4483-bf8f-2b30d571ee51', '399500.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('1234', '200.00', '1', '0000-00-00', '00:00:00'),
-('12345', '10000.00', '1', '0000-00-00', '00:00:00'),
-('1235', '700.00', '1', '0000-00-00', '00:00:00'),
-('12c7967a-7e5f-41a7-9b62-adfce78e73e6', '150.00', '22', NULL, NULL),
-('14', '200.00', '2', '0000-00-00', '00:00:00'),
-('1431c1f9-0aec-446f-ab7c-5b678c777936', '150.00', '22', NULL, NULL),
-('15', '200.00', '1', '0000-00-00', '00:00:00'),
-('168c254f-8595-4222-8f8c-0c1787205c2c', '1111000.00', '1', '0000-00-00', '00:00:00'),
-('18', '500.00', '1', '0000-00-00', '00:00:00'),
-('1a7c91bf-5da3-4a4b-8eb3-45c61ba45202', '900.00', '1', NULL, NULL),
-('1aa', '1111.00', '5', '0000-00-00', '00:00:00'),
-('1b1063be-e71c-4f1d-bfaf-a9782463da47', '1200.00', '2', '0000-00-00', '00:00:00'),
-('1cdebe1d-a5b0-4dc4-ae96-0de04838ec62', '20000.00', '1', '0000-00-00', '00:00:00'),
-('1no', '212.00', '1', '0000-00-00', '00:00:00'),
-('1ww1', '1111.00', '5', '0000-00-00', '00:00:00'),
-('1wwaz', '21.00', '4', '0000-00-00', '00:00:00'),
-('2', '100.00', '1', '0000-00-00', '00:00:00'),
-('20', '100.00', '1', '0000-00-00', '00:00:00'),
-('20053ee2-c820-41de-a351-70660f06c5f4', '1000.00', '1', '0000-00-00', '00:00:00'),
-('204f1051-10dc-404a-a650-49a7b2edf064', '20000.00', '1', '0000-00-00', '00:00:00'),
-('211c82a8-9fbd-40df-9990-990afa605bd1', '100.00', '2', '0000-00-00', '00:00:00'),
-('226695ad-6388-4484-87e5-2b427cce9254', '6000.00', '9', '0000-00-00', '00:00:00'),
-('2469de40-535c-4004-8f86-8caf470f6289', '1200.00', '2', '0000-00-00', '00:00:00'),
-('247a4ca1-aca2-45c5-a8d7-6db4f9e8c648', '100000.00', '1ef40eb6-7', '0000-00-00', '00:00:00'),
-('25364242-7fbf-4d4f-81bb-17f85ab24b74', '1000.00', '9', '0000-00-00', '00:00:00'),
-('2613cbfe-9d96-45d3-a2bf-71217ab74b91', '500000.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('26494e2e-12bc-4b7b-9de9-2581a0cbd128', '150.00', '22', NULL, NULL),
-('27878385-197a-463c-a45a-449639fb069b', '900.00', '22', NULL, NULL),
-('27d93031-9057-4cb7-89cf-6ead756762ba', '900.00', '2', NULL, NULL),
-('286af274-2620-42b8-a05b-10713ff2252b', '900.00', '1', NULL, NULL),
-('28931760-3eb6-405f-a81d-812a7be1cc27', '1200.00', '2', '0000-00-00', '00:00:00'),
-('29e226fc-1502-4717-8ef2-42f5b2ac932f', '900.00', '1', NULL, NULL),
-('2d7d7feb-9475-42b2-9556-2b2c8223d604', '100.00', '22', '0000-00-00', '00:00:00'),
-('3', '100.00', '1', '0000-00-00', '00:00:00'),
-('32df7922-8c1f-483d-957a-1a04bcd52804', '1200.00', '2', '0000-00-00', '00:00:00'),
-('33ff378e-41b5-4ddb-8dde-4922565e72c8', '5000.00', '4', '0000-00-00', '00:00:00'),
-('34d7262b-32e7-469d-b112-83b44adca29e', '6000.00', '9', '0000-00-00', '00:00:00'),
-('37f7314a-0107-47da-bb89-745ab2eb4f6e', '15000.00', '4', '0000-00-00', '00:00:00'),
-('386ac9e6-f841-4944-bac0-d4dbdd714287', '199501.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('387798c3-1b90-459b-8272-909307bfe67a', '100.00', '2', NULL, NULL),
-('3d8fbb5f-1fbc-4917-8202-4fb04bea6fd7', '15000.00', '4', '0000-00-00', '00:00:00'),
-('3e4edd67-2d87-4309-a600-c6f1b4f0d8b1', '1200.00', '2', '0000-00-00', '00:00:00'),
-('3e907dfd-e452-4333-9eac-90f09ebe5961', '1200.00', '1', '0000-00-00', '00:00:00'),
-('3f909483-6118-41b0-965d-962198b5c122', '900.00', '22', NULL, NULL),
-('4', '100.00', '1', '0000-00-00', '00:00:00'),
-('40c00aea-a9fd-4f5e-a74b-3049cac39605', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('423d4a32-ac60-41fd-a0a2-01c0d84be507', '20000.00', '9', '0000-00-00', '00:00:00'),
-('45cecc93-b0c1-4b95-9685-8abfa162b790', '200000.00', '288affa1-4', '0000-00-00', '00:00:00'),
-('468ee361-d78a-4a6a-b873-9e97e2bbda2a', '6000.00', '9', '0000-00-00', '00:00:00'),
-('47903d93-ad64-4223-b8ca-a91096c7a402', '900.00', '1', NULL, NULL),
-('48784b98-9421-451b-a669-2f68a255b76c', '45000.00', '8854cc2a-9', '0000-00-00', '00:00:00'),
-('4a8706aa-0369-437f-aaea-aefa2fbf92b6', '900.00', '1', NULL, NULL),
-('4caa3310-f9ec-49c5-857b-6b2ca400d504', '4000.00', '8854cc2a-9', '0000-00-00', '00:00:00'),
-('5', '100.00', '1', '0000-00-00', '00:00:00'),
-('50bbe1d2-67da-4ea4-88cc-99a7b11b1e88', '1200.00', '1', '0000-00-00', '00:00:00'),
-('57796705-dcfc-416e-a0f0-7e63eed9970b', '1200.00', '1', '0000-00-00', '00:00:00'),
-('59143c7d-4b6c-48f9-a9fb-694a87ab700d', '1200.00', '2', '0000-00-00', '00:00:00'),
-('5a5f6ad3-4780-477f-9fc3-c8256db76780', '900.00', '1', NULL, NULL),
-('5c3a6cd9-ff64-4efd-acd9-4c9d74cc578b', '900.00', '1', NULL, NULL),
-('5c6a7c81-10a1-4d40-856b-e7f462f6a7a0', '150.00', '22', NULL, NULL),
-('5fd5605b-6cc8-4c9d-b174-4a95b188eecf', '199500.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('6', '200.00', '1', '0000-00-00', '00:00:00'),
-('6083f478-97fc-4b6b-80a6-d9658b9e3170', '900.00', '1', NULL, NULL),
-('69ce7b78-a4e7-4c85-84b3-dce3e01a788c', '900.00', '1', NULL, NULL),
-('6bafcced-b5ef-4861-a7c3-3970c4d3b8c1', '100.00', '2', NULL, NULL),
-('70aa3778-067c-4d31-a483-8de06fad105e', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('711d6652-0ae5-4387-ab16-535fe443ae47', '20000.00', '9', '0000-00-00', '00:00:00'),
-('7318365c-ae43-44e2-97ce-a6421074db49', '900.00', '1', NULL, NULL),
-('73d554ed-0911-4a6b-af60-2ea878e9358e', '199500.01', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('764c8acc-cf9e-40bf-9736-35ab91c83629', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('778222bc-829e-45d7-859c-71de949b7b6a', '900.00', '2', NULL, NULL),
-('77ee9b84-3389-45c2-aae0-3272d73321b8', '900.00', '1', '0000-00-00', '00:00:00'),
-('7cf6594d-72f6-479f-aa95-f16853ddf3e4', '200000.00', '3bd4adfb-e', '0000-00-00', '00:00:00'),
-('8', '1000.00', '1', '0000-00-00', '00:00:00'),
-('802c3c0c-5b8e-4245-b947-561be247d93b', '100.00', '2', '0000-00-00', '00:00:00'),
-('8278ed1c-8fa3-4033-8b34-1c72f32da7bf', '900.00', '1', NULL, NULL),
-('836128df-ac02-4f3c-82f3-992650b2f95e', '150.00', '22', NULL, NULL),
-('8463dd4c-4540-401e-a13d-c353819424c3', '5000.00', '3', '0000-00-00', '00:00:00'),
-('883b2df5-86ec-41a2-8bc7-d95af5a9f11a', '900.00', '22', NULL, NULL),
-('8cf4271f-f02e-4a3e-8abc-d79d8f87a67a', '1200.00', '1', '0000-00-00', '00:00:00'),
-('8f07b422-2129-449b-a7f0-bf5bdf589faf', '900.00', '1', NULL, NULL),
-('92dd6e93-da61-46fa-a7fc-1743e9136e71', '900.00', '1', NULL, NULL),
-('930fc2a1-bc30-4e67-9f94-5c16bbe909f6', '900.00', '2', NULL, NULL),
-('9499c1c6-9e1d-4f67-b58b-015d8cd3457e', '900.00', '1', NULL, NULL),
-('9516e901-d011-4397-9d38-bb7854c3e28b', '15000.00', '4', '0000-00-00', '00:00:00'),
-('99', '800.00', '3', '0000-00-00', '00:00:00'),
-('9989', '170024.00', '9', '0000-00-00', '00:00:00'),
-('999', '3000.00', '7', '0000-00-00', '00:00:00'),
-('9999', '0.11', '4', '0000-00-00', '00:00:00'),
-('9a361965-7bde-45c4-8e28-bd882c89b8ad', '200000.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('9d411573-78a5-4a8a-94e5-1acf0d9b7efe', '150.00', '22', NULL, NULL),
-('9ecdb42b-2731-4a17-8d13-dfd90df6c22c', '900.00', '2', NULL, NULL),
-('9ef4d7dc-5fdc-4451-ba29-8d1e21bfc159', '100000.00', '9', '0000-00-00', '00:00:00'),
-('a19f8f6d-c835-44d5-91a6-d7fccfd1cfa3', '48000.00', '9', '0000-00-00', '00:00:00'),
-('a4240529-a167-4468-9a9f-febacdcb858d', '150.00', '23', NULL, NULL),
-('a6daed70-8446-416e-8ca3-9b2d1b7a350d', '200000.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('a73c42ad-5b5d-484b-9f5e-bd88d08af779', '111000.00', '1', '0000-00-00', '00:00:00'),
-('a93005c7-3b29-4470-ad36-b392e46432a8', '900.00', '1', NULL, NULL),
-('ab2affd9-2b87-481b-9bac-7b9773d6ba3d', '150.00', '22', NULL, NULL),
-('b08abc7b-3cce-4d18-b256-049987890ebf', '9.00', '2', '0000-00-00', '00:00:00'),
-('b35aed12-fc9a-4f3f-ab91-0f89d2698084', '9000.00', '1', NULL, NULL),
-('b438981c-6c13-46a0-846b-baa29c8348c9', '399500.01', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('b76d0417-699a-4ad8-b91e-8b7b795cd602', '99000.00', '1ef40eb6-7', '0000-00-00', '00:00:00'),
-('ba1c96bf-89e4-4315-833f-68f67403a107', '1200.00', '2', '0000-00-00', '00:00:00'),
-('balamu', '21222.00', '6', '0000-00-00', '00:00:00'),
-('balamu2', '3000.00', '7', '0000-00-00', '00:00:00'),
-('bf571b54-1174-4281-a395-a32b2b66ad0f', '900.00', '1', NULL, NULL),
-('c0ace0a3-6e86-4fb0-804f-9ab0a1f4c9bb', '5000.00', '4', '0000-00-00', '00:00:00'),
-('c18f59ae-491f-4403-b958-1b795b1d36bd', '199000.00', '3bd4adfb-e', '0000-00-00', '00:00:00'),
-('c1f1145a-f357-45a2-85c2-6776428d751c', '5000.00', '9', '0000-00-00', '00:00:00'),
-('c2ffca7c-7d9e-49aa-841c-1de4a42f3b33', '1200.00', '1', '0000-00-00', '00:00:00'),
-('c5e35282-cc9a-4290-9860-bc7c66ad1f62', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('c89a040d-5a3c-401d-af45-97cf5c033576', '6000.00', '14681e95-5', '0000-00-00', '00:00:00'),
-('cec25416-b0a7-4696-bcd0-9cfbad3cb4ab', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('d1ca35ab-c9ab-48fa-9a49-cc12f23c73f7', '900.00', '1', NULL, NULL),
-('d5894bfe-7d08-46d8-969a-7a44a3763800', '200000.00', '6dbb04b7-b', '0000-00-00', '00:00:00'),
-('d8f8f6a9-f4e9-4a6a-aec7-28be27242e81', '900.00', '22', NULL, NULL),
-('d94f57a8-595b-4942-8d4a-d27704951ee9', '399500.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('d95bdd14-0123-4a0c-b01e-3fc1dc934028', '900.00', '1', NULL, NULL),
-('da83f930-7500-413f-a93d-b6acdb4e24db', '900.00', '2', NULL, NULL),
-('dandan', '1111.00', '1', '0000-00-00', '00:00:00'),
-('dc812248-03cf-4961-9ae3-299f79ba3098', '15000.00', '4', '0000-00-00', '00:00:00'),
-('ddfa694b-5564-45b1-a403-7acd9ed1a9d3', '399400.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('de3a7eae-3a54-406a-b87b-d0ffac14b887', '111111.11', '6', '0000-00-00', '00:00:00'),
-('dfcf54af-d17a-4504-8b80-453eb0858ffe', '900.00', '1', NULL, NULL),
-('dff454ae-4de3-4828-82e0-ebf8a4706410', '9500.00', '1', '0000-00-00', '00:00:00'),
-('e0c6ec1a-0f16-4d8f-b2da-485bd5aa6549', '900.00', '1', '0000-00-00', '00:00:00'),
-('e15699c0-3ee7-4636-8485-c0bf724cbab7', '6000.00', '9', '0000-00-00', '00:00:00'),
-('e30f5801-2fcf-4f80-98bc-c21faae0b841', '900.00', '2', NULL, NULL),
-('e3c78917-607d-46a9-815d-c088b430845e', '900.00', '1', NULL, NULL),
-('e7142b84-bb85-4519-b67d-a6dc6c47765f', '399500.00', 'd820d84e-a', '0000-00-00', '00:00:00'),
-('e78ab79e-1468-4b26-a74b-c63d62aa0b62', '900.00', '1', NULL, NULL),
-('e85a4a75-b09f-4b2a-8b01-a9e1d5539ca1', '900.00', '1', NULL, NULL),
-('e8dd43f6-5546-415d-8091-55ce4f55492c', '5000.00', '4', '0000-00-00', '00:00:00'),
-('ec8bedb4-b790-4b59-b7fc-6c408330dd95', '15000.00', '4', '0000-00-00', '00:00:00'),
-('ede90fde-3922-4fcc-b89d-8dc935f502b4', '1200.00', '1', '0000-00-00', '00:00:00'),
-('ef3b9ff8-4df5-4cf2-8bfd-20b1574bd50e', '900.00', '2', NULL, NULL),
-('f31625d1-8e8b-4ff3-bbf5-38885bbdee21', '1200.00', '1', '0000-00-00', '00:00:00'),
-('fb5960ec-a97a-4298-805e-bbd97b61f9a5', '900.00', '22', NULL, NULL),
-('fdf1acbc-0c41-451f-bc33-be4a1a3d71b3', '900.00', '1', NULL, NULL),
-('medan', '1000.00', '3', '0000-00-00', '00:00:00'),
-('now', '1000.00', '1', '0000-00-00', '00:00:00'),
-('qqaazzaaqq', '1000.00', '4', '0000-00-00', '00:00:00'),
-('sasas', '5000.00', '9', '0000-00-00', '00:00:00'),
-('sasdwdccsxa', '100000.00', '9', '0000-00-00', '00:00:00'),
-('ssssssss', '121212.00', '2', '0000-00-00', '00:00:00'),
-('wddwedwedwewdewdew', '413.00', '2', '0000-00-00', '00:00:00');
+('32323sdssafds', '100.00', '9', '0000-00-00', '00:00:00'),
+('dasdasdadsqrf4', '10000.00', '9', '0000-00-00', '00:00:00'),
+('nowshouldbecorrect', '1.00', '9', '0000-00-00', '00:00:00'),
+('sdswqdqwd211212312', '10000.00', '9', '0000-00-00', '00:00:00');
+
+-- --------------------------------------------------------
 
 --
--- Triggers `receipt`
+-- Table structure for table `reports`
+--
+
+CREATE TABLE `reports` (
+  `receiptNum` varchar(255) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `accountNum` varchar(255) NOT NULL,
+  `date_` varchar(30) NOT NULL,
+  `time_` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `receivingAccountID` varchar(150) DEFAULT NULL,
+  `type` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`receiptNum`, `amount`, `accountNum`, `date_`, `time_`, `receivingAccountID`, `type`) VALUES
+('', '0.00', '', '', '0000-00-00 00:00:00.000000', NULL, '');
+
+--
+-- Triggers `reports`
 --
 DELIMITER $$
-CREATE TRIGGER `addDateTime` BEFORE INSERT ON `receipt` FOR EACH ROW BEGIN
- 	if new.date_ <> CURRENT_DATE then set new.date_ = CURRENT_DATE;
-    end if;
-    if new.time_ <> CURRENT_TIME then set new.time_ = CURRENT_TIME;
-    end if;
-  end
+CREATE TRIGGER `after_insert_receipt` AFTER INSERT ON `reports` FOR EACH ROW BEGIN
+    
+    INSERT INTO `reports` (`receiptNum`, `amount`, `accountNum`, `date_`, `time_`, `receivingAccountID`, `type`) VALUES (new.receiptNum,new.amount,new.accountNum,new.date_,new.time_,null,'');
+    
+    end
 $$
 DELIMITER ;
 
@@ -1684,7 +1521,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('7c2eb52a-e', 5, 'Senior'),
 ('806d7376-3', 10, 'Child'),
 ('8854cc2a-9', 10, 'Adult'),
-('9', 10, 'Child'),
+('9', 9, 'Child'),
 ('90291d50-5', 10, 'Child'),
 ('91b8b215-1', 5, 'Child'),
 ('9bba5cd8-d', 10, 'Child'),
@@ -1728,72 +1565,8 @@ CREATE TABLE `transferreceipt` (
 --
 
 INSERT INTO `transferreceipt` (`receiptNum`, `receivingAccountID`) VALUES
-('0172b0db-1969-4e33-a722-392ee7eaff9b', '1'),
-('11sss', '1'),
-('387798c3-1b90-459b-8272-909307bfe67a', '1'),
-('6bafcced-b5ef-4861-a7c3-3970c4d3b8c1', '1'),
-('0392a38a-7515-4f10-8e27-03cb52725313', '2'),
-('07624f5f-a972-4a5a-b321-6e3717ec0fa9', '2'),
-('1a7c91bf-5da3-4a4b-8eb3-45c61ba45202', '2'),
-('1no', '2'),
-('27878385-197a-463c-a45a-449639fb069b', '2'),
-('286af274-2620-42b8-a05b-10713ff2252b', '2'),
-('29e226fc-1502-4717-8ef2-42f5b2ac932f', '2'),
-('3f909483-6118-41b0-965d-962198b5c122', '2'),
-('47903d93-ad64-4223-b8ca-a91096c7a402', '2'),
-('4a8706aa-0369-437f-aaea-aefa2fbf92b6', '2'),
-('5a5f6ad3-4780-477f-9fc3-c8256db76780', '2'),
-('5c3a6cd9-ff64-4efd-acd9-4c9d74cc578b', '2'),
-('6083f478-97fc-4b6b-80a6-d9658b9e3170', '2'),
-('69ce7b78-a4e7-4c85-84b3-dce3e01a788c', '2'),
-('7318365c-ae43-44e2-97ce-a6421074db49', '2'),
-('8278ed1c-8fa3-4033-8b34-1c72f32da7bf', '2'),
-('883b2df5-86ec-41a2-8bc7-d95af5a9f11a', '2'),
-('8f07b422-2129-449b-a7f0-bf5bdf589faf', '2'),
-('92dd6e93-da61-46fa-a7fc-1743e9136e71', '2'),
-('9499c1c6-9e1d-4f67-b58b-015d8cd3457e', '2'),
-('a93005c7-3b29-4470-ad36-b392e46432a8', '2'),
-('b35aed12-fc9a-4f3f-ab91-0f89d2698084', '2'),
-('bf571b54-1174-4281-a395-a32b2b66ad0f', '2'),
-('d1ca35ab-c9ab-48fa-9a49-cc12f23c73f7', '2'),
-('d8f8f6a9-f4e9-4a6a-aec7-28be27242e81', '2'),
-('d95bdd14-0123-4a0c-b01e-3fc1dc934028', '2'),
-('dandan', '2'),
-('dfcf54af-d17a-4504-8b80-453eb0858ffe', '2'),
-('e3c78917-607d-46a9-815d-c088b430845e', '2'),
-('e78ab79e-1468-4b26-a74b-c63d62aa0b62', '2'),
-('e85a4a75-b09f-4b2a-8b01-a9e1d5539ca1', '2'),
-('fb5960ec-a97a-4298-805e-bbd97b61f9a5', '2'),
-('fdf1acbc-0c41-451f-bc33-be4a1a3d71b3', '2'),
-('now', '2'),
-('05d6d8a4-5c1e-40e5-80d9-80a4781a8e02', '22'),
-('27d93031-9057-4cb7-89cf-6ead756762ba', '22'),
-('778222bc-829e-45d7-859c-71de949b7b6a', '22'),
-('930fc2a1-bc30-4e67-9f94-5c16bbe909f6', '22'),
-('9ecdb42b-2731-4a17-8d13-dfd90df6c22c', '22'),
-('a4240529-a167-4468-9a9f-febacdcb858d', '22'),
-('da83f930-7500-413f-a93d-b6acdb4e24db', '22'),
-('e30f5801-2fcf-4f80-98bc-c21faae0b841', '22'),
-('ef3b9ff8-4df5-4cf2-8bfd-20b1574bd50e', '22'),
-('12c7967a-7e5f-41a7-9b62-adfce78e73e6', '23'),
-('1431c1f9-0aec-446f-ab7c-5b678c777936', '23'),
-('26494e2e-12bc-4b7b-9de9-2581a0cbd128', '23'),
-('5c6a7c81-10a1-4d40-856b-e7f462f6a7a0', '23'),
-('836128df-ac02-4f3c-82f3-992650b2f95e', '23'),
-('9d411573-78a5-4a8a-94e5-1acf0d9b7efe', '23'),
-('ab2affd9-2b87-481b-9bac-7b9773d6ba3d', '23'),
-('12345', '3'),
-('1ww1', '3'),
-('ssssssss', '3'),
-('1aa', '4'),
-('medan', '4'),
-('121121', '5'),
-('9999', '5'),
-('12121', '6'),
-('balamu', '7'),
-('1wwaz', '9'),
-('balamu2', '9'),
-('wddwedwedwewdewdew', '9');
+('dasdasdadsqrf4', '1'),
+('nowshouldbecorrect', '1');
 
 -- --------------------------------------------------------
 
@@ -1843,65 +1616,16 @@ CREATE TABLE `withdrawalreceipt` (
 --
 
 INSERT INTO `withdrawalreceipt` (`receiptNum`) VALUES
-('06af6308-b3bf-4729-8313-27ac5c8a207b'),
-('07e6bd1d-18d1-49c1-ac02-b568f87d6447'),
-('09ab123b-6540-4fdb-9420-0eb73e3b7b7e'),
-('1227848b-425e-4483-bf8f-2b30d571ee51'),
-('168c254f-8595-4222-8f8c-0c1787205c2c'),
-('1b1063be-e71c-4f1d-bfaf-a9782463da47'),
-('1cdebe1d-a5b0-4dc4-ae96-0de04838ec62'),
-('20053ee2-c820-41de-a351-70660f06c5f4'),
-('226695ad-6388-4484-87e5-2b427cce9254'),
-('2469de40-535c-4004-8f86-8caf470f6289'),
-('25364242-7fbf-4d4f-81bb-17f85ab24b74'),
-('2613cbfe-9d96-45d3-a2bf-71217ab74b91'),
-('28931760-3eb6-405f-a81d-812a7be1cc27'),
-('32df7922-8c1f-483d-957a-1a04bcd52804'),
-('33ff378e-41b5-4ddb-8dde-4922565e72c8'),
-('34d7262b-32e7-469d-b112-83b44adca29e'),
-('386ac9e6-f841-4944-bac0-d4dbdd714287'),
-('3e4edd67-2d87-4309-a600-c6f1b4f0d8b1'),
-('3e907dfd-e452-4333-9eac-90f09ebe5961'),
-('40c00aea-a9fd-4f5e-a74b-3049cac39605'),
-('423d4a32-ac60-41fd-a0a2-01c0d84be507'),
-('468ee361-d78a-4a6a-b873-9e97e2bbda2a'),
-('48784b98-9421-451b-a669-2f68a255b76c'),
-('4caa3310-f9ec-49c5-857b-6b2ca400d504'),
-('50bbe1d2-67da-4ea4-88cc-99a7b11b1e88'),
-('57796705-dcfc-416e-a0f0-7e63eed9970b'),
-('59143c7d-4b6c-48f9-a9fb-694a87ab700d'),
-('5fd5605b-6cc8-4c9d-b174-4a95b188eecf'),
-('70aa3778-067c-4d31-a483-8de06fad105e'),
-('711d6652-0ae5-4387-ab16-535fe443ae47'),
-('73d554ed-0911-4a6b-af60-2ea878e9358e'),
-('764c8acc-cf9e-40bf-9736-35ab91c83629'),
-('77ee9b84-3389-45c2-aae0-3272d73321b8'),
-('8463dd4c-4540-401e-a13d-c353819424c3'),
-('8cf4271f-f02e-4a3e-8abc-d79d8f87a67a'),
-('9ef4d7dc-5fdc-4451-ba29-8d1e21bfc159'),
-('a19f8f6d-c835-44d5-91a6-d7fccfd1cfa3'),
-('a73c42ad-5b5d-484b-9f5e-bd88d08af779'),
-('b438981c-6c13-46a0-846b-baa29c8348c9'),
-('b76d0417-699a-4ad8-b91e-8b7b795cd602'),
-('ba1c96bf-89e4-4315-833f-68f67403a107'),
-('c0ace0a3-6e86-4fb0-804f-9ab0a1f4c9bb'),
-('c18f59ae-491f-4403-b958-1b795b1d36bd'),
-('c2ffca7c-7d9e-49aa-841c-1de4a42f3b33'),
-('c5e35282-cc9a-4290-9860-bc7c66ad1f62'),
-('c89a040d-5a3c-401d-af45-97cf5c033576'),
-('cec25416-b0a7-4696-bcd0-9cfbad3cb4ab'),
-('d94f57a8-595b-4942-8d4a-d27704951ee9'),
-('ddfa694b-5564-45b1-a403-7acd9ed1a9d3'),
-('de3a7eae-3a54-406a-b87b-d0ffac14b887'),
-('dff454ae-4de3-4828-82e0-ebf8a4706410'),
-('e0c6ec1a-0f16-4d8f-b2da-485bd5aa6549'),
-('e15699c0-3ee7-4636-8485-c0bf724cbab7'),
-('e7142b84-bb85-4519-b67d-a6dc6c47765f'),
-('e8dd43f6-5546-415d-8091-55ce4f55492c'),
-('ede90fde-3922-4fcc-b89d-8dc935f502b4'),
-('f31625d1-8e8b-4ff3-bbf5-38885bbdee21'),
-('qqaazzaaqq'),
-('sasdwdccsxa');
+('32323sdssafds');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `activeaccount`
+--
+DROP TABLE IF EXISTS `activeaccount`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `activeaccount`  AS  select `account`.`accountNum` AS `accountNum`,`account`.`customerID` AS `customerID`,`account`.`balance` AS `balance`,`account`.`branchID` AS `branchID` from `account` where (`account`.`closed` = 0) ;
 
 -- --------------------------------------------------------
 
@@ -2156,6 +1880,12 @@ ALTER TABLE `receipt`
   ADD KEY `accountNum` (`accountNum`);
 
 --
+-- Indexes for table `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`receiptNum`);
+
+--
 -- Indexes for table `savingsaccount`
 --
 ALTER TABLE `savingsaccount`
@@ -2322,6 +2052,16 @@ ALTER TABLE `transferreceipt`
 --
 ALTER TABLE `withdrawalreceipt`
   ADD CONSTRAINT `withdrawalreceipt_ibfk_1` FOREIGN KEY (`receiptNum`) REFERENCES `receipt` (`receiptNum`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_FD_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 00:57:18' ON COMPLETION NOT PRESERVE ENABLE DO update fdaccountdetails set amount = amount+amount*interest/36500$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_Saving_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 01:18:34' ON COMPLETION NOT PRESERVE ENABLE DO update viewallsavingaccountsdetails set balance = balance+balance*interest/36500$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
