@@ -10,9 +10,9 @@ exports.getAll = () => {
 
 };
 
-exports.getByDate = (table,date) => {
+exports.getByDate = (date) => {
 
-    return Db.getByColumn(table, { "column": "date_", "body": date }).then((results) => {
+    return Db.getByColumn(table,{ "column": "date_", "body": date }).then((results) => {
 
         return results;
     });
