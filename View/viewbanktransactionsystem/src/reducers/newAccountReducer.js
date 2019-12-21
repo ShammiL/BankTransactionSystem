@@ -7,7 +7,7 @@ const initialState = {
     fdtype: '',
     branchID: '',
     customerID: '',
-    accountType: '',
+    accountType: 'Adult',
     guardianID: '',
     FDType: '',
     error: ''

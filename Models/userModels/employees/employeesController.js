@@ -283,7 +283,7 @@ exports.offlineWithdrawal = (req, res) => {
 };
 
 exports.createSavingAccount = (req, res) => {
-    // console.log("BODY", req.body);
+    console.log("BODY", req.body);
     var branchname = req.body.details.branchID;
     req.body.accountID = uuidv4()
     var type = req.body.details.type
@@ -302,7 +302,7 @@ exports.createSavingAccount = (req, res) => {
             else {
                 var customerID = result[0].customerID;
                 branchModel.getByName(branchname).then((branch) => {
-                    if (branch < 0) {
+                    if (branch <= 0) {
                         res.send({
                             "success": "branch doesn't Exists",
                             "code": 204
@@ -325,7 +325,7 @@ exports.createSavingAccount = (req, res) => {
                                 .then((guardian) => {
                                     console.log("Child", result)
                                     console.log("GUARDIAN", guardian)
-                                    if (guardian[0].length <= 0) {
+                                    if (guardian <= 0) {
                                         res.send({
                                             "success": "guardian hasn't a account",
                                             "code": 204
@@ -333,7 +333,7 @@ exports.createSavingAccount = (req, res) => {
 
                                     }
                                     else {
-
+                                        var guardianID = guardian[0].customerID
                                         childModel.getById(customerID).then((child) => {
                                             if (child.length <= 0) {
                                                 res.send({
