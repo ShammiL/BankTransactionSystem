@@ -488,7 +488,7 @@ exports.requestOfflineLoan = (req, res) => {
 };
 
 exports.PayMonthlyInstallement = (req, res) => {
-    // console.log("BODY", req.body);
+    console.log("BODY", req.body);
     req.body.paymentID = uuidv4()
     var loanNum = req.body.details.loanNum
     var month = req.body.details.month
@@ -499,7 +499,7 @@ exports.PayMonthlyInstallement = (req, res) => {
             if (result <= 0) {
                 res.send({
                     "success": "LoanNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
@@ -515,7 +515,7 @@ exports.PayMonthlyInstallement = (req, res) => {
                 )
                     .then((result) => {
                         res.send({
-                            "successs": "Done",
+                            "success": "Done",
                             "code": 200,
                             result: result
                         })
