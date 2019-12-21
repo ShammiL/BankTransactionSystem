@@ -5,6 +5,7 @@ import activeUser from './activeReducer'
 import transactionReducer from './transactionReducer'
 import newAccountReducer from './newAccountReducer'
 import loanReducer from './loanReducer'
+import searchbar from './searchBarReducer'
 
 
 
@@ -14,5 +15,6 @@ export default combineReducers({
     activeUser: activeUser,
     transactionReducer: transactionReducer,
     newAccountReducer: newAccountReducer,
-    loanReducer: loanReducer
+    loanReducer: loanReducer,
+    searchbar:searchbar
 })

@@ -20,6 +20,15 @@ exports.getById = (id) => {
     });
 
 };
+
+exports.getByCustomerId = (id) => {
+    console.log("CUSTOMER SEARCHING ID", id)
+    return Db.getByColumn(table, { "column": "customerID", "body": id }).then((results) => {
+
+        return results;
+    });
+
+};
 // this.getById(7);
 
 exports.getRemainingLoanAmount = (id) => {
