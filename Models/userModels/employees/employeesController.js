@@ -559,8 +559,8 @@ exports.createFD = (req, res) => {
                 })
             }
             else {
-                var customerID = customer.customerID;
-
+                var customerID = customer[0].customerID;
+                console.log("CUSTOMERID", customerID)
                 SavingsAccountModel.getByID(accountNumber)
                     .then((result) => {
                         if (result <= 0) {
