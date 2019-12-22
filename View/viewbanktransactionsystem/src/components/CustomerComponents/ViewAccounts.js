@@ -28,7 +28,6 @@ export class ViewAccounts extends Component {
                 <SearchBar
                     type="viewAllAccounts"
                 />
-                <Loan/>
             </div>
         )
     }
