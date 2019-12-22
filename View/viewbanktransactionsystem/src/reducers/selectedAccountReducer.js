@@ -1,4 +1,4 @@
-import { TYPE_NEW_ACCOUNT_DETAILS } from '../actions/types'
+import { DETILS_ERROR, FETCHED_ACCOUNT } from '../actions/types'
 
 
 const initialState = {

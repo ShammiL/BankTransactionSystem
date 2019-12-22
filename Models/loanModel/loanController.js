@@ -21,7 +21,8 @@ exports.getByCustomerId = (req, res) => {
         });
     }
     else {
-        LoanModel.getByID(req.params.customerID).then((result) => {
+        console.log(req.params.customerID)
+        LoanModel.getByCustomerId(req.params.customerID).then((result) => {
             res.send(result)
         });
     }

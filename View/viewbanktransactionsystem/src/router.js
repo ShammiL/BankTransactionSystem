@@ -21,9 +21,10 @@ import ResetPassword from './components/common components/ResetPassword'
 import ViewLoan from './components/EmployeeComponents/ViewLoan'
 import ViewTrans from './components/EmployeeComponents/ViewTransaction'
 import ViewAccounts from './components/CustomerComponents/ViewAccounts'
-import ViewLoans from './components/CustomerComponents/ViewLoans'
+// import ViewLoans from './components/CustomerComponents/ViewLoans'
 import OnlineLoan from './components/CustomerComponents/requestOnlineLoan'
 import simpleDashPage from './components/otherComponents/dashpage'
+import Loans from './components/detailscomponents/Loan'
 
 class router extends Component {
     render() {
@@ -53,13 +54,13 @@ class router extends Component {
                     <Route exact path="/employee/paymonthlyinstallement" component={paymonthlyinstallment}></Route>
                     <Route exact path="/user/changePassword" component={ResetPassword}></Route>
                     <Route exact path="/employee/requestofflineloan" component={requestofflineloan}></Route>
-                    <Route exact path="/manager/viewLoanDetails" component={ViewLoan}></Route>
+                    {/* <Route exact path="/manager/viewLoanDetails" component={ViewLoan}></Route> */}
                     <Route exact path="/manager/view/allAlTransactions" component={ViewTrans}></Route>
                     <Route exact path="/customer/viewAccount" component={ViewAccounts}></Route>
-                    <Route exact path="/customer/viewLoan" component={ViewLoans}></Route>
+                    {/* <Route exact path="/customer/viewLoan" component={ViewLoans}></Route> */}
                     <Route exact path="/cusomer/online/loanRequest" component={OnlineLoan}></Route>
                     <Route exact path="/simpledashpage#/" component={simpleDashPage}></Route>
-
+                    <Route exact path="loan/getLoans/" component={Loans}></Route>
                 </Router>
 
             </div >

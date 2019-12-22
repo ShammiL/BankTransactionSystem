@@ -1,4 +1,4 @@
-import { TYPE_LOAN_DETAILS } from '../actions/types'
+import { FETCHED_LOAN, DETILS_ERROR } from '../actions/types'
 
 
 const initialState = {
