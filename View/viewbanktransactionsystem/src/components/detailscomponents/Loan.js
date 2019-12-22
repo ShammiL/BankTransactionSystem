@@ -26,7 +26,7 @@ export class Loan extends Component {
 
 
     render() {
-
+        console.log("BECOME")
         const items = this.state.loans.map((item, key) =>
 
             <SingleLoan
