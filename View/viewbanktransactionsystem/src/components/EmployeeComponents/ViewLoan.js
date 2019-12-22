@@ -29,7 +29,6 @@ export class ViewLoan extends Component {
                     type="viewAllLoan"
                 />
                 <Loan
-                    search='all'
                 />
             </div>
         )

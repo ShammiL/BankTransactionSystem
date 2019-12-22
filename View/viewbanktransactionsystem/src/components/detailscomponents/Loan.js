@@ -11,27 +11,25 @@ export class Loan extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.content)
+        var content = this.props.content == '' ? "all" : this.props.content
         if (this.props.type == "manager")
-            console.log("http://localhost:5000/loan/getByCustomerId/" + this.props.search)
-
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.search).then((res) => {
-                this.setState({ loans: res.data })
+            console.log("http://localhost:5000/loan/getByCustomerId/" + content)
+        axios.get("http://localhost:5000/loan/getByCustomerId/" + content).then((res) => {
+            this.setState({ loans: res.data })
             console.log(this.state.loans)
         })
         if (this.props.customerID !== '')
-            console.log("http://localhost:5000/loan/getByCustomerId/" + this.props.username)
-
+            console.log("CUSTOMER", "http://localhost:5000/loan/getByCustomerId/" + this.props.username)
         axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.username).then((res) => {
-                this.setState({ loans: res.data })
+            this.setState({ loans: res.data })
             console.log(this.state.loans)
         })
     }
 
 
     render() {
-        console.log("BECOME")
         const items = this.state.loans.map((item, key) =>
-
             <SingleLoan
                 key={key}
                 customerID={item.customerID}
@@ -41,9 +39,7 @@ export class Loan extends Component {
                 monthlyInstallment={item.monthlyInstallment}
                 duration={item.duration}
                 getRemaining={item.getRemaining}
-
             />
-
         );
         return (
             <div>
@@ -56,7 +52,9 @@ export class Loan extends Component {
 
 const mapStatesToProps = state => ({
     type: state.activeUser.type,
-    username: state.activeUser.username
+    username: state.activeUser.username,
+    customerID: state.activeUser.customerID,
+    content: state.searchbar.content
 })
 
 export default connect(mapStatesToProps, {})(Loan)
