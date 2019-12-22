@@ -12,14 +12,17 @@ export class Loan extends Component {
 
     componentDidMount() {
         if (this.props.type == "manager")
-            axios.get("http://localhost:5000/loan/getByCustomerId/all").then((res) => {
+            console.log("http://localhost:5000/loan/getByCustomerId/" + this.props.search)
+
+        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.search).then((res) => {
                 this.setState({ loans: res.data })
-                console.log(this.state.loans)
-            })
+            console.log(this.state.loans)
+        })
         if (this.props.customerID !== '')
-            console.log("http://localhost:5000/loan/getByCustomerId/" + this.props.customerID)
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.customerID).then((res) => {
-            this.setState({ loans: res.data })
+            console.log("http://localhost:5000/loan/getByCustomerId/" + this.props.username)
+
+        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.username).then((res) => {
+                this.setState({ loans: res.data })
             console.log(this.state.loans)
         })
     }
@@ -53,7 +56,7 @@ export class Loan extends Component {
 
 const mapStatesToProps = state => ({
     type: state.activeUser.type,
-    customerID: state.activeUser.customerID
+    username: state.activeUser.username
 })
 
 export default connect(mapStatesToProps, {})(Loan)

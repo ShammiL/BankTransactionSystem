@@ -1,5 +1,6 @@
 
 LoanModel = require("./loanModel")
+customerModel = require('../userModels/customers/customersModel')
 
 exports.getRemaining = (req, res) => {
     LoanModel.getRemainingLoanAmount(req.params.loanNum).then((result) => {
@@ -22,8 +23,14 @@ exports.getByCustomerId = (req, res) => {
     }
     else {
         console.log(req.params.customerID)
-        LoanModel.getByCustomerId(req.params.customerID).then((result) => {
-            res.send(result)
-        });
+        customerModel.getByUsername(req.params.customerID).then((user) => {
+            console.log("User", user)
+            LoanModel.getByCustomerId(user[0].customerID).then((result) => {
+                res.send(result)
+            });
+
+        })
+
+
     }
 }

@@ -24,6 +24,7 @@ export default class singleLoan extends Component {
                 <p>loanNum: {this.props.loanNum}</p>
                 <p>dateTaken: {this.props.dateTaken}</p>
                 <p>customerID: {this.props.customerID}</p>
+                <p>amount: {this.props.amount}</p>
                 <p>duration: {this.props.duration}</p>
                 <p>monthlyInstallment:{this.props.monthlyInstallment}</p>
                 <p>getRemaining:{this.state.getRemaining}</p>

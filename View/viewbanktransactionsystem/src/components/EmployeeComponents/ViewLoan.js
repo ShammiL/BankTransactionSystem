@@ -28,14 +28,16 @@ export class ViewLoan extends Component {
                 <SearchBar
                     type="viewAllLoan"
                 />
-                <Loan/>
+                <Loan
+                    search='all'
+                />
             </div>
         )
     }
 }
 
 const mapStatesToProps = state => ({
-    // content: state.searchbar.content
+    content: state.searchbar.content
 })
 const mapActionToProps = {
     // typeDetails: typeDetails,
