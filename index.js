@@ -23,6 +23,7 @@ const FDRouter = require('./Models/FDModel/route.config');
 const transactionRouter = require('./Models/viewModels/transActionView/router.config');
 const savingViewRouter = require('./Models/viewModels/savingView/router.config');
 const FDViewRouter = require('./Models/viewModels/FDView/router.config');
+const reportViewRouter = require('./Models/reportModel/router.config');
 
 app.use(bodyParser.json());
 // AuthorizationRouter.routesConfig(app);
@@ -36,6 +37,7 @@ accountRouter.routesConfig(app);
 FDRouter.routesConfig(app);
 savingViewRouter.routesConfig(app);
 FDViewRouter.routesConfig(app);
+reportViewRouter.routesConfig(app);
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });
