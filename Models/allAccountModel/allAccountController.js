@@ -7,3 +7,12 @@ exports.close = (req, res) => {
     });
 }
 
+exports.reopen = (req, res) => {
+
+
+    
+    allAccountModel.reopen(req.body.id).then((result) => {
+        res.send(result)
+    });
+}
+
