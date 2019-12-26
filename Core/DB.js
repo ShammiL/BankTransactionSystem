@@ -127,6 +127,7 @@ async function updateAdata(table, data, params) {
     return result[0];
 }
 async function update(table, data) {
+    console.log(data);
     var values = Object.values(data.body);
     var keys = Object.keys(data.body);
     var length = values.length;
@@ -145,6 +146,8 @@ async function update(table, data) {
     return result[0];
 
 }
+
+
 
 
 
