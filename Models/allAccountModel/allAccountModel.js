@@ -15,7 +15,7 @@ exports.close = (id) => {
     });
 }
 
-exports.close = (id) => {
+exports.reopen = (id) => {
 
     return Db.updatedata(table, { "column": ID, "value": id, "body": {"closed":0} }).then((results) => {
 
