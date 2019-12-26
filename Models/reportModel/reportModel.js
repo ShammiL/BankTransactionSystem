@@ -1,6 +1,6 @@
 const db = require('../../Core/DB');
 
-var table = "reports";
+var table = "receipt";
 var ID = "receiptNum";//primary key
 
 exports.getAll = () => {

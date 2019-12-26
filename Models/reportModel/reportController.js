@@ -7,17 +7,8 @@ exports.getAll = (req, res) => {
     });
 }
 
-exports.getbyID = (req, res) => {
-    ReportModel.getByID(req.params.FDNumber).then((result) => {
-        res.send(result)
-    });
-}
 
-exports.update = (req, res) => {
-    ReportModel.update(req.body.FDNumber, req.body.details).then((result) => {
-        res.send(result)
-    });
-}
+
 
 exports.getByDate = (req, res) => {
     var date = req.body.date
