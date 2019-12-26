@@ -24,7 +24,7 @@ const transactionRouter = require('./Models/viewModels/transActionView/router.co
 const savingViewRouter = require('./Models/viewModels/savingView/router.config');
 const FDViewRouter = require('./Models/viewModels/FDView/router.config');
 const reportViewRouter = require('./Models/reportModel/router.config');
-const accountDeleteRouter = require('./Models/allAccountModel/router.config');
+const allAccountRouter = require('./Models/allAccountModel/router.config');
 
 
 app.use(bodyParser.json());
@@ -40,7 +40,7 @@ FDRouter.routesConfig(app);
 savingViewRouter.routesConfig(app);
 FDViewRouter.routesConfig(app);
 reportViewRouter.routesConfig(app);
-accountDeleteRouter.routesConfig(app);
+allAccountRouter.routesConfig(app);
 
 
 app.listen(config.port, function () {
