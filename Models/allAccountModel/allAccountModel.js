@@ -22,6 +22,13 @@ exports.reopen = (id) => {
         return results;
     });
 }
+exports.getByID = (id) => {
+
+    return Db.getByColumn(table, { "column": ID, "body": id }).then((results) => {
+        console.log(results)
+        return results;
+    });
+}
 
 
 
