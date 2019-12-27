@@ -48,6 +48,9 @@ exports.routesConfig = function (app) {
     app.put('/employee/update', [
         EmployeeController.update
     ]);
+    app.post('/employee/offlineTransfer', [
+        EmployeeController.offlineTransfer
+    ]);
 
 
 };
