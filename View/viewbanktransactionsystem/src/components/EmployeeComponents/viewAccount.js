@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import { typeDetails } from '../../actions/searchbarAction'
 import SearchBar from './../otherComponents/SearchBar'
-import Loan from '../detailscomponents/Loan'
-export class ViewLoan extends Component {
+import Account from '../detailscomponents/Account'
+export class ViewAccount extends Component {
 
 
 
@@ -15,10 +15,7 @@ export class ViewLoan extends Component {
     render() {
         return (
             <div>
-                <SearchBar
-                    type="viewAllLoan"
-                />
-                <Loan
+                <Account
                 />
             </div>
         )
