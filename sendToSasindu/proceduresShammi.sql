@@ -105,3 +105,6 @@ SELECT
 
 END$$
 DELIMITER ;
+
+--rermaining withdrawals renewal event
+CREATE DEFINER=`root`@`localhost` EVENT `updateWithdrawalsRemaining` ON SCHEDULE EVERY 1 MONTH STARTS '2019-12-27 16:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE savingsaccount SET `withdrawlsRemaining` = 5
