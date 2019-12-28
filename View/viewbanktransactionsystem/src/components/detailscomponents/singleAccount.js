@@ -9,7 +9,7 @@ export default class singleLoan extends Component {
     }
 
     close = (e) => {
-        const confirm = window.confirm("Do you really want to cancel his account?")
+        const confirm = window.confirm("Do you really want to close this account?")
 
         if (confirm)
             axios.put("http://localhost:5000/accountClose", { "id": this.props.accountNum }).then((res) => {
