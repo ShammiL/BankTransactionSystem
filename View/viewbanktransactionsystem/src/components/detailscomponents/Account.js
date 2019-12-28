@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import SingleLoan from './singleAccount'
+import SingleAccount from './singleAccount'
 import { connect } from 'react-redux'
 
-export class Loan extends Component {
+export class Account extends Component {
 
     constructor(props) {
         super(props);
         this.state = { accounts: [] }
     }
 
+
     componentDidMount() {
-        console.log(this.props.content)
-        var content = this.props.content == '' ? "all" : this.props.content
         if (this.props.type == "manager")
-            console.log("http://localhost:5000/loan/getByCustomerId/" + content)
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + content).then((res) => {
-            this.setState({ accounts: res.data })
-            console.log(this.state.accounts)
-        })
+            axios.get("http://localhost:5000/accounts").then((res) => {
+                this.setState({ accounts: res.data })
+                console.log(this.state.accounts)
+            })
         if (this.props.customerID !== '')
-            console.log("CUSTOMER", "http://localhost:5000/loan/getByCustomerId/" + this.props.username)
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.username).then((res) => {
-            this.setState({ loans: res.data })
+            console.log("CUSTOMER", "http://localhost:5000/account/" + this.props.customerID)
+        axios.get("http://localhost:5000/account/" + this.props.customerID).then((res) => {
+            this.setState({ accounts: res.data })
             console.log(this.state.accounts)
         })
     }
@@ -30,15 +28,12 @@ export class Loan extends Component {
 
     render() {
         const items = this.state.accounts.map((item, key) =>
-            <SingleLoan
+            <SingleAccount
                 key={key}
                 customerID={item.customerID}
-                amount={item.amount}
-                loanNum={item.loanNum}
-                dateTaken={item.dateTaken}
-                monthlyInstallment={item.monthlyInstallment}
-                duration={item.duration}
-                getRemaining={item.getRemaining}
+                balance={item.balance}
+                accountNum={item.accountNum}
+                branch={item.branchID}
             />
         );
         return (
@@ -54,8 +49,7 @@ const mapStatesToProps = state => ({
     type: state.activeUser.type,
     username: state.activeUser.username,
     customerID: state.activeUser.customerID,
-    content: state.searchbar.content
 })
 
-export default connect(mapStatesToProps, {})(Loan)
+export default connect(mapStatesToProps, {})(Account)
 
