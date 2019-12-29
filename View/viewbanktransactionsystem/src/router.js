@@ -27,6 +27,7 @@ import OnlineLoan from './components/CustomerComponents/requestOnlineLoan'
 import simpleDashPage from './components/otherComponents/dashpage'
 import Loans from './components/detailscomponents/Loan'
 import Requests from './components/detailscomponents/Request'
+import changeInterest from './components/ManagerComponents/changeInterestRates'
 
 class router extends Component {
     render() {
@@ -64,6 +65,7 @@ class router extends Component {
                     <Route exact path="/simpledashpage" component={simpleDashPage}></Route>
                     <Route exact path="/loan/getLoans" component={Loans}></Route>
                     <Route exact path="/manager/LoanRequests" component={Requests}></Route>
+                    <Route exact path="/manager/changeInterest" component={changeInterest}></Route>
 
                 </Router>
 

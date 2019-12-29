@@ -8,6 +8,10 @@ exports.routesConfig = function (app) {
     app.get('/loan/getByCustomerId/:customerID', [
         LoanController.getByCustomerId
     ]);
+    app.get('/loan/getLateDetails/:loanNum', [
+        LoanController.getLateDetails
+    ]);
+
 
 }
 

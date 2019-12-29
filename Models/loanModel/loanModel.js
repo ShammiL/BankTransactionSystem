@@ -30,6 +30,13 @@ exports.getByCustomerId = (id) => {
 
 };
 // this.getById(7);
+exports.getLateDetails = (id) => {
+    return functions.checkLateLoans(id).then((results) => {
+
+        return results;
+    });
+
+};
 
 exports.getRemainingLoanAmount = (id) => {
     return functions.checkRemainingLoanAmount(id).then((results) => {

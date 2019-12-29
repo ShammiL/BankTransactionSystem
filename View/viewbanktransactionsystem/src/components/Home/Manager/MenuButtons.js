@@ -50,7 +50,7 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>View Loan</IconButton>
                 </Link>
                 <Divider />
-                <Link to={'/'}>
+                <Link to={'/manager/changeInterest'}>
                     <IconButton color='inherit' onClick={e => { }}>View/Change Interest Rates</IconButton>
                 </Link>
                 <Divider />

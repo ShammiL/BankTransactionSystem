@@ -7,6 +7,11 @@ exports.getRemaining = (req, res) => {
         res.send(result)
     });
 }
+exports.getLateDetails = (req, res) => {
+    LoanModel.getLateDetails(req.params.loanNum).then((result) => {
+        res.send(result)
+    });
+}
 
 exports.getAll = (req, res) => {
     LoanModel.getAll().then((result) => {

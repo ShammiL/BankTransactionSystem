@@ -7,13 +7,16 @@ export default class singleLoan extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { getRemaining: 0 }
+        this.state = { getRemaining: 0, late: '' }
     }
 
     componentDidMount() {
 
         axios.get("http://localhost:5000/loan/remainingAmount/" + this.props.loanNum).then((res) => {
             this.setState({ getRemaining: res.data })
+        })
+        axios.get("http://localhost:5000/loan/getLateDetails/" + this.props.loanNum).then((res) => {
+            this.setState({ late: res.data })
         })
 
     }
@@ -28,6 +31,8 @@ export default class singleLoan extends Component {
                 <p>duration: {this.props.duration}</p>
                 <p>monthlyInstallment:{this.props.monthlyInstallment}</p>
                 <p>getRemaining:{this.state.getRemaining}</p>
+                <p>Status:{this.state.late}</p>
+
                 <Divider />
             </div>
         )
