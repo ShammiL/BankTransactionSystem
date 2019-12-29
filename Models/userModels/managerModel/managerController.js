@@ -5,6 +5,19 @@ procedure = require("../../../Core/databaseEvents/procedures/procedures")
 ManagerModel = require("./managerModel")
 FDTypeModel = require("../../FixedDepositType/fixedDepositTypeModel")
 
+
+exports.viewRequests = (req, res) => {
+    LoanRequestModel.getAll().then((result) => {
+        res.send({
+            "code": 200,
+            "result": result
+        })
+    })
+
+
+};
+
+
 exports.approveLoan = (req, res) => {
 
     var loanNumber = uuidv4()
@@ -27,14 +40,13 @@ exports.approveLoan = (req, res) => {
                 var monthlyInstallement = interest.offlineLoanMonthlyInstallment
                 procedure.approveLoan(
                     loanNumber, customerID, amount, null, monthlyInstallement, duration, requestID, managerID
-                )
-                    .then((result) => {
-                        res.send({
-                            "success": "Success",
-                            "code": 204,
-                            "result": result
-                        })
+                ).then((result) => {
+                    res.send({
+                        "success": "Success",
+                        "code": 200,
+                        "result": result
                     })
+                })
 
 
             }
