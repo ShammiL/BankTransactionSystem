@@ -1,33 +1,64 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/searchbarAction'
-import SearchBar from '../otherComponents/SearchBar'
+import axios from 'axios'
+import SingleTransaction from '../detailscomponents/SingleTransaction'
 
 export class ViewTransaction extends Component {
 
-    // submit = e => {
-    //     e.preventDefault();
-    //     // console.log("Withdrawal Types", { username: this.props.accountNum, password: this.props.amount })
-    //     // this.props.fetchLoggedUser(this.props.username, this.props.password)
-    //     // localStorage.setItem('usertoken', res.data)
-    // }
-    // change = e => {
-    //     this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
-
-    // }
-
-
     constructor(props) {
         super(props);
+        this.state = {
+            "search": 'deposit',
+            transactions: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
+            this.setState({
+                transactions: res.data
+            })
+        })
+    }
+
+    submit = e => {
+        e.preventDefault();
+        axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
+            this.setState({
+                transactions: res.data
+            })
+        })
+    }
+    change = e => {
+        this.setState({
+            state: e.target.value
+        })
     }
 
     render() {
+        const items =
+            this.state.transactions.map((item, key) =>
+                <SingleTransaction
+                    key={key}
+                    receiptNum={item.receiptNum}
+                    accountNum={item.accountNum}
+                    amount={item.amount}
+                    date={item.date_}
+
+                />
+            );
         return (
             <div>
-                <SearchBar
-                    type="viewAllTransaction"
-                />
+                <form onSubmit={this.submit}>
+                    <h5>Accountholder type: </h5>
+                    <input type="radio" name="type" value="deposit" onChange={this.change} defaultChecked /> Deposit Transactions
+                        <input type="radio" name="type" value="withdrawal" onChange={this.change} /> Withdrawal Transactions
+                        <input type="radio" name="type" value="transfer" onChange={this.change} /> Transfer Transactions
+                </form>
+
+                <div>
+                    {items}
+                </div>
             </div>
         )
     }

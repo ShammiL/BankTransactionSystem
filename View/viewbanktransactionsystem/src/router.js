@@ -40,7 +40,6 @@ class router extends Component {
                 <Router>
                     <AppBar />
                     <Route exact path="/" component={Dashpage} />
-
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/customer/register/individual" component={IndividualCustomerRegister} />
                     <Route exact path="/employee/register" component={EmployeeRegister} />

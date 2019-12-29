@@ -14,9 +14,6 @@ exports.getByUsername = (req, res) => {
 };
 
 
-
-
-
 exports.login = function (req, res) {
     console.log("My req", req.body);
     var username = req.body.username;
