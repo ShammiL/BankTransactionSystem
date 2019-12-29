@@ -54,6 +54,11 @@ export class MenuButtons extends Component {
                     <IconButton color='inherit' onClick={e => { }}>View/Change Interest Rates</IconButton>
                 </Link>
                 <Divider />
+
+                <Link to={'/manager/LoanRequests'}>
+                    <IconButton color='inherit' onClick={e => { }}>View/approve Loan Requests</IconButton>
+                </Link>
+                <Divider />
                 <Link to={'/user/changePassword'}>
                     <IconButton color='inherit' onClick={e => { }}>Reset Password</IconButton>
                 </Link>
@@ -77,6 +82,7 @@ export class MenuButtons extends Component {
                 <Link to={'/manager/view/allAlTransactions'}>
                     <IconButton color='inherit' onClick={e => { }}>View Transactions</IconButton>
                 </Link>
+
 
             </div>
         )

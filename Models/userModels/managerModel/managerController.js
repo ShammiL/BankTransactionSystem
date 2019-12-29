@@ -23,7 +23,7 @@ exports.approveLoan = (req, res) => {
     var loanNumber = uuidv4()
     var requestID = req.body.details.requestID
     var managerID = req.body.details.managerID
-
+    console.log(req.body)
     LoanRequestModel.getById(requestID)
         .then((result) => {
             if (result <= 0) {

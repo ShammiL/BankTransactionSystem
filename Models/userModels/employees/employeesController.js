@@ -464,7 +464,7 @@ exports.requestOfflineLoan = (req, res) => {
                                                 "date_": null,
                                                 "approved": false,
                                                 "loanOfficerID": loanOfficerID,
-                                                "approvedBy": "7f177d91-c",
+                                                "approvedBy": "Not Approved Yet",
                                                 "branchID": result[0].branchID,
                                                 "customerID": customerID
 
