@@ -26,7 +26,6 @@ class EmployeeRegister extends Component {
         }
         // console.log(details)
         this.props.fetchEmployeeRegisteredUser({ details });
-        window.location.assign("http://localhost:3000");
 
     }
     render() {
@@ -70,9 +69,9 @@ class EmployeeRegister extends Component {
                     </div>
                     <button>Register</button>
                 </form>
-                {/* <div>
-                    {this.props.code == 204 ? <p> {this.props.success} </p> : ''}
-                </div> */}
+                <div>
+                    {this.props.code == 204 ? <p> {this.props.existError} </p> : ''}
+                </div>
             </div >
         )
     }
@@ -92,7 +91,9 @@ const mapStatesToProps = state => ({
     branchID: state.registerReducer.branchID,
     salary: state.registerReducer.salary,
     designation: state.registerReducer.designation,
-    type: state.registerReducer.type
+    type: state.registerReducer.type,
+    code: state.registerReducer.code,
+    existError: state.registerReducer.existError
 
 })
 const mapActionToProps = {

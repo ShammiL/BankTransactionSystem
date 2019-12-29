@@ -1,4 +1,4 @@
-import { FETCHED_REGISTER_USER, TYPE_DETAILS } from '../actions/types'
+import { FETCHED_REGISTER_USER, TYPE_DETAILS, FETCHED_ERROR_USER } from '../actions/types'
 
 
 const initialState = {
@@ -17,7 +17,8 @@ const initialState = {
     companyName: [''],
     salary: [''],
     designation: ['manager'],
-    branchID: ['']
+    branchID: [''],
+    existError: ''
 }
 
 export default function (state = initialState, action) {
@@ -30,6 +31,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 [action.payload.key]: [action.payload.value],
+            };
+        case FETCHED_ERROR_USER:
+            return {
+                ...state,
+                existError: action.payload.success,
+                code: action.payload.code
             };
 
 

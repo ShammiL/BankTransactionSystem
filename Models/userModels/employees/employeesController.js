@@ -88,52 +88,47 @@ exports.insert = (req, res) => {
             console.log("VALIDATE MESSAGE", message)
             res.send({
                 "success": message,
-                "code": 200
+                "code": 204
             })
         }
         else {
 
-            EmployeeModel.getByEmail(email).
-                then((user) => {
-                    if (user.length > 0) {
-                        console.log("Email exists")
-                        res.send({
-                            "success": "Email already exists",
-                            "code": 204
-                        })
+
+            hashFunction.hashPassword(req.body.details.password)
+                .then((hash) => {
+                    console.log("hashregister", hash)
+                    req.body.details.password = hash
+                    console.log(req.body)
+                    req.body.employeeID = uuidv4()
+
+                    if (req.body.details.designation == names.manageremployee) {
+
+                        procedures.managerRegisterProcedure(
+                            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
                     }
                     else {
 
-                        hashFunction.hashPassword(req.body.details.password)
-                            .then((hash) => {
-                                console.log("hashregister", hash)
-                                req.body.details.password = hash
-                                console.log(req.body)
-                                req.body.employeeID = uuidv4()
+                        procedures.otherEmployeeRegisterProcedure(
+                            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
 
-                                if (req.body.details.designation == names.manageremployee) {
-
-                                    procedures.managerRegisterProcedure(
-                                        req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-                                    )
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-                                }
-                                else {
-
-                                    procedures.otherEmployeeRegisterProcedure(
-                                        req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-                                    )
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-
-                                }
-
-                            })
                     }
+
                 })
+
         }
     })
 };

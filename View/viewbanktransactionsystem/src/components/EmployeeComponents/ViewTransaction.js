@@ -21,6 +21,7 @@ export class ViewTransaction extends Component {
         })
     }
 
+
     submit = e => {
         e.preventDefault();
         axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
@@ -31,22 +32,22 @@ export class ViewTransaction extends Component {
     }
     change = e => {
         this.setState({
-            state: e.target.value
+            search: e.target.value
         })
+
     }
 
     render() {
-        const items =
-            this.state.transactions.map((item, key) =>
-                <SingleTransaction
-                    key={key}
-                    receiptNum={item.receiptNum}
-                    accountNum={item.accountNum}
-                    amount={item.amount}
-                    date={item.date_}
+        const items = this.state.transactions.map((item, key) =>
+            <SingleTransaction
+                key={key}
+                receiptNum={item.receiptNum}
+                accountNum={item.accountNum}
+                amount={item.amount}
+                date={item.date_}
 
-                />
-            );
+            />
+        );
         return (
             <div>
                 <form onSubmit={this.submit}>
@@ -54,6 +55,7 @@ export class ViewTransaction extends Component {
                     <input type="radio" name="type" value="deposit" onChange={this.change} defaultChecked /> Deposit Transactions
                         <input type="radio" name="type" value="withdrawal" onChange={this.change} /> Withdrawal Transactions
                         <input type="radio" name="type" value="transfer" onChange={this.change} /> Transfer Transactions
+                        <button type="submit">Check</button>
                 </form>
 
                 <div>
