@@ -33,13 +33,15 @@ exports.approveLoan = (req, res) => {
                 })
             }
             else {
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
                 var customerID = result[0].customerID;
                 var amount = result[0].amount;
                 var duration = interest.offlineLoanDuration
-                var monthlyInstallement = interest.offlineLoanMonthlyInstallment
+                var monthlyInstallement = (amount / duration) * (1 + interest.LoanInterest)
                 procedure.approveLoan(
-                    loanNumber, customerID, amount, null, monthlyInstallement, duration, requestID, managerID
+                    loanNumber, customerID, amount, date, monthlyInstallement, duration, requestID, managerID
                 ).then((result) => {
                     res.send({
                         "success": "Success",

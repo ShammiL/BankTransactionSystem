@@ -426,6 +426,7 @@ exports.requestOfflineLoan = (req, res) => {
 
     CustomerModel.getByUsername(customerID)
         .then((result) => {
+            console.log("CHK USER", result)
             if (result <= 0) {
                 res.send({
                     "success": "User doesn't Exists",
@@ -455,13 +456,14 @@ exports.requestOfflineLoan = (req, res) => {
                                         })
                                     }
                                     else {
-
+                                        var today = new Date();
+                                        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                                         LoanRequestModel.insert(
                                             {
                                                 "requestID": req.body.requestID,
                                                 "description": description,
                                                 "amount": amount,
-                                                "date_": null,
+                                                "date_": date,
                                                 "approved": false,
                                                 "loanOfficerID": loanOfficerID,
                                                 "approvedBy": "Not Approved Yet",
@@ -509,14 +511,15 @@ exports.PayMonthlyInstallement = (req, res) => {
                 })
             }
             else {
-
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                 MonthlyInstallment.insert(
                     {
                         "paymentID": req.body.paymentID,
                         "loanNum": loanNum,
                         "month": month,
                         "year": year,
-                        "datePaid": null
+                        "datePaid": date
                     }
                 )
                     .then((result) => {

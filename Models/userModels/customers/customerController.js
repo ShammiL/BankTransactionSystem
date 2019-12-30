@@ -157,8 +157,10 @@ exports.requestOnlineLoan = (req, res) => {
     var customerID = req.body.details.customerID
     var amount = parseFloat(req.body.details.amount)
     // var monthlyInstallment = req.body.details.monthlyInstallment
-    var monthlyInstallment = interest.onlineLoanMonthlyInstallment;
+    // var monthlyInstallment = interest.onlineLoanMonthlyInstallment;
     var duration = interest.onlineLoanDuration;
+    var monthlyInstallment = (amount / duration) * (1 + interest.LoanInterest)
+
 
     CustomerModel.getById(customerID)
         .then((result) => {
@@ -180,9 +182,12 @@ exports.requestOnlineLoan = (req, res) => {
                             })
                         }
                         else {
+                            var today = new Date();
+                            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
                             console.log(result)
                             customerProcedures.addOnlineLoan(
-                                loanNum, customerID, amount, null, monthlyInstallment, duration, result
+                                loanNum, customerID, amount, date, monthlyInstallment, duration, result
                             )
                                 .then((result) => {
                                     res.send({

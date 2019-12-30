@@ -5,14 +5,25 @@ import { typeDetails, requestofflineloan } from '../../actions/loanActions'
 
 export class requestOfflineLoan extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            "customerID": ""
+        }
+    }
 
+    changecustomer = e => {
+        this.setState({
+            customerID: e.target.value
+        })
+    }
     submit = e => {
         e.preventDefault();
 
         var details = {
             loanOfficerID: this.props.loanOfficerID,
             branchID: this.props.branchname,
-            customerID: this.props.customerID,
+            customerID: this.state.customerID,
             amount: this.props.amount,
             description: this.props.description
 
@@ -40,7 +51,7 @@ export class requestOfflineLoan extends Component {
                         <input onChange={this.change} type="text" name="branchname" placeholder="Branch name" />
 
                         <h5>Customer ID: </h5>
-                        <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
+                        <input required onChange={this.changecustomer} type="text" name="customerID" placeholder="Customer ID" />
 
                         <h5>Amount requested: </h5>
                         <input onChange={this.change} type="text" name="amount" placeholder="Loan amount" />

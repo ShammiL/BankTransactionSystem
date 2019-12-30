@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route, BrowserRouter } from 'react-router-dom'
 import Dashpage from './components/Dashpage'
 import EmployeeRegister from './components/Register/EmployeeRegistration/EmployeeRegister'
 import IndividualCustomerRegister from './components/Register/CustomerRegistration/IndividualCustomerRegister'
@@ -39,7 +39,7 @@ class router extends Component {
         return (
             <div>
 
-                <Router>
+                <BrowserRouter>
                     <AppBar />
                     <Route exact path="/" component={Dashpage} />
                     <Route exact path="/profile" component={Profile} />
@@ -67,7 +67,7 @@ class router extends Component {
                     <Route exact path="/manager/LoanRequests" component={Requests}></Route>
                     <Route exact path="/manager/changeInterest" component={changeInterest}></Route>
 
-                </Router>
+                </BrowserRouter>
 
             </div >
 
