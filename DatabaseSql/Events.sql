@@ -1,0 +1,3 @@
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_FD_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 00:57:18' ON COMPLETION NOT PRESERVE ENABLE DO update fdaccountdetails set amount = amount+amount*interest/36500
+
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_Saving_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 01:18:34' ON COMPLETION NOT PRESERVE ENABLE DO update viewallsavingaccountsdetails set balance = balance+balance*interest/36500

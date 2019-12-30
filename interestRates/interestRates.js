@@ -1,0 +1,1 @@
+exports.FD = 0.6;
