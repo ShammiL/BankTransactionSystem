@@ -24,7 +24,6 @@ class IndividualCustomerRegister extends Component {
         }
         // console.log(details)
         this.props.fetchRegisteredUser({ details });
-        window.location.assign("http://localhost:3000");
 
     }
     render() {
@@ -62,9 +61,9 @@ class IndividualCustomerRegister extends Component {
                     <input onChange={this.change} name="city" type="text" />
                     <button>Register</button>
                 </form>
-                {/* <div>
-                    {this.props.code == 204 ? <p> {this.props.success} </p> : ''}
-                </div> */}
+                <div>
+                    {this.props.code == 204 ? <p> {this.props.existError} </p> : ''}
+                </div>
             </div>
         )
     }
@@ -82,7 +81,9 @@ const mapStatesToProps = state => ({
     city: state.registerReducer.city,
     phoneNumber: state.registerReducer.phoneNumber,
     companyName: state.registerReducer.companyName,
-    type: state.registerReducer.type
+    type: state.registerReducer.type,
+    code: state.registerReducer.code,
+    existError: state.registerReducer.existError
 
 })
 const mapActionToProps = {

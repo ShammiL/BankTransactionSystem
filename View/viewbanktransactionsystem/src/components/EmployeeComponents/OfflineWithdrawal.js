@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/transactionReducerActions'
+import { typeDetails, offlineWithdrawal } from '../../actions/transactionReducerActions'
 
 export class OfflineWithdrawal extends Component {
 
     submit = e => {
         e.preventDefault();
-        console.log("Withdrawal Types", { username: this.props.accountNum, password: this.props.amount })
-        // this.props.fetchLoggedUser(this.props.username, this.props.password)
-        // localStorage.setItem('usertoken', res.data)
+
+        var details = {
+            accountID: this.props.accountNum,
+            amount: this.props.amount,
+            customerID: this.props.customerID,
+        }
+
+        this.props.offlineWithdrawal({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
-
     }
 
 
@@ -29,11 +34,12 @@ export class OfflineWithdrawal extends Component {
                         <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
 
                         <h5>Amount: </h5>
-                        
+
                         <input onChange={this.change} name="amount" type="text" placeholder="Enter amount here" />
                         <h1></h1>
                         <button type="submit">Proceed Withdrawal</button>
                     </form>
+                    <p>{this.props.error}</p>
                 </div>
             </div>
         )
@@ -44,12 +50,13 @@ export class OfflineWithdrawal extends Component {
 const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
-    amount: state.transactionReducer.customerID
+    customerID: state.transactionReducer.customerID,
+    error: state.transactionReducer.error
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    offlineWithdrawal: offlineWithdrawal
     // fetchLoggedUser: fetchLoggedUser
 }
 

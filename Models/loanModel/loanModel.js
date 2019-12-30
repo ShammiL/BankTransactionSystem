@@ -20,7 +20,23 @@ exports.getById = (id) => {
     });
 
 };
+
+exports.getByCustomerId = (id) => {
+    console.log("CUSTOMER SEARCHING ID", id)
+    return Db.getByColumn(table, { "column": "customerID", "body": id }).then((results) => {
+
+        return results;
+    });
+
+};
 // this.getById(7);
+exports.getLateDetails = (id) => {
+    return functions.checkLateLoans(id).then((results) => {
+
+        return results;
+    });
+
+};
 
 exports.getRemainingLoanAmount = (id) => {
     return functions.checkRemainingLoanAmount(id).then((results) => {

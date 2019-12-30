@@ -1,7 +1,7 @@
 Db = require("../../../Core/DB");
 
-var table1 = "depositreceipt"
-var table2 = "withdrawalreceipt"
+var table1 = "depositereceipts"
+var table2 = "withdrawalreceipts"
 var table3 = "transferreceipts"
 
 exports.getAllD = () => {

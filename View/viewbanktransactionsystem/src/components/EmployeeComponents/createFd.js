@@ -1,12 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/newAccountReducer'
+import { typeDetails, createfdaccount } from '../../actions/newAccountReducer'
 
 export class createFD extends Component {
 
     submit = e => {
         e.preventDefault();
+
+        var details = {
+            customerID: this.props.customerID,
+            FDType: this.props.fdtype,
+            accountID: this.props.accountID,
+            amount: this.props.amount
+        }
+
+        this.props.createfdaccount({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -27,7 +37,7 @@ export class createFD extends Component {
                     <input onChange={this.change} type="text" name="accountID" placeholder="Account Number" />
 
                     <h5>Deposit Period: </h5>
-                    <select name="FDType" onChange={this.change}>
+                    <select name="fdtype" onChange={this.change}>
                         <option value="A">6 months</option>
                         <option value="B">1 year</option>
                         <option value="C">3 years</option>
@@ -39,19 +49,22 @@ export class createFD extends Component {
                     <h1></h1>
                     <button type="submit">Open Fixed Deposit</button>
                 </form>
+                <p>{this.props.error}</p>
             </div>
         )
     }
 }
 const mapStatesToProps = state => ({
-    accountNum: state.newAccountReducer,
+    accountID: state.newAccountReducer.accountID,
     amount: state.newAccountReducer.amount,
-    customerID: state.activeUser.customerID
+    customerID: state.newAccountReducer.customerID,
+    fdtype: state.newAccountReducer.fdtype,
+    error: state.newAccountReducer.error
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    createfdaccount: createfdaccount,
     // fetchLoggedUser: fetchLoggedUser
 }
 

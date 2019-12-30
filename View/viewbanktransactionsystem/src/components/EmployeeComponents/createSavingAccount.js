@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/newAccountReducer'
+import { typeDetails, createsavingaccount } from '../../actions/newAccountReducer'
 
 export class createSavingAccount extends Component {
 
 
 
-
     submit = e => {
         e.preventDefault();
+
+        var details = {
+            customerID: this.props.customerID,
+            branchID: this.props.branchID,
+            type: 'saving',
+            accountType: this.props.accountType,
+            guardianID: this.props.guardianID
+        }
+
+        this.props.createsavingaccount({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -39,7 +49,7 @@ export class createSavingAccount extends Component {
                         <h5>Customer ID: </h5>
                         <input onChange={this.change} type="text" name="customerID" placeholder="Customer ID" />
 
-                        {this.props.accountType[0] == "Child"
+                        {this.props.accountType == "Child"
                             ? <div>
                                 <h5>ID of the Guardian customer: </h5>
                                 <input onChange={this.change} type="text" name="guardianID" placeholder="Guardian Customer ID" />
@@ -50,6 +60,7 @@ export class createSavingAccount extends Component {
                         <h1></h1>
                         <button type="submit">Create Account</button>
                     </form>
+                    <p>{this.props.error}</p>
                 </div>
             </div>
         )
@@ -58,16 +69,18 @@ export class createSavingAccount extends Component {
 }
 
 const mapStatesToProps = state => ({
-    branchID: state.newAccountReducer.branch,
+    branchID: state.newAccountReducer.branchID,
     customerID: state.newAccountReducer.customerID,
     accountType: state.newAccountReducer.accountType,
-    guardianID: state.newAccountReducer.guardianID
+    guardianID: state.newAccountReducer.guardianID,
+    error: state.newAccountReducer.error,
+    accountType: state.newAccountReducer.accountType
 
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    createsavingaccount: createsavingaccount
     // fetchLoggedUser: fetchLoggedUser
 }
 

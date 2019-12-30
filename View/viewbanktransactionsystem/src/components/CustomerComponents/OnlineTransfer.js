@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import { typeDetails } from '../../actions/transactionReducerActions'
+import { typeDetails, onlinetransfer } from '../../actions/transactionReducerActions'
 
 export class OnlineTransfer extends Component {
 
     submit = e => {
         e.preventDefault();
-        console.log("Withdrawal Types", { username: this.props.accountNum, password: this.props.amount })
-        // this.props.fetchLoggedUser(this.props.username, this.props.password)
-        // localStorage.setItem('usertoken', res.data)
+
+        var details = {
+            accountID: this.props.accountNum,
+            amount: this.props.amount,
+            recievingAccountID: this.props.recieverAccountNum
+        }
+
+        this.props.onlinetransfer({ details })
+
     }
     change = e => {
         this.props.typeDetails(e.target.name, e.target.value); //connect connect this prop
@@ -20,7 +26,7 @@ export class OnlineTransfer extends Component {
     render() {
         return (
             <div>
-                <h1>Offline Withdrawal Form</h1>
+                <h1>Online Money Transfer</h1>
                 <div>
                     <form onSubmit={this.submit}>
                         <h5>Account Number: </h5>
@@ -32,6 +38,7 @@ export class OnlineTransfer extends Component {
                         <h1></h1>
                         <button type="submit">Proceed Transfer</button>
                     </form>
+                    <p>{this.props.error}</p>
                 </div>
             </div>
         )
@@ -42,12 +49,13 @@ export class OnlineTransfer extends Component {
 const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
-    customer: state.activeUser.customerID
+    recieverAccountNum: state.transactionReducer.recieverAccountNum,
+    error: state.transactionReducer.error
 
 })
 const mapActionToProps = {
     typeDetails: typeDetails,
-    // typePassword: typePassword,
+    onlinetransfer: onlinetransfer,
     // fetchLoggedUser: fetchLoggedUser
 }
 

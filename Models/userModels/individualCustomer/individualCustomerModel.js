@@ -9,3 +9,9 @@ exports.getByID = (nic) => {
     });
 
 };
+exports.getByUsername = (nic) => {
+    return Db.getByColumn(table, { "column": "NIC", "body": nic }).then((results) => {
+        return results;
+    });
+
+};

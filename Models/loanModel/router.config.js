@@ -5,4 +5,13 @@ exports.routesConfig = function (app) {
         LoanController.getRemaining
     ]);
 
+    app.get('/loan/getByCustomerId/:customerID', [
+        LoanController.getByCustomerId
+    ]);
+    app.get('/loan/getLateDetails/:loanNum', [
+        LoanController.getLateDetails
+    ]);
+
+
 }
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { typeConfirm, typePassword, typeUsername } from '../../actions/loginAction'
+import { typeConfirm, typePassword, typeUsername, typenewPassword, changepassword } from '../../actions/loginAction'
 import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 // import Home from './Home/Home'
@@ -16,12 +16,22 @@ class ResetPassword extends Component {
     confirmchange = e => {
         this.props.typeConfirm(e.target.value);
     }
+    newpasswordchange = e => {
+        this.props.typenewPassword(e.target.value); //connect connect this prop
+    }
 
     submit = e => {
         e.preventDefault();
-        console.log("TYPED", { username: this.props.username, password: this.props.password })
-        // this.props.fetchLoggedUser(this.props.username, this.props.password)
-        // localStorage.setItem('usertoken', res.data)
+
+        var details = {
+            username: this.props.username,
+            password: this.props.password,
+            newpassword: this.props.newpassword,
+            confirm: this.props.confirm
+        }
+
+        this.props.changepassword({ details })
+
     }
 
     render() {
@@ -32,13 +42,15 @@ class ResetPassword extends Component {
                     <input onChange={this.usernamechange} name="username" type="text" placeholder="Username" />
                     <h5>Password: </h5>
                     <input onChange={this.passwordchange} name="password" type="password" />
+                    <h5>New Password: </h5>
+                    <input onChange={this.newpasswordchange} name="newpassword" type="password" />
                     <h5>Confirm: </h5>
                     <input onChange={this.confirmchange} name="confirm" type="password" />
-                    <button>Login</button>
+                    <button>Change</button>
                 </form>
-                {/* <div>
+                <div>
                     {this.props.code == 204 ? <p> {this.props.success} </p> : ''}
-                </div> */}
+                </div>
 
 
                 <div>
@@ -52,14 +64,17 @@ class ResetPassword extends Component {
 const mapStatesToProps = state => ({
     username: state.loginUser.username,
     password: state.loginUser.password,
-    password: state.loginUser.confirm,
+    confirm: state.loginUser.confirm,
+    newpassword: state.loginUser.newpassword,
     success: state.loginUser.result,
     code: state.loginUser.code
 })
 const mapActionToProps = {
     typeUsername: typeUsername,
     typePassword: typePassword,
-    typeConfirm: typeConfirm
+    typeConfirm: typeConfirm,
+    typenewPassword: typenewPassword,
+    changepassword: changepassword
 }
 
 export default connect(mapStatesToProps, mapActionToProps)(ResetPassword)

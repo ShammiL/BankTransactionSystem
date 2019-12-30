@@ -88,52 +88,47 @@ exports.insert = (req, res) => {
             console.log("VALIDATE MESSAGE", message)
             res.send({
                 "success": message,
-                "code": 200
+                "code": 204
             })
         }
         else {
 
-            EmployeeModel.getByEmail(email).
-                then((user) => {
-                    if (user.length > 0) {
-                        console.log("Email exists")
-                        res.send({
-                            "success": "Email already exists",
-                            "code": 204
-                        })
+
+            hashFunction.hashPassword(req.body.details.password)
+                .then((hash) => {
+                    console.log("hashregister", hash)
+                    req.body.details.password = hash
+                    console.log(req.body)
+                    req.body.employeeID = uuidv4()
+
+                    if (req.body.details.designation == names.manageremployee) {
+
+                        procedures.managerRegisterProcedure(
+                            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
                     }
                     else {
 
-                        hashFunction.hashPassword(req.body.details.password)
-                            .then((hash) => {
-                                console.log("hashregister", hash)
-                                req.body.details.password = hash
-                                console.log(req.body)
-                                req.body.employeeID = uuidv4()
+                        procedures.otherEmployeeRegisterProcedure(
+                            req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
 
-                                if (req.body.details.designation == names.manageremployee) {
-
-                                    procedures.managerRegisterProcedure(
-                                        req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-                                    )
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-                                }
-                                else {
-
-                                    procedures.otherEmployeeRegisterProcedure(
-                                        req.body.employeeID, req.body.details.firstName, req.body.details.lastName, req.body.details.nic, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.salary, req.body.details.designation, req.body.details.branchID, req.body.details.username, req.body.details.password, req.body.details.type
-                                    )
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-
-                                }
-
-                            })
                     }
+
                 })
+
         }
     })
 };
@@ -150,7 +145,7 @@ exports.offlineDeposite = (req, res) => {
             if (result <= 0) {
                 res.send({
                     "success": "AccountNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
@@ -161,7 +156,11 @@ exports.offlineDeposite = (req, res) => {
 
                 procedures.makeOfflineDeposite(req.body.reciptnumber, amount, account, Date().toString(), Date().toString(), balance_)
                     .then((result) => {
-                        res.status(200).send(result);
+                        res.send({
+                            "success": "OK",
+                            "code": 200,
+                            "result": result
+                        })
                     });
 
             }
@@ -175,6 +174,7 @@ exports.offlineDeposite = (req, res) => {
 
 exports.offlineWithdrawal = (req, res) => {
     // console.log("BODY", req.body);
+    console.log("PRINT", req.body)
     req.body.reciptnumber = uuidv4()
     var amount = req.body.details.amount
     var account = req.body.details.accountID
@@ -184,7 +184,7 @@ exports.offlineWithdrawal = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -194,7 +194,7 @@ exports.offlineWithdrawal = (req, res) => {
 
                 accountModel.getByID(account)
                     .then((result) => {
-                        if (result <= 0) {
+                        if (result.length <= 0) {
                             res.send({
                                 "success": "AccountNumber doesn't exists",
                                 "code": 204
@@ -278,7 +278,7 @@ exports.offlineWithdrawal = (req, res) => {
 };
 
 exports.createSavingAccount = (req, res) => {
-    // console.log("BODY", req.body);
+    console.log("BODY", req.body);
     var branchname = req.body.details.branchID;
     req.body.accountID = uuidv4()
     var type = req.body.details.type
@@ -290,16 +290,16 @@ exports.createSavingAccount = (req, res) => {
 
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
             else {
                 var customerID = result[0].customerID;
                 branchModel.getByName(branchname).then((branch) => {
-                    if (branch < 0) {
+                    if (branch <= 0) {
                         res.send({
-                            "successs": "branch doesn't Exists",
+                            "success": "branch doesn't Exists",
                             "code": 204
                         })
                     }
@@ -308,7 +308,10 @@ exports.createSavingAccount = (req, res) => {
                         if (accountType != "Child") {
                             procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, '')
                                 .then((result) => {
-                                    res.status(200).send(result);
+                                    res.send({
+                                        "result": result,
+                                        "code": 200
+                                    });
                                 });
 
                         }
@@ -317,19 +320,19 @@ exports.createSavingAccount = (req, res) => {
                                 .then((guardian) => {
                                     console.log("Child", result)
                                     console.log("GUARDIAN", guardian)
-                                    if (guardian[0].length <= 0) {
+                                    if (guardian <= 0) {
                                         res.send({
-                                            "successs": "guardian hasn't a account",
+                                            "success": "guardian hasn't a account",
                                             "code": 204
                                         })
 
                                     }
                                     else {
-
+                                        var guardianID = guardian[0].customerID
                                         childModel.getById(customerID).then((child) => {
                                             if (child.length <= 0) {
                                                 res.send({
-                                                    "successs": "Please Register as a child",
+                                                    "success": "Please Register as a child",
                                                     "code": 204
                                                 })
                                             }
@@ -339,7 +342,10 @@ exports.createSavingAccount = (req, res) => {
 
                                                 procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
                                                     .then((result) => {
-                                                        res.status(200).send(result);
+                                                        res.send({
+                                                            "result": result,
+                                                            "code": 200
+                                                        });
                                                     });
                                             }
 
@@ -365,6 +371,7 @@ exports.createSavingAccount = (req, res) => {
 
 
 exports.createCheckingAccount = (req, res) => {
+    console.log(req.body)
     req.body.accountID = uuidv4()
     var branchname = req.body.details.branchID;
     var type = req.body.details.type
@@ -373,7 +380,7 @@ exports.createCheckingAccount = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -383,7 +390,7 @@ exports.createCheckingAccount = (req, res) => {
                 branchModel.getByName(branchname).then((branch) => {
                     if (branch.length <= 0) {
                         res.send({
-                            "successs": "branch doesn't Exists",
+                            "success": "branch doesn't Exists",
                             "code": 204
                         })
                     }
@@ -392,7 +399,11 @@ exports.createCheckingAccount = (req, res) => {
                         console.log(branch)
                         procedures.createAccountCustomer(req.body.accountID, type, '', customerID, 0, 0, branch[0].branchID, 0, 0)
                             .then((result) => {
-                                res.status(200).send(result);
+                                res.send({
+                                    "success": "OK",
+                                    "code": 200,
+                                    "result": result
+                                });
                             });
 
 
@@ -405,7 +416,7 @@ exports.createCheckingAccount = (req, res) => {
         });
 };
 exports.requestOfflineLoan = (req, res) => {
-
+    console.log(req.body.details)
     req.body.requestID = uuidv4()
     var description = req.body.details.description
     var loanOfficerID = req.body.details.loanOfficerID
@@ -417,28 +428,29 @@ exports.requestOfflineLoan = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
             else {
-
-                EmployeeModel.getById(loanOfficerID)
+                var customerID = result[0].customerID
+                console.log("LOAN OFFICER", loanOfficerID)
+                EmployeeModel.getByUsername(loanOfficerID)
                     .then((result) => {
                         if (result <= 0) {
                             res.send({
-                                "successs": "Employee doesn't Exists",
+                                "success": "Employee doesn't Exists",
                                 "code": 204
                             })
                         }
                         else {
-
+                            var loanOfficerID = result[0].employeeID
                             BranchModel.getByName(branchname)
                                 .then((result) => {
 
                                     if (result <= 0) {
                                         res.send({
-                                            "successs": "Branch doesn't Exists",
+                                            "success": "Branch doesn't Exists",
                                             "code": 204
                                         })
                                     }
@@ -452,7 +464,7 @@ exports.requestOfflineLoan = (req, res) => {
                                                 "date_": null,
                                                 "approved": false,
                                                 "loanOfficerID": loanOfficerID,
-                                                "approvedBy": "7f177d91-c",
+                                                "approvedBy": "Not Approved Yet",
                                                 "branchID": result[0].branchID,
                                                 "customerID": customerID
 
@@ -460,7 +472,7 @@ exports.requestOfflineLoan = (req, res) => {
                                         )
                                             .then((result) => {
                                                 res.send({
-                                                    "successs": "Done",
+                                                    "success": "Done",
                                                     "code": 200,
                                                     result: result
                                                 })
@@ -482,7 +494,7 @@ exports.requestOfflineLoan = (req, res) => {
 };
 
 exports.PayMonthlyInstallement = (req, res) => {
-    // console.log("BODY", req.body);
+    console.log("BODY", req.body);
     req.body.paymentID = uuidv4()
     var loanNum = req.body.details.loanNum
     var month = req.body.details.month
@@ -493,7 +505,7 @@ exports.PayMonthlyInstallement = (req, res) => {
             if (result <= 0) {
                 res.send({
                     "success": "LoanNumber doesn't exists",
-                    "code": 200
+                    "code": 204
                 })
             }
             else {
@@ -509,7 +521,7 @@ exports.PayMonthlyInstallement = (req, res) => {
                 )
                     .then((result) => {
                         res.send({
-                            "successs": "Done",
+                            "success": "Done",
                             "code": 200,
                             result: result
                         })
@@ -542,8 +554,8 @@ exports.createFD = (req, res) => {
                 })
             }
             else {
-                var customerID = customer.customerID;
-
+                var customerID = customer[0].customerID;
+                console.log("CUSTOMERID", customerID)
                 SavingsAccountModel.getByID(accountNumber)
                     .then((result) => {
                         if (result <= 0) {
@@ -574,7 +586,10 @@ exports.createFD = (req, res) => {
                                                 else {
                                                     procedures.createFD(accountNumber, amount, FDNumber, null, FDType)
                                                         .then((result) => {
-                                                            res.status(200).send(result);
+                                                            res.send({
+                                                                "result": result,
+                                                                "code": 200
+                                                            });;
                                                         });
                                                 }
                                             })

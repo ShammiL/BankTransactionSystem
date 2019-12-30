@@ -65,7 +65,7 @@ exports.delete = (req, res) => {
 };
 
 exports.insert = (req, res) => {
-console.log(req.body.details)
+    console.log(req.body.details)
     var email = req.body.details.email;
     var username = req.body.details.username;
     var NIC = req.body.details.nic;
@@ -76,87 +76,75 @@ console.log(req.body.details)
             console.log("VALIDATE MESSAGE", message)
             res.send({
                 "success": message,
-                "code": 200
+                "code": 204
             })
         }
         else {
+            hashFunction.hashPassword(req.body.details.password)
+                .then((hash) => {
+                    console.log("hashregister", hash)
+                    req.body.details.password = hash
 
-            CustomerModel.getByEmail(email).
-                then((user) => {
-                    if (user.length > 0) {
-                        console.log("Email exists")
-                        res.send({
-                            "success": "Email already exists",
-                            "code": 204
-                        })
+                    // console.log(req.body)
+                    req.body.customerID = uuidv4()
+                    if (req.body.details.type == names.individualcustomer) {
+                        customerProcedures.individualCustomerLogin(
+                            req.body.customerID, req.body.details.firstname, req.body.details.lastname, req.body.details.NIC, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
+
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
                     }
-                    else {
+                    if (req.body.details.type == names.companycustomer) {
+                        customerProcedures.companycustomerLogin(
+                            req.body.customerID, req.body.details.companyName, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
 
-                        hashFunction.hashPassword(req.body.details.password)
-                            .then((hash) => {
-                                console.log("hashregister", hash)
-                                req.body.details.password = hash
-
-                                // console.log(req.body)
-                                req.body.customerID = uuidv4()
-                                if (req.body.details.type == names.individualcustomer) {
-                                    customerProcedures.individualCustomerLogin(
-                                        req.body.customerID, req.body.details.firstname, req.body.details.lastname, req.body.details.NIC, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
-
-                                    )
-                                        .then((result) => {
-                                            res.status(200).send(result);
-                                        });
-                                }
-                                if (req.body.details.type == names.companycustomer) {
-                                    customerProcedures.companycustomerLogin(
-                                        req.body.customerID, req.body.details.companyName, req.body.details.email, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type
-
-                                    )
-                                        .then((result) => {
-                                            console.log("RE", result)
-                                            res.status(200).send(result);
-                                        });
-
-                                }
-                                if (req.body.details.type == names.childcustomer) {
-
-                                    IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
-
-                                        console.log(result[0][0])
-                                        if (result <= 0) {
-                                            res.send({
-                                                "success": "Guardian doesn't exists",
-                                                "code": 204
-                                            })
-                                        }
-                                        else {
-
-                                            customerProcedures.childCustomerLogin(
-                                                req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
-
-                                            )
-                                                .then((result) => {
-                                                    res.status(200).send(result);
-                                                });
-                                        }
-
-                                    }
-
-
-                                    )
-
-
-                                }
-                            })
+                        )
+                            .then((result) => {
+                                res.send({
+                                    "code": 200,
+                                    "result": result
+                                })
+                            });
 
                     }
+                    if (req.body.details.type == names.childcustomer) {
 
-                }
-                )
+                        IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
+
+                            console.log(result[0][0])
+                            if (result <= 0) {
+                                res.send({
+                                    "success": "Guardian doesn't exists",
+                                    "code": 204
+                                })
+                            }
+                            else {
+
+                                customerProcedures.childCustomerLogin(
+                                    req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
+
+                                )
+                                    .then((result) => {
+                                        res.send({
+                                            "code": 200,
+                                            "result": result
+                                        })
+                                    });
+                            }
+
+                        }
 
 
+                        )
 
+
+                    }
+                })
         }
     })
 
@@ -176,7 +164,7 @@ exports.requestOnlineLoan = (req, res) => {
         .then((result) => {
             if (result <= 0) {
                 res.send({
-                    "successs": "User doesn't Exists",
+                    "success": "User doesn't Exists",
                     "code": 204
                 })
             }
@@ -187,7 +175,7 @@ exports.requestOnlineLoan = (req, res) => {
 
                         if (result == "error") {
                             res.send({
-                                "successs": "You havent valid FD account to take this loan",
+                                "success": "You havent valid FD account to take this loan",
                                 "code": 204
                             })
                         }
@@ -198,7 +186,7 @@ exports.requestOnlineLoan = (req, res) => {
                             )
                                 .then((result) => {
                                     res.send({
-                                        "successs": "Done",
+                                        "success": "Done",
                                         "code": 200,
                                         result: result
                                     })
@@ -272,7 +260,7 @@ exports.onlineTransfer = (req, res) => {
                                                 if (result) {
                                                     res.send({
                                                         "success": "Transfer done successfully",
-                                                        "code": 204
+                                                        "code": 200
                                                     })
                                                 }
                                             });
@@ -294,7 +282,7 @@ exports.onlineTransfer = (req, res) => {
                                                 if (result) {
                                                     res.send({
                                                         "success": "Transfer done successfully",
-                                                        "code": 204
+                                                        "code": 200
                                                     })
                                                 }
                                             });

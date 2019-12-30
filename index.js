@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 var cors = require('cors');
 // app.use(cors());
 
-// app.use(cors());
+app.use(cors());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -23,6 +23,8 @@ const FDRouter = require('./Models/FDModel/route.config');
 const transactionRouter = require('./Models/viewModels/transActionView/router.config');
 const savingViewRouter = require('./Models/viewModels/savingView/router.config');
 const FDViewRouter = require('./Models/viewModels/FDView/router.config');
+const AllAccountRouter = require('./Models/allAccountModel/router.config');
+
 
 app.use(bodyParser.json());
 // AuthorizationRouter.routesConfig(app);
@@ -36,6 +38,8 @@ accountRouter.routesConfig(app);
 FDRouter.routesConfig(app);
 savingViewRouter.routesConfig(app);
 FDViewRouter.routesConfig(app);
+AllAccountRouter.routesConfig(app);
+
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });
