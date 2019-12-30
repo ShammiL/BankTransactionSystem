@@ -28,7 +28,7 @@ export class MenuButtons extends Component {
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>View/update profile</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>View profile</IconButton>
                 </Link>
                 <Divider />
 

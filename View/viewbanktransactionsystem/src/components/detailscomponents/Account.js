@@ -12,7 +12,7 @@ export class Account extends Component {
 
 
     componentDidMount() {
-        if (this.props.type == "manager")
+        if (this.props.employeeID !== '')
             axios.get("http://localhost:5000/accounts").then((res) => {
                 this.setState({ accounts: res.data })
                 console.log(this.state.accounts)
@@ -50,6 +50,8 @@ const mapStatesToProps = state => ({
     type: state.activeUser.type,
     username: state.activeUser.username,
     customerID: state.activeUser.customerID,
+    employeeID: state.activeUser.employeeID,
+
 })
 
 export default connect(mapStatesToProps, {})(Account)
