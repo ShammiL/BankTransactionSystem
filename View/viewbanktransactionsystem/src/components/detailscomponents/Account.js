@@ -38,6 +38,7 @@ export class Account extends Component {
         );
         return (
             <div>
+                <h1>Details of Bank Accounts associated to your User Account</h1>
                 {items}
             </div>
         )

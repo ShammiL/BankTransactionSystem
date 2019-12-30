@@ -19,17 +19,14 @@ export class Profile extends Component {
     // }
 
     render() {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         return (
             <div>
-                <div>
-                    firstName :{this.props.user.firstName}
-                </div>
-                <div>
-                    lastName :{this.props.user.lastName}
-                </div>
-                <div>
-                    Username :{this.props.user.username}
-                </div>
+                <p style = {{align:"right"}}>{date}</p>
+                <h1>
+                    Welcome {this.props.user.firstName} {this.props.user.lastName} !
+                </h1>
             </div >
         )
     }

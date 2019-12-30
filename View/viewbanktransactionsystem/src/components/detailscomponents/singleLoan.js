@@ -24,14 +24,14 @@ export default class singleLoan extends Component {
     render() {
         return (
             <div>
-                <p>loanNum: {this.props.loanNum}</p>
-                <p>dateTaken: {this.props.dateTaken}</p>
-                <p>customerID: {this.props.customerID}</p>
-                <p>amount: {this.props.amount}</p>
-                <p>duration: {this.props.duration}</p>
-                <p>monthlyInstallment:{this.props.monthlyInstallment}</p>
-                <p>getRemaining:{this.state.getRemaining}</p>
-                <p>Status:{this.state.late}</p>
+                <p>Loan ID: {this.props.loanNum}</p>
+                <p>Date Taken: {this.props.dateTaken}</p>
+                <p>CustomerID: {this.props.customerID}</p>
+                <p>Amount: {this.props.amount}</p>
+                <p>Duration: {this.props.duration}</p>
+                <p>Monthly Installment: {this.props.monthlyInstallment}</p>
+                <p>Balance Payable (LKR): {this.state.getRemaining}</p>
+                <p>Status: {this.state.late}</p>
 
                 <Divider />
             </div>

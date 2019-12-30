@@ -26,8 +26,9 @@ export class offlineDeposite_ extends Component {
     render() {
         return (
             <div>
+                <h1>Offline Deposit Form</h1>
                 <form onSubmit={this.submit}>
-                    <h5>AccountNumber: </h5>
+                    <h5>Account Number: </h5>
                     <input onChange={this.change} name="accountNum" type="text" placeholder="Username" />
                     <h5>Amount: </h5>
                     <input onChange={this.change} name="amount" type="text" />

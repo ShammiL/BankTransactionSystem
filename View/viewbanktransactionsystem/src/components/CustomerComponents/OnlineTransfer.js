@@ -33,8 +33,8 @@ export class OnlineTransfer extends Component {
                         <input onChange={this.change} name="accountNum" type="text" placeholder="Account Number" />
                         <h5>Amount: </h5>
                         <input onChange={this.change} name="amount" type="text" placeholder="Enter amount here" />
-                        <h5>Receiving AccountID: </h5>
-                        <input onChange={this.change} name="recieverAccountNum" type="text" placeholder="Enter amount here" />
+                        <h5>Receiving Account Number: </h5>
+                        <input onChange={this.change} name="recieverAccountNum" type="text" placeholder="Account Number" />
                         <h1></h1>
                         <button type="submit">Proceed Transfer</button>
                     </form>

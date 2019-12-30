@@ -29,13 +29,14 @@ class IndividualCustomerRegister extends Component {
     render() {
         return (
             <div>
+                <h1>Create User Account</h1>
                 <form onSubmit={this.submit}>
                     <input type="radio" name="type" value="individual" onChange={this.change} defaultChecked /> Person
                     <input type="radio" name="type" value="company" onChange={this.change} /> Company
                     {this.props.type[0] == "individual" ? <div>
-                        <h5>FirstName: </h5>
+                        <h5>First Name: </h5>
                         <input onChange={this.change} name="firstName" type="text" placeholder="FirstName" />
-                        <h5>LastName: </h5>
+                        <h5>Last Name: </h5>
                         <input onChange={this.change} name="lastName" type="text" />
                         <h5>NIC: </h5>
                         <input onChange={this.change} name="nic" type="text" />
@@ -59,6 +60,7 @@ class IndividualCustomerRegister extends Component {
                     <input onChange={this.change} name="streetName" type="text" />
                     <h5>City: </h5>
                     <input onChange={this.change} name="city" type="text" />
+                    <h1></h1>
                     <button>Register</button>
                 </form>
                 <div>

@@ -15,7 +15,7 @@ export class MenuButtons extends Component {
                 </Link>
                 <Divider />
                 <Link to={'/'}>
-                    <IconButton color='inherit' onClick={e => { }}>Create Customer Profiles</IconButton>
+                    <IconButton color='inherit' onClick={e => { }}>Create Customer Account</IconButton>
                 </Link>
                 <Divider />
                 <Link to={'/'}>

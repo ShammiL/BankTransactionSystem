@@ -43,6 +43,7 @@ export class Loan extends Component {
         );
         return (
             <div>
+                <h1>All Loans</h1>
                 {items}
             </div>
         )
