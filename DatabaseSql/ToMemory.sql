@@ -25,3 +25,5 @@ CREATE DEFINER=`root`@`localhost` EVENT `Upload_Saving_Interest` ON SCHEDULE EVE
 
 
 insert into receipt(receiptNum,amount,accountNum,date_,time_) values(receiptNum,amount,accountNumber,date,time);
+
+SELECT sum(`amount`) from depositereceipts where MONTH(CURRENT_DATE) = MONTH(`date_`)
