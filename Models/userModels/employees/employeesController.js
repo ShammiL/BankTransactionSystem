@@ -660,7 +660,7 @@ exports.offlineTransfer = (req,res) => {
                             else{
                                 procedures.onlineTransfer(
                                     reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
-                                ).then((result){
+                                ).then((result)=>{
                                     if(result){
                                         res.send({
                                             "success" : "Transaction Success",
