@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2020 at 08:59 AM
+-- Generation Time: Jan 01, 2020 at 02:32 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -283,14 +283,14 @@ BEGIN
    return res;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `checkForonlineLoan` (`customerID_` VARCHAR(200), `value` DECIMAL(10,2)) RETURNS VARCHAR(40) CHARSET latin1 NO SQL
+CREATE DEFINER=`root`@`localhost` FUNCTION `checkForonlineLoan` (`customerID_` VARCHAR(200), `value` DECIMAL(10,2)) RETURNS VARCHAR(100) CHARSET latin1 NO SQL
     DETERMINISTIC
 BEGIN
 
 	declare has int;
     declare val decimal(10,2);
-    declare fd varchar(40);
-    declare res varchar(20);
+    declare fd varchar(100);
+    declare res varchar(100);
  
     SELECT count(*) into has FROM `fixeddeposit` natural join savingsaccount natural join account where customerID = customerID_ order by amount desc limit 1;
     SELECT amount into val FROM `fixeddeposit` natural join savingsaccount natural join account where customerID = customerID_ order by amount desc limit 1;
@@ -353,7 +353,7 @@ return res;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `checkRemainingLoanAmount` (`loanNumber` VARCHAR(50)) RETURNS DECIMAL(10,2) BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `checkRemainingLoanAmount` (`loanNumber` VARCHAR(100)) RETURNS DECIMAL(10,2) BEGIN
      DECLARE amount_ decimal(10,2);
      DECLARE monthlyInstallmentValue decimal(10,2);
      DECLARE times int;
@@ -513,13 +513,13 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('07748765-0', '98d1f210-8', '0.00', '1', 0),
 ('0bf65022-5bb1-40bd-8e4d-dfcb0483f9f9', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '1', 1),
 ('0d40e644-f', '98d1f210-8', '0.00', '2', 0),
-('1', 'b192b124-4', '108798.00', '1', 0),
+('1', 'b192b124-4', '113798.00', '1', 0),
 ('11582f45-9', '8116275a-c', '0.00', '1', 0),
 ('14681e95-5', 'a8f0ee6c-a', '44000.00', '2', 0),
 ('1c1b237b-4', '98d1f210-8', '0.00', '1', 0),
 ('1ef40eb6-7', '45880c14-a', '10154.30', '2', 0),
 ('1f925ffc-f', '98d1f210-8', '0.00', '2', 0),
-('2', 'b192b124-4', '4077.91', '1', 0),
+('2', 'b192b124-4', '1077.91', '1', 0),
 ('22', '66b1811b-f', '101423.50', '1', 0),
 ('23', '66b1811b-f', '152.15', '1', 0),
 ('25', '66b1811b-f', '0.00', '1', 0),
@@ -528,7 +528,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('2877e9a8-e', 'a8f0ee6c-a', '0.00', '3', 0),
 ('288affa1-4', '45880c14-a', '203086.03', '2', 0),
 ('2d1faa74-d', '98d1f210-8', '0.00', '2', 0),
-('2f41c323-8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '2', 0),
+('2f41c323-8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '45000.00', '2', 0),
 ('2ff2d2ee-c', '98d1f210-8', '0.00', '2', 0),
 ('3', 'b192b124-4', '-4846.00', '1', 0),
 ('3370130d-5292-4805-9975-7ecf0d086243', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '4', 0),
@@ -538,6 +538,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('423461b7-a6e0-426a-a2c1-1d3fc003a4bf', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '1', 0),
 ('5', 'b192b124-4', '4.13', '1', 0),
 ('5328e043-1', '98d1f210-8', '0.00', '1', 0),
+('58614937-36b5-4548-960a-9c78bebf789d', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '108500.00', '4', 0),
 ('5cbe2178-f', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '2', 0),
 ('6', 'b192b124-4', '888888.88', '1', 0),
 ('6b1bbc44-0', '98d1f210-8', '0.00', '1', 0),
@@ -554,7 +555,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('806d7376-3', '98d1f210-8', '0.00', '1', 0),
 ('8854cc2a-9', '45880c14-a', '1011.90', '2', 0),
 ('8e618b31-fa6d-4e6e-a690-3b4bdc159be0', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '1', 0),
-('9', '45880c14-a', '302124.09', '1', 0),
+('9', '45880c14-a', '313124.09', '1', 0),
 ('90291d50-5', '98d1f210-8', '0.00', '1', 0),
 ('91b8b215-1', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '2', 0),
 ('96be1130-a4ab-4eb3-aa14-d03a9592d40d', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '4', 0),
@@ -570,6 +571,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('c6ff036d-d', '98d1f210-8', '0.00', '1', 0),
 ('c89ff408-3', '98d1f210-8', '0.00', '1', 0),
 ('c9b40683-8', '98d1f210-8', '0.00', '1', 0),
+('d18abbea-186c-4ad4-a1bf-2d12c07f4f6f', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '0.00', '2', 0),
 ('d1db643a-7ca5-44de-ba8b-1fbde4fef4ff', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '1', 0),
 ('d2cb9269-4', '98d1f210-8', '0.00', '2', 0),
 ('d820d84e-a', '45880c14-a', '506.45', '2', 0),
@@ -578,6 +580,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('e22b718c-e', '98d1f210-8', '0.00', '2', 0),
 ('e3a43b9d-b', '45880c14-a', '0.00', '2', 0),
 ('e68cb367-0', '45880c14-a', '0.00', '2', 0),
+('e93556b8-5db2-4900-a36b-e2fff31c7040', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '1500.00', '1', 0),
 ('ead25a9b-3', '98d1f210-8', '0.00', '2', 0),
 ('eb17d6ba-b', '98d1f210-8', '0.00', '2', 0),
 ('ec6aac61-5846-43ee-b2c7-1338300baa86', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '1', 0),
@@ -619,9 +622,10 @@ INSERT INTO `accounttype` (`accountType`, `minimumAmount`, `interest`) VALUES
 --
 CREATE TABLE `activeaccount` (
 `accountNum` varchar(100)
-,`customerID` varchar(100)
 ,`balance` decimal(10,2)
 ,`branchID` varchar(255)
+,`username` varchar(255)
+,`customerID` varchar(100)
 );
 
 -- --------------------------------------------------------
@@ -731,6 +735,7 @@ INSERT INTO `bankwithdrawl` (`receiptNum`, `branchID`) VALUES
 ('c05270ea-7cc8-4cf3-8187-223130c1d1b1', '1'),
 ('c2ffca7c-7d9e-49aa-841c-1de4a42f3b33', '1'),
 ('ca6f89c3-8d1c-4519-bc34-c471e293f006', '1'),
+('cf37930f-f4f9-487d-8c7a-836e80d86df9', '1'),
 ('dd762b70-2255-47e2-83c8-139de053f530', '1'),
 ('dff454ae-4de3-4828-82e0-ebf8a4706410', '1'),
 ('e0c6ec1a-0f16-4d8f-b2da-485bd5aa6549', '1'),
@@ -761,7 +766,8 @@ INSERT INTO `bankwithdrawl` (`receiptNum`, `branchID`) VALUES
 ('cec25416-b0a7-4696-bcd0-9cfbad3cb4ab', '2'),
 ('d94f57a8-595b-4942-8d4a-d27704951ee9', '2'),
 ('ddfa694b-5564-45b1-a403-7acd9ed1a9d3', '2'),
-('e7142b84-bb85-4519-b67d-a6dc6c47765f', '2');
+('e7142b84-bb85-4519-b67d-a6dc6c47765f', '2'),
+('76f04ff2-d317-40c4-a50d-175885e3adc6', '4');
 
 -- --------------------------------------------------------
 
@@ -816,6 +822,7 @@ INSERT INTO `checkingaccount` (`accountNum`) VALUES
 ('7'),
 ('761bcc9c-1'),
 ('8'),
+('d18abbea-186c-4ad4-a1bf-2d12c07f4f6f'),
 ('f386bc3e-8');
 
 -- --------------------------------------------------------
@@ -889,6 +896,7 @@ INSERT INTO `companycustomer` (`customerID`, `name`) VALUES
 ('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom'),
 ('a382076c-69ff-4a75-9476-e7c1e2d58735', 'lumindi'),
 ('a995c926-f', 'comcom'),
+('aede00ab-5c63-4f26-a9ba-a1bb998bf908', 'Yasith'),
 ('b0620ab1-9', 'testprotest'),
 ('b192b124-4', 'WSO2'),
 ('pany', 'pany');
@@ -941,11 +949,13 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('99e02f57-35e3-42dc-a68f-6acc19c31bb3', 'newcheckCus', 'newcheckCus', '', '', '', ''),
 ('9d3f655b-3', 'updatedseconearly', 'updatedseconearly', 'updatedseconear', 'updatedseconearly', 'updatedseconearly', 'updatedseconearly'),
 ('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom', 'comcomcom', '1236547891123', '1', 'Street Name', 'Angoda'),
+('9fb8fc25-c3e4-4683-ab45-6da81517738d', 'sasindu@gmail.com', 'sasinduD', '0112567074', '461/6B', 'N.T Perera Road', 'Angoda'),
 ('a382076c-69ff-4a75-9476-e7c1e2d58735', 'lumindi', 'lumindi', '', '', '', ''),
 ('a44e49f4-0', 'nic', 'this.props.city[0]', 'NULL', 'medan', 'this.props.buildingNumber[0]', 'this.props.streetName[0]'),
 ('a8f0ee6c-a', 'azxcds', 'azxcds', 'azxcds', 'azxcds', 'azxcds', 'azxcds'),
 ('a995c926-f', 'comcom', 'comcom', 'comcom', 'comcom', 'comcom', 'comcom'),
 ('aa81a8c5-e', 'FirsFirstNameFirstNametName', 'FirstNameFirstNameFirstName', 'FirFirstNameFir', '', '', ''),
+('aede00ab-5c63-4f26-a9ba-a1bb998bf908', 'yasith@gmail.com', 'yasithU', '0112344325', '12', 'nuwara para', 'Kandy'),
 ('b0620ab1-9', 'testprotest', 'testprotesttestprotest', 'testprotest', 'testprotest', 'testprotest', 'testprotest'),
 ('b192b124-4', 'dilsharasaaaaaaaaaaaaaaaaaaaaasindu@gmai', '170024R', '1236547891123', 'b', 'street', 'Angoda'),
 ('b824ed8b-c14e-439c-9b2f-227de7fa57e3', 'individualhash', 'individualhash', '', '', '', 'Angoda'),
@@ -977,7 +987,7 @@ CREATE TABLE `customerlogin` (
 CREATE TABLE `depositereceipts` (
 `receiptNum` varchar(255)
 ,`amount` decimal(10,2)
-,`accountNum` varchar(10)
+,`accountNum` varchar(100)
 ,`date_` varchar(255)
 ,`time_` varchar(255)
 );
@@ -999,9 +1009,11 @@ CREATE TABLE `depositreceipt` (
 INSERT INTO `depositreceipt` (`receiptNum`) VALUES
 ('021c7a57-ec8c-455e-bc4e-e911964f88bd'),
 ('09baaa25-bb1b-4ff1-a9b6-0c9820879f99'),
+('303380d9-ceb3-420a-a3dd-a50f0ffd76d8'),
 ('5422f8df-ced2-4b52-95d0-e7cd6b179bba'),
 ('54d1a478-e60c-4ffe-9276-a956592a5ff4'),
 ('c34da4ea-3201-4fab-97db-493e2e8c49cd'),
+('dfee8fa5-4d96-4ff4-9b62-314df36d8af8'),
 ('sdswqdqwd211212312');
 
 -- --------------------------------------------------------
@@ -1051,6 +1063,7 @@ INSERT INTO `employee` (`employeeID`, `firstName`, `lastName`, `username`, `emai
 ('724f6ac8-0213-4cf0-96c2-4910cb91a424', 'adacheck', 'adacheck', 'adacheck', 'adacheck', '', '', '', '', 'adacheck', 'manager', '111111.00', '1'),
 ('7437395e-9e72-4a32-ac57-2b4efbff1a0a', 'shammi2', 'shammi2', 'shammi2', 'shammi2', '', '', '', '', 'shammi2', 'manager', '0.00', '2'),
 ('79bc2c5e-968c-4a6c-9fd4-da2394dc3e74', '', '', 'xxxxxxxxx', 'ssassxxx', '', '', '', '', 'shammi', 'manager', '0.00', '1'),
+('807bd722-79c5-40bf-9c68-5216e2fce109', 'Disura ', 'Warusaithana', 'disuraW', 'disura@gmail.com', '11', 'galle road', 'Panadura', '01123443216', '1223213V', 'manager', '12000.00', '3'),
 ('8e6d6b1a-b', 'employeer', 'employeer', 'employeer', 'employeer', 'emplo', 'employeer', 'employeer', 'employeer', 'employeer', 'manager', '0.00', '1'),
 ('93e53359-71f5-48ac-bbdc-c6ca92da1f49', 'anotherHashChec', 'anotherHashChec', 'anotherHashCheck', 'anotherHashCheck', '', '', '', 'anotherHashChec', 'anotherHash', 'manager', '0.00', '2'),
 ('a7b71973-0751-4e8c-81c0-25ebee397ad1', 'm12m3m1m2m3', '', 'm12m3m1m2m3', 'm12m3m1m2m3', '', '', '', '', '', 'manager', '10000.00', '1'),
@@ -1064,6 +1077,7 @@ INSERT INTO `employee` (`employeeID`, `firstName`, `lastName`, `username`, `emai
 ('ec0fc708-f049-4f10-b8ef-f1fc11762f51', 'FirstNameFirstN', '', '4567890', 'FirstNameFirstNameFirstNameFirstNameFirs', '', '', '', '', '', 'manager', '999999.99', '2'),
 ('f0a823b6-3135-47d2-b406-3bdeadff70bd', 'cuspopocuspopoc', '', 'cuspopocuspopocuspopocuspopo', 'cuspopocuspopocuspopocuspopo', '', '', '', '', '', 'manager', '0.00', '2'),
 ('f3c06a51-a0f9-459c-8d9d-8ce0d4220d1f', 'sasindu', 'sasindu', 'sasindu______', 'sasindu', 'sasin', '', '', 'sasindu', 'sasindu', 'manager', '0.00', '1'),
+('f4d0d2fe-9600-42ce-aa31-9b779faa13d7', 'Shammi', 'Lumindi', 'shammiL', 'shammi@gmail.com', '12', 'Alakeshwara Roa', 'Colombo', '0775560025', '12232123V', 'manager', '25000.00', '3'),
 ('mamama', 'mamama', 'mamama', 'mamama', 'mamama', 'mamam', 'mamama', 'mamama', 'mamama', 'mamama', 'mamama', '0.00', '1');
 
 -- --------------------------------------------------------
@@ -1115,6 +1129,7 @@ CREATE TABLE `fixeddeposit` (
 
 INSERT INTO `fixeddeposit` (`FDNumber`, `accountNum`, `amount`, `dateDeposited`, `FDType`, `closed`) VALUES
 ('2', '2', '102.00', '2019-12-30', 'A', 0),
+('2b44da40-5fe7-408f-9ff0-9aab5680c684', '58614937-36b5-4548-960a-9c78bebf789d', '100000.00', '2020-01-01', 'A', 0),
 ('2b83defa-d', '9', '204.32', '2019-12-30', 'C', 0),
 ('3', '9', '306.48', '2017-12-30', 'B', 1),
 ('333', '9', '2.05', '2019-12-30', 'C', 0),
@@ -1253,6 +1268,7 @@ INSERT INTO `individualcustomer` (`customerID`, `firstName`, `lastName`, `NIC`) 
 ('98d1f210-8', 'hello', 'hello', 'hello'),
 ('99e02f57-35e3-42dc-a68f-6acc19c31bb3', NULL, NULL, NULL),
 ('9d3f655b-3', 'updatedseconear', 'updatedseconear', 'updatedseconear'),
+('9fb8fc25-c3e4-4683-ab45-6da81517738d', NULL, NULL, NULL),
 ('a8f0ee6c-a', NULL, NULL, 'jhjh'),
 ('aa81a8c5-e', NULL, NULL, 'nbnbnb'),
 ('b824ed8b-c14e-439c-9b2f-227de7fa57e3', NULL, NULL, 'individualhash'),
@@ -1285,7 +1301,9 @@ INSERT INTO `loan` (`loanNum`, `customerID`, `amount`, `dateTaken`, `monthlyInst
 ('02fa4423-746a-4b15-9d9d-b7f5a50ccfe8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '19980107.00', '2019-12-30', '999999.99', 5),
 ('035bd22f-ede0-450e-9a96-5b3985a80de8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1.75', '2019-12-30', '0.65', 3),
 ('1', '424626e4-f', '1000.00', '2019-11-30', '10.00', 5),
+('1075c17d-8937-4f80-bc1d-5d7daf3b29ee', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '2001.00', '2020-01-01', '444.00', 5),
 ('1234', '45880c14-a', '100.00', '2019-11-30', '5.00', 8),
+('13823c50-ac72-4e9b-bdd8-f20fe768bc3d', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '10000.00', '2020-01-01', '3700.00', 3),
 ('15', '66b1811b-f', '20500.00', '2019-12-30', '100.00', 5),
 ('16', '66b1811b-f', '10000.00', '2019-12-30', '100.00', 5),
 ('21c736a4-229c-4d51-8f12-2cd00460c8a1', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '21.00', '2019-12-30', '1000.00', 3),
@@ -1294,6 +1312,7 @@ INSERT INTO `loan` (`loanNum`, `customerID`, `amount`, `dateTaken`, `monthlyInst
 ('3f463ee6-e8f5-4003-a816-35f89fbb308d', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '2.01', '2019-12-30', '1000.00', 3),
 ('563e00f6-cba2-464f-aec2-c90290276789', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1751.00', '2019-12-30', '500.00', 5),
 ('58a39bb6-a36d-48dc-aa89-e2d881a0ddcd', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '500.00', '2019-12-30', '1000.00', 3),
+('635b9ec7-7db8-44bc-ac25-b04c17bdbb4f', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '10000.00', '2020-01-01', '3700.00', 3),
 ('65c135b9-a6de-483e-ac05-05bfb98c9049', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10.00', '2019-12-30', '1000.00', 3),
 ('7336b980-3', '45880c14-a', '1.00', '2019-12-30', '100.00', 5),
 ('7fb2e437-4dc1-4a60-aa1f-2674dbd4807e', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10000.00', '2019-12-30', '500.00', 5),
@@ -1308,6 +1327,7 @@ INSERT INTO `loan` (`loanNum`, `customerID`, `amount`, `dateTaken`, `monthlyInst
 ('dc5abe64-b', '66b1811b-f', '66.00', '2019-12-30', '500.00', 5),
 ('dfe022de-3', '45880c14-a', '1.00', '2019-12-30', '100.00', 5),
 ('e489c7dc-9', '1', '0.00', '2019-12-30', '500.00', 5),
+('f3b9be80-c206-477e-9806-ab377a538e05', '9fb8fc25-c3e4-4683-ab45-6da81517738d', '500.00', '2020-01-01', '185.00', 3),
 ('f57c3c10-0', '66b1811b-f', '50000.00', '2019-12-30', '500.00', 5),
 ('fee0ae6d-6', '66b1811b-f', '50000.00', '2019-12-30', '500.00', 5),
 ('FIFTHTRY', '45880c14-a', '8000.00', '2019-12-30', '111.00', 2),
@@ -1347,6 +1367,7 @@ INSERT INTO `loanrequest` (`requestID`, `description`, `amount`, `date_`, `appro
 ('27d32a9f-a6dc-4d21-a7fc-d10c5aec76a2', 'I am going to ..', '1751.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
 ('2b2b0511-2', 'description', '0.00', '2019-12-30', 1, '7f177d91-c', 'mamama', '1', '1'),
 ('3f731fed-4', 'need for a loan', '400.00', '2019-12-30', 1, '19619307-1', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '66b1811b-f'),
+('4175fe3e-33c1-4bef-b5ff-23e083f6727c', 'money problem', '2001.00', '2020-01-01', 1, 'f4d0d2fe-9600-42ce-aa31-9b779faa13d7', 'f4d0d2fe-9600-42ce-aa31-9b779faa13d7', '1', '9fb8fc25-c3e4-4683-ab45-6da81517738d'),
 ('4535a94b-4', 'need for a loan', '400.00', '2019-12-30', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
 ('456548eb-eb6c-4e5f-ba80-e750084b73df', 'shammmi anith paththta', '108991.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
 ('51c78299-6b94-49f3-b9d5-084091efdfc4', 'test1', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
@@ -1357,6 +1378,7 @@ INSERT INTO `loanrequest` (`requestID`, `description`, `amount`, `date_`, `appro
 ('7ae2a15b-6244-4b78-ab43-2ec2df6cd8e9', 'tets 2', '1.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
 ('81dd3594-a373-49d4-be88-826bbe4863bc', 'shammi bday', '19980107.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
 ('8ed46ddb-1', 'description', '0.00', '2019-12-30', 0, '7f177d91-c', '7f177d91-c', '1', '1'),
+('a3e13ae2-b9ee-4a73-9773-8304847ca95c', 'I have a ergent money problem', '5000000.00', '2020-01-01', 0, 'f4d0d2fe-9600-42ce-aa31-9b779faa13d7', 'Not Approved Yet', '1', '9fb8fc25-c3e4-4683-ab45-6da81517738d'),
 ('a766e7fa-2726-4aeb-bec8-28b9ce64b8fd', NULL, '0.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '1'),
 ('b06f5187-a84d-44b3-95d4-811e77d275fc', 'test1', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
 ('b4b7ad53-0', 'need hurry a loan', '400.00', '2019-12-30', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
@@ -1404,6 +1426,7 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('cuspopocuspopocuspopocuspopo', 'cuspopocuspopocuspopocuspopo', 'manager'),
 ('cuspopocuspopocuspopocuspopocuspopocuspopocuspopo', 'cuspopocuspopocuspopocuspopocu', 'company'),
 ('dannikangahuwe', 'dannikangahuwe', 'manager'),
+('disuraW', '$2a$10$d8rstpdHacBeu6pAEMVVXuV6YP3SZnnrHMmHfO.q6GAxuuRgDdg82', 'other'),
 ('dsasdadsadindividualhashindividualhashindividualhashindividualhash', '$2a$10$KsRA3BUGgsJtt.2Fn4uQQuAZInQgaXz3P9CiI7b73x22nucWl8fSq', 'individual'),
 ('employeema', 'employeemanager', 'manager'),
 ('employeer', 'employeer', 'manager'),
@@ -1439,12 +1462,14 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('sasindu', '$2a$10$roAooAjjYl1CgR9Y0b1ng.Nd0ARZhcYOs/ygVQFORB2FgMOwOgqRi', 'individual'),
 ('sasindu111', '$2a$10$6tyrhq62ep6Fj0JQcARYl.V3RAU8Abr2q6KyBjeLL/aayFCeMbg6S', 'individual'),
 ('sasinducompany', '$2a$10$JQ/qkHPlA89zCVbHbQPTFu3rHN1HZ7GlwhWySN0.Zz19tN9fjfQYS', 'company'),
+('sasinduD', '$2a$10$j1OTfRdJJwaUmFsmUtH2rOmbfoOdjoJR4wMvh9LPp6eJV2GRCfXN6', 'individual'),
 ('sasindusasindu', '$2a$10$hNlPLEXvgjoK5QwDzSc3l.kKkQiFMbbPU0MPJsPPcL8P3SQYoTLba', 'company'),
 ('sasindusasindusasindu', '$2a$10$w.g11qBbZ7xoMlkSpvEWv.scwA0/gdVYA8mXi2APLZfRT3e.k2QjO', 'individual'),
 ('sasindu______', '$2a$10$N.5kGWwoXpEkymUBatEA6uop3Ktjvw8AuiygatSUOI689d/glgamO', 'manager'),
 ('shammi', '$2a$10$lPw4PZhwyFI.wW4KFPEIj.L2MK1hQfg19dx76313SjRUPo64bGIeK', 'manager'),
 ('shammi2', '$2a$10$qGfe1nL3AwbeRH2K0K6tMuxIv/jJXSTld6hyMoOG/jhXNO/b20Wey', 'other'),
 ('shammi22', '$2a$10$d2XIAY/AMZIOUT6t.oHlP.MhjjEMzgF0vRDortMqUQEoSLV5dXQEa', 'other'),
+('shammiL', '$2a$10$DIGIj6yR1MYx2Npt75bAVe78lfDnRNWU41NuZzl7pK9OZuxzszjH6', 'manager'),
 ('testprotesttestprotest', 'testprotest', 'company'),
 ('this.props.city[0]', 'userusernsme', 'userusernsme'),
 ('up7', 'updatedThirdly', 'company'),
@@ -1457,7 +1482,8 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('us1erusernsme', 'us1erusernsme', 'child'),
 ('wronghash', 'wronghash', 'manager'),
 ('wronghashwronghash', 'wronghashwronghash', 'manager'),
-('xxxxxxxxx', '$2a$10$99aF0pOBUXlO2nlW91zhtuGsw9p9bpKZhzIfEjrdw0eB92gZ97fxG', 'individual');
+('xxxxxxxxx', '$2a$10$99aF0pOBUXlO2nlW91zhtuGsw9p9bpKZhzIfEjrdw0eB92gZ97fxG', 'individual'),
+('yasithU', '$2a$10$oUOhGL1M48fTWAKmgDSmeu7yaiHiBa1cahP9THum0YSlnvf7EoMi2', 'company');
 
 -- --------------------------------------------------------
 
@@ -1494,6 +1520,7 @@ INSERT INTO `manager` (`employeeID`) VALUES
 ('7437395e-9e72-4a32-ac57-2b4efbff1a0a'),
 ('79bc2c5e-968c-4a6c-9fd4-da2394dc3e74'),
 ('7f177d91-c'),
+('807bd722-79c5-40bf-9c68-5216e2fce109'),
 ('8e6d6b1a-b'),
 ('93e53359-71f5-48ac-bbdc-c6ca92da1f49'),
 ('a0907b56-5cec-46de-b241-00af6bd7f34e'),
@@ -1507,6 +1534,7 @@ INSERT INTO `manager` (`employeeID`) VALUES
 ('ec0fc708-f049-4f10-b8ef-f1fc11762f51'),
 ('f0a823b6-3135-47d2-b406-3bdeadff70bd'),
 ('f3c06a51-a0f9-459c-8d9d-8ce0d4220d1f'),
+('f4d0d2fe-9600-42ce-aa31-9b779faa13d7'),
 ('mamama');
 
 -- --------------------------------------------------------
@@ -1529,7 +1557,8 @@ CREATE TABLE `monthlyinstallment` (
 
 INSERT INTO `monthlyinstallment` (`paymentID`, `loanNum`, `month`, `year`, `datePaid`) VALUES
 ('5d76abd8-a3c5-4', '1234', '02', '2019', '2019-12-30'),
-('6cd838db-76b9-4', '1234', '01', '2019', '2019-12-30');
+('6cd838db-76b9-4', '1234', '01', '2019', '2019-12-30'),
+('cb6cc45e-5a59-4', '1075c17d-8937-4f80-bc1d-5d7daf3b29ee', '01', '2020', '2020-01-01');
 
 -- --------------------------------------------------------
 
@@ -1558,6 +1587,7 @@ INSERT INTO `offlineloan` (`loanNumber`, `requestID`) VALUES
 ('563e00f6-cba2-464f-aec2-c90290276789', '27d32a9f-a6dc-4d21-a7fc-d10c5aec76a2'),
 ('e489c7dc-9', '2b2b0511-2'),
 ('01b763cd-b15f-428f-a00d-8e08f174ef6a', '3f731fed-4'),
+('1075c17d-8937-4f80-bc1d-5d7daf3b29ee', '4175fe3e-33c1-4bef-b5ff-23e083f6727c'),
 ('9b9731b7-4ec9-4edb-9ddf-4e44a8c8cb04', '456548eb-eb6c-4e5f-ba80-e750084b73df'),
 ('02fa4423-746a-4b15-9d9d-b7f5a50ccfe8', '81dd3594-a373-49d4-be88-826bbe4863bc');
 
@@ -1583,6 +1613,8 @@ INSERT INTO `onlineloan` (`loanNum`, `FDNumber`) VALUES
 ('83f8a67c-9', '2'),
 ('ba77e160-1', '2'),
 ('dfe022de-3', '2'),
+('635b9ec7-7db8-44bc-ac25-b04c17bdbb4f', '2b44da40-5fe7-408f-9ff0-9aab5680c684'),
+('f3b9be80-c206-477e-9806-ab377a538e05', '2b44da40-5fe7-408f-9ff0-9aab5680c684'),
 ('FIFTHTRY', '333'),
 ('FIRSTONLIN', '333'),
 ('SECONDTRY', '333'),
@@ -1608,7 +1640,7 @@ INSERT INTO `onlineloan` (`loanNum`, `FDNumber`) VALUES
 CREATE TABLE `receipt` (
   `receiptNum` varchar(255) NOT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
-  `accountNum` varchar(10) DEFAULT NULL,
+  `accountNum` varchar(100) DEFAULT NULL,
   `date_` varchar(255) DEFAULT NULL,
   `time_` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1624,27 +1656,33 @@ INSERT INTO `receipt` (`receiptNum`, `amount`, `accountNum`, `date_`, `time_`) V
 ('1d2cdac7-76fc-471c-b644-ffdf22dcf93c', '100.00', '9', '2019-12-29', '23:51:33'),
 ('26faca64-f36c-4f86-954e-1136ac9b2396', '100.00', '9', '2019-12-29', '23:51:33'),
 ('2fca546d-6b6e-46c1-9c8a-c303d8ea2fc2', '11.00', '2', NULL, NULL),
+('303380d9-ceb3-420a-a3dd-a50f0ffd76d8', '100000.00', '58614937-36b5-4548-960a-9c78bebf789d', '2020-01-01', '16:26:03'),
 ('32323sdssafds', '100.00', '9', '2019-12-29', '23:51:33'),
 ('484f4360-7dc2-46a3-8d48-18632f56b2a0', '2000.00', '1', '2019-12-30', '18:57:36'),
+('4e7a9ced-1f8c-4e90-9644-1de1b2dc408d', '1500.00', '58614937-36b5-4548-960a-9c78bebf789d', '2020-01-01', '16:40:12'),
 ('52b62af5-b08a-40f6-9b01-55b778093d7a', '1000.00', '2', '2019-12-29', '23:51:33'),
 ('5422f8df-ced2-4b52-95d0-e7cd6b179bba', '10000.00', '1', '2019-10-29', '23:51:33'),
 ('54d1a478-e60c-4ffe-9276-a956592a5ff4', '125000.00', '9', '2019-10-30', '19:03:14'),
 ('57f9c451-f7e3-45ac-9ec8-f5ae23520c14', '1000.00', '1', '2019-12-29', '23:51:33'),
 ('699af9db-2914-4322-a2fe-702c5dfde4ff', '1000.00', '1', '2019-12-29', '23:51:33'),
 ('6dfe8852-cb84-4675-afbd-6177183981f5', '1.09', '2', '2019-12-30', '19:18:20'),
+('76f04ff2-d317-40c4-a50d-175885e3adc6', '500.00', '58614937-36b5-4548-960a-9c78bebf789d', '2020-01-01', '16:28:05'),
 ('8a1c0d7f-f447-4dc2-9e03-803a10e279e2', '5000.00', '2', '2019-12-29', '23:51:33'),
 ('9677d97d-9510-4c93-a9e8-d5c32082a2b9', '1000.00', '1', '2019-12-29', '23:51:33'),
 ('978a327f-de24-42a4-819d-c8337149558f', '1000.00', '9', '2019-12-29', '23:51:33'),
 ('b103ecb1-cf88-44a7-a266-789ea5bb5939', '1000.00', '2', '2019-12-29', '23:51:33'),
 ('b60ef5b2-8ef6-4efa-8358-526ccdc64736', '90.00', '1', '2019-12-30', '19:17:15'),
 ('b6a87d3b-4cc5-4a09-aa1c-83294dba11fb', '1.00', '1', '2019-12-30', '20:18:40'),
+('bbc300f9-4558-4823-a78b-7058c1a3b9ca', '5000.00', '2f41c323-8', '2020-01-01', '14:57:02'),
 ('bdac7c0f-1dc1-441d-99ee-7706e9a8c67c', '100.00', '9', '2019-12-29', '23:51:33'),
 ('c05270ea-7cc8-4cf3-8187-223130c1d1b1', '100.00', '9', '2019-12-29', '23:51:33'),
 ('c34da4ea-3201-4fab-97db-493e2e8c49cd', '1000.00', '1', '2019-12-29', '23:51:33'),
 ('ca6f89c3-8d1c-4519-bc34-c471e293f006', '1000.00', '9', '2019-12-29', '23:51:33'),
+('cf37930f-f4f9-487d-8c7a-836e80d86df9', '3000.00', '2', '2020-01-01', '14:48:16'),
 ('dasdasdadsqrf4', '10000.00', '9', '2019-12-29', '23:51:33'),
 ('dc740ea7-22c3-4586-a55f-d9317ab2567d', '1111.00', '1', '2019-12-30', '20:09:25'),
 ('dd762b70-2255-47e2-83c8-139de053f530', '10000.00', '9', '2019-12-29', '23:51:33'),
+('dfee8fa5-4d96-4ff4-9b62-314df36d8af8', '11000.00', '9', '2020-01-01', '14:37:18'),
 ('f17cb51f-b171-4f9a-9056-4ac8272f44f1', '1000.00', '9', '2019-12-29', '23:51:33'),
 ('f25062b5-9c83-4779-a952-ff1396b120fe', '1000.00', '9', '2019-12-29', '23:51:33'),
 ('f2847faf-734c-4724-86c6-1fdb9c808ff8', '10000.00', '9', '2019-12-29', '23:51:33'),
@@ -1710,7 +1748,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('1c1b237b-4', 10, 'Child'),
 ('1ef40eb6-7', 10, 'Senior'),
 ('1f925ffc-f', 5, 'Teen'),
-('2', 9, 'Adult'),
+('2', 8, 'Adult'),
 ('22', 10, 'Child'),
 ('23', 10, 'Child'),
 ('25', 10, 'Child'),
@@ -1724,6 +1762,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('4', 10, 'Child'),
 ('423461b7-a6e0-426a-a2c1-1d3fc003a4bf', 5, 'Child'),
 ('5328e043-1', 10, 'Child'),
+('58614937-36b5-4548-960a-9c78bebf789d', 4, 'Adult'),
 ('6b1bbc44-0', 10, 'Child'),
 ('6dbb04b7-b', 10, 'Adult'),
 ('70c57223-5', 10, 'Adult'),
@@ -1757,6 +1796,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('e22b718c-e', 5, 'Child'),
 ('e3a43b9d-b', 10, 'Adult'),
 ('e68cb367-0', 10, 'Teen'),
+('e93556b8-5db2-4900-a36b-e2fff31c7040', 5, 'Senior'),
 ('ead25a9b-3', 10, 'Adult'),
 ('eb17d6ba-b', 10, 'Child'),
 ('ec6aac61-5846-43ee-b2c7-1338300baa86', 5, 'Child'),
@@ -1775,7 +1815,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 
 CREATE TABLE `transferreceipt` (
   `receiptNum` varchar(255) NOT NULL,
-  `receivingAccountID` varchar(10) DEFAULT NULL
+  `receivingAccountID` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1786,6 +1826,7 @@ INSERT INTO `transferreceipt` (`receiptNum`, `receivingAccountID`) VALUES
 ('0e546860-1241-423d-856f-5b0d44b308d9', '1'),
 ('52b62af5-b08a-40f6-9b01-55b778093d7a', '1'),
 ('b103ecb1-cf88-44a7-a266-789ea5bb5939', '1'),
+('bbc300f9-4558-4823-a78b-7058c1a3b9ca', '1'),
 ('dasdasdadsqrf4', '1'),
 ('nowshouldbecorrect', '1'),
 ('57f9c451-f7e3-45ac-9ec8-f5ae23520c14', '2'),
@@ -1794,7 +1835,8 @@ INSERT INTO `transferreceipt` (`receiptNum`, `receivingAccountID`) VALUES
 ('2fca546d-6b6e-46c1-9c8a-c303d8ea2fc2', '9'),
 ('6dfe8852-cb84-4675-afbd-6177183981f5', '9'),
 ('b6a87d3b-4cc5-4a09-aa1c-83294dba11fb', '9'),
-('dc740ea7-22c3-4586-a55f-d9317ab2567d', '9');
+('dc740ea7-22c3-4586-a55f-d9317ab2567d', '9'),
+('4e7a9ced-1f8c-4e90-9644-1de1b2dc408d', 'e93556b8-5db2-4900-a36b-e2fff31c7040');
 
 -- --------------------------------------------------------
 
@@ -1805,10 +1847,10 @@ INSERT INTO `transferreceipt` (`receiptNum`, `receivingAccountID`) VALUES
 CREATE TABLE `transferreceipts` (
 `receiptNum` varchar(255)
 ,`amount` decimal(10,2)
-,`accountNum` varchar(10)
+,`accountNum` varchar(100)
 ,`date_` varchar(255)
 ,`time_` varchar(255)
-,`receivingAccountID` varchar(10)
+,`receivingAccountID` varchar(100)
 );
 
 -- --------------------------------------------------------
@@ -1848,12 +1890,14 @@ INSERT INTO `withdrawalreceipt` (`receiptNum`) VALUES
 ('26faca64-f36c-4f86-954e-1136ac9b2396'),
 ('32323sdssafds'),
 ('484f4360-7dc2-46a3-8d48-18632f56b2a0'),
+('76f04ff2-d317-40c4-a50d-175885e3adc6'),
 ('8a1c0d7f-f447-4dc2-9e03-803a10e279e2'),
 ('9677d97d-9510-4c93-a9e8-d5c32082a2b9'),
 ('978a327f-de24-42a4-819d-c8337149558f'),
 ('bdac7c0f-1dc1-441d-99ee-7706e9a8c67c'),
 ('c05270ea-7cc8-4cf3-8187-223130c1d1b1'),
 ('ca6f89c3-8d1c-4519-bc34-c471e293f006'),
+('cf37930f-f4f9-487d-8c7a-836e80d86df9'),
 ('dd762b70-2255-47e2-83c8-139de053f530'),
 ('f17cb51f-b171-4f9a-9056-4ac8272f44f1'),
 ('f25062b5-9c83-4779-a952-ff1396b120fe'),
@@ -1868,7 +1912,7 @@ INSERT INTO `withdrawalreceipt` (`receiptNum`) VALUES
 CREATE TABLE `withdrawalreceipts` (
 `receiptNum` varchar(255)
 ,`amount` decimal(10,2)
-,`accountNum` varchar(10)
+,`accountNum` varchar(100)
 ,`date_` varchar(255)
 ,`time_` varchar(255)
 );
@@ -1880,7 +1924,7 @@ CREATE TABLE `withdrawalreceipts` (
 --
 DROP TABLE IF EXISTS `activeaccount`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `activeaccount`  AS  select `account`.`accountNum` AS `accountNum`,`account`.`customerID` AS `customerID`,`account`.`balance` AS `balance`,`account`.`branchID` AS `branchID` from `account` where (`account`.`closed` = 0) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `activeaccount`  AS  select `account`.`accountNum` AS `accountNum`,`account`.`balance` AS `balance`,`account`.`branchID` AS `branchID`,`customer`.`username` AS `username`,`account`.`customerID` AS `customerID` from (`account` join `customer` on((`account`.`customerID` = `customer`.`customerID`))) where (`account`.`closed` = 0) ;
 
 -- --------------------------------------------------------
 
