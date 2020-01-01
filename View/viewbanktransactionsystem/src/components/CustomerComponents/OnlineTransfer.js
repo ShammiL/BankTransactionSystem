@@ -11,7 +11,8 @@ export class OnlineTransfer extends Component {
         var details = {
             accountID: this.props.accountNum,
             amount: this.props.amount,
-            recievingAccountID: this.props.recieverAccountNum
+            recievingAccountID: this.props.recieverAccountNum,
+            customerID: this.props.customerID
         }
 
         this.props.onlinetransfer({ details })
@@ -50,7 +51,8 @@ const mapStatesToProps = state => ({
     accountNum: state.transactionReducer.accountNum,
     amount: state.transactionReducer.amount,
     recieverAccountNum: state.transactionReducer.recieverAccountNum,
-    error: state.transactionReducer.error
+    error: state.transactionReducer.error,
+    customerID: state.activeUser.customerID
 
 })
 const mapActionToProps = {
