@@ -13,11 +13,12 @@ export default class singleLoan extends Component {
     componentDidMount() {
 
         axios.get("http://localhost:5000/loan/remainingAmount/" + this.props.loanNum).then((res) => {
-            this.setState({ getRemaining: res.data })
-        })
-        axios.get("http://localhost:5000/loan/getLateDetails/" + this.props.loanNum).then((res) => {
-            this.setState({ late: res.data })
-        })
+            this.setState({ getRemaining: res.data });
+            axios.get("http://localhost:5000/loan/getLateDetails/" + this.props.loanNum).then((res) => {
+                this.setState({ late: res.data })
+            });
+        });
+
 
     }
 
