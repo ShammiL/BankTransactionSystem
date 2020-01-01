@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2020 at 02:32 PM
+-- Generation Time: Jan 01, 2020 at 04:14 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -26,7 +26,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `accountForCustomer` (IN `accountNum` VARCHAR(50), IN `type` VARCHAR(50), IN `accountType` VARCHAR(20), IN `customerID` VARCHAR(150), IN `withdrawalRemaining` INT, IN `balance` DECIMAL(10,2), IN `branchID` VARCHAR(150), IN `closed` TINYINT, IN `gurNic` VARCHAR(15))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `accountForCustomer` (IN `accountNum` VARCHAR(50), IN `type` VARCHAR(50), IN `accountType` VARCHAR(20), IN `customerID` VARCHAR(150), IN `withdrawalRemaining` INT, IN `balance` DECIMAL(10,2), IN `branchID` VARCHAR(150), IN `closed` TINYINT, IN `gurNic` VARCHAR(150))  BEGIN
     set AUTOCOMMIT = 0;
     if withdrawalRemaining = 0 THEN
     	set withdrawalRemaining = 5;
@@ -515,6 +515,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('0d40e644-f', '98d1f210-8', '0.00', '2', 0),
 ('1', 'b192b124-4', '113798.00', '1', 0),
 ('11582f45-9', '8116275a-c', '0.00', '1', 0),
+('14362427-5c17-468b-b03e-2d25b1498f40', 'efd143de-c490-4b27-b85a-18cdddc8acdf', '0.00', '1', 0),
 ('14681e95-5', 'a8f0ee6c-a', '44000.00', '2', 0),
 ('1c1b237b-4', '98d1f210-8', '0.00', '1', 0),
 ('1ef40eb6-7', '45880c14-a', '10154.30', '2', 0),
@@ -542,6 +543,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('5cbe2178-f', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '2', 0),
 ('6', 'b192b124-4', '888888.88', '1', 0),
 ('6b1bbc44-0', '98d1f210-8', '0.00', '1', 0),
+('6bda27ce-83b7-4d5c-8ca8-89b436b261e9', 'cf7bc512-5731-4574-84ba-1ab6d25028ea', '0.00', '1', 0),
 ('6ce0f12e-c', 'a8f0ee6c-a', '0.00', '2', 0),
 ('6dbb04b7-b', '45880c14-a', '202369.77', '2', 0),
 ('7', 'b192b124-4', '4000.12', '1', 0),
@@ -577,6 +579,7 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('d820d84e-a', '45880c14-a', '506.45', '2', 0),
 ('d8c4e353-0', '98d1f210-8', '0.00', '1', 0),
 ('dc6ed29e-f', '45880c14-a', '0.00', '2', 0),
+('deadc196-d5b2-48da-a70e-e1fe949a5c6f', 'efd143de-c490-4b27-b85a-18cdddc8acdf', '0.00', '1', 0),
 ('e22b718c-e', '98d1f210-8', '0.00', '2', 0),
 ('e3a43b9d-b', '45880c14-a', '0.00', '2', 0),
 ('e68cb367-0', '45880c14-a', '0.00', '2', 0),
@@ -842,7 +845,10 @@ CREATE TABLE `child` (
 
 INSERT INTO `child` (`customerID`, `guardianID`) VALUES
 ('0e9d215f-f646-4cef-8ec0-5e2a3625661a', '9d3f655b-3'),
-('0e9d215f-f646-4cef-8ec0-5e2a3625661a', '9d3f655b-3');
+('0e9d215f-f646-4cef-8ec0-5e2a3625661a', '9d3f655b-3'),
+('efd143de-c490-4b27-b85a-18cdddc8acdf', '9fb8fc25-c3e4-4683-ab45-6da81517738d'),
+('efd143de-c490-4b27-b85a-18cdddc8acdf', '9fb8fc25-c3e4-4683-ab45-6da81517738d'),
+('cf7bc512-5731-4574-84ba-1ab6d25028ea', '9fb8fc25-c3e4-4683-ab45-6da81517738d');
 
 -- --------------------------------------------------------
 
@@ -866,8 +872,13 @@ INSERT INTO `childcustomer` (`customerID`, `firstName`, `lastName`, `guardingID`
 ('1e3b68b2-5207-408c-9f75-fc62b99cf5c3', 'fnam1e', 'ln1ame', 'medan'),
 ('251b526a-1154-464d-976e-73d651240dbe', 'fnam1e', 'ln1ame', 'medan'),
 ('a44e49f4-0582-4ee4-baa1-b1d45afbd847', 'fname', 'lname', 'child'),
+('bdf28836-1782-4f7f-96f0-baa148a8be8e', 'Chirathchild', 'Chirathchild', 'Chirathchild'),
 ('cdafb32c-8380-4fd0-8190-0fd39c422ebc', 'fnam1e', 'ln1ame', 'medan'),
-('e72bb3b8-7115-4c40-9c37-93da4542983b', 'fnam1e', 'ln1ame', 'medan');
+('cf7bc512-5731-4574-84ba-1ab6d25028ea', 'chira', 'chira', '973531344v'),
+('e72bb3b8-7115-4c40-9c37-93da4542983b', 'fnam1e', 'ln1ame', 'medan'),
+('efd143de-c490-4b27-b85a-18cdddc8acdf', 'chirath', 'devmith', '973531344Vaaa'),
+('f1625913-5e91-49b6-81a0-e30108322cb6', 'ChirathchildChirathchild', 'ChirathchildChirathchild', '973531344v'),
+('fd1a746e-94c9-43d3-b57d-a14ccf1ff9bd', 'chirathD', 'devmithD', 'qq//opo');
 
 -- --------------------------------------------------------
 
@@ -892,6 +903,7 @@ INSERT INTO `companycustomer` (`customerID`, `name`) VALUES
 ('424626e4-f', 'company'),
 ('435081e2-f811-47d8-814a-8bacadc9160d', ''),
 ('76804595-c59e-4cd9-a37d-bee1c8df1e53', ''),
+('8d216a04-03f3-4a15-b11f-5697688a27f8', 'wso3'),
 ('8ea5c8ff-c420-46e6-8a90-0c1f177d438d', 'companywronghash'),
 ('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom'),
 ('a382076c-69ff-4a75-9476-e7c1e2d58735', 'lumindi'),
@@ -925,6 +937,7 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('006fab9e-0ef6-4438-8de0-c605f44f1b02', 'aaaaaaxaaa', 'aaaaaaxaaa', 'aaaaaaxaaa', 'aaaaaaxaaa', 'aaaaaaxaaa', 'aaaaaaxaaa'),
 ('06b825a6-b', 'up7', 'up7', 'up4', 'up4', 'up4', 'up4'),
 ('0710b619-e6c3-4e96-a143-3c9354420e51', 'individualhashindividualhashindividualha', 'dsasdadsadindividualhashindividualhashindividualhashindividualhash', '', '', '', ''),
+('0a170f9e-50ed-41e5-b4dd-de85ae53e2a7', 'afterChild', 'afterChild', 'afterChild', 'afterChild', 'afterChild', 'afterChild'),
 ('0b2acfe9-7284-4c5b-863b-e22bd68afccc', '11111', 'q11', '', '', '', ''),
 ('0e9d215f-f646-4cef-8ec0-5e2a3625661a', 'NULL', 'us1erusernsme', 'medan', 'this.props.buil', 'this.props.streetName[0]', 'this.props.city[0]'),
 ('1', '', '', '', '', '', ''),
@@ -944,6 +957,7 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('76804595-c59e-4cd9-a37d-bee1c8df1e53', 'sasindusasindu', 'sasindusasindu', '', '', '', ''),
 ('7f9f6787-398d-432e-be60-20afe621ad5c', 'sasindusasindusasindu', 'sasindusasindusasindu', '', '', '', ''),
 ('8116275a-c', 'individualcustomercus', 'individualcustomercus', 'individualcusto', 'individualcustomercus', 'individualcustomercus', 'individualcustomercus'),
+('8d216a04-03f3-4a15-b11f-5697688a27f8', 'wso3', 'wso3', 'wso3', 'wso3', 'wso3', 'wso3'),
 ('8ea5c8ff-c420-46e6-8a90-0c1f177d438d', 'companywronghash', 'companywronghash', '', '', '', ''),
 ('98d1f210-8', 'hellollollollollo', 'helloololol', 'azxcds', 'azxcds', 'azxcds', 'azxcds'),
 ('99e02f57-35e3-42dc-a68f-6acc19c31bb3', 'newcheckCus', 'newcheckCus', '', '', '', ''),
@@ -959,9 +973,14 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('b0620ab1-9', 'testprotest', 'testprotesttestprotest', 'testprotest', 'testprotest', 'testprotest', 'testprotest'),
 ('b192b124-4', 'dilsharasaaaaaaaaaaaaaaaaaaaaasindu@gmai', '170024R', '1236547891123', 'b', 'street', 'Angoda'),
 ('b824ed8b-c14e-439c-9b2f-227de7fa57e3', 'individualhash', 'individualhash', '', '', '', 'Angoda'),
+('bdf28836-1782-4f7f-96f0-baa148a8be8e', NULL, 'Chirathchild', 'Chirathchild', 'Chirathchild', 'Chirathchild', 'Chirathchild'),
 ('cdafb32c-8380-4fd0-8190-0fd39c422ebc', NULL, 'us111111er11usernsme', 'medan', 'this.props.buil', 'this.props.streetName[0]', 'this.props.city[0]'),
+('cf7bc512-5731-4574-84ba-1ab6d25028ea', NULL, 'chira', 'chira', 'chira', 'chira', 'chira'),
 ('e72bb3b8-7115-4c40-9c37-93da4542983b', NULL, 'MyuserChild', 'medan', 'this.props.buil', 'this.props.streetName[0]', 'this.props.city[0]'),
 ('ed7f2796-8875-49ab-90c2-71eaa08b1eb3', 'sasindu1111', 'sasindu111', '', '', '', ''),
+('efd143de-c490-4b27-b85a-18cdddc8acdf', NULL, 'chirath', '1231231231', '12', 'NT PERERA MAWATHA', 'Angoda'),
+('f1625913-5e91-49b6-81a0-e30108322cb6', NULL, 'ChirathchildChirathchild', 'ChirathchildChirathchild', 'ChirathchildChi', 'ChirathchChirathchildild', 'ChirathchildChirathchild'),
+('fd1a746e-94c9-43d3-b57d-a14ccf1ff9bd', NULL, 'chirathD', '1236547891123', '1', 'Street Name', 'Angoda'),
 ('fdc', 'fdc', 'fdc', '', '', '', 'fdc'),
 ('medan', 'medan', 'medan', 'medan', 'medan', 'medan', 'medan'),
 ('nowOnwards', 'aaa', '', '', '', '', ''),
@@ -1256,6 +1275,7 @@ CREATE TABLE `individualcustomer` (
 INSERT INTO `individualcustomer` (`customerID`, `firstName`, `lastName`, `NIC`) VALUES
 ('006fab9e-0ef6-4438-8de0-c605f44f1b02', NULL, NULL, NULL),
 ('0710b619-e6c3-4e96-a143-3c9354420e51', NULL, NULL, NULL),
+('0a170f9e-50ed-41e5-b4dd-de85ae53e2a7', 'afterChild', 'afterChild', 'afterChild'),
 ('0b2acfe9-7284-4c5b-863b-e22bd68afccc', NULL, NULL, NULL),
 ('392063fe-01a9-42d9-9abd-1563b135a050', NULL, NULL, NULL),
 ('45880c14-a', 'dsdsd', 'dsdsds', 'dsdsdsd'),
@@ -1268,7 +1288,7 @@ INSERT INTO `individualcustomer` (`customerID`, `firstName`, `lastName`, `NIC`) 
 ('98d1f210-8', 'hello', 'hello', 'hello'),
 ('99e02f57-35e3-42dc-a68f-6acc19c31bb3', NULL, NULL, NULL),
 ('9d3f655b-3', 'updatedseconear', 'updatedseconear', 'updatedseconear'),
-('9fb8fc25-c3e4-4683-ab45-6da81517738d', NULL, NULL, NULL),
+('9fb8fc25-c3e4-4683-ab45-6da81517738d', 'sasindu', 'dilshara', '973531344V'),
 ('a8f0ee6c-a', NULL, NULL, 'jhjh'),
 ('aa81a8c5-e', NULL, NULL, 'nbnbnb'),
 ('b824ed8b-c14e-439c-9b2f-227de7fa57e3', NULL, NULL, 'individualhash'),
@@ -1414,10 +1434,16 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('a', 'a', 'individual'),
 ('aaaaaaxaaa', '$2a$10$8uxDSJWZz.2OH4ryUBN/M.1ifxlPyyN9gL04yi2Wi05Gw/xAnlrwG', 'individual'),
 ('adacheck', 'adacheck', 'manager'),
+('afterChild', '$2a$10$XiDZYLO.dOjbEtpMTO7RXu3W2vOiGr2.MpYEQ08x24kp5uHKxpze2', 'individual'),
 ('anotherHashCheck', '$2a$10$Z1IuQ7ZswipP5qayJeEmju2AHxvfHC/SLor3B6teQ.g', 'manager'),
 ('asasas', '$2a$10$ap/1Rddzk0kH/aYSsVBa8ujM1bTAcMYUbufXn2eqPkpvEoKW36z/2', 'individual'),
 ('azxcds', 'azxcds', 'individual'),
 ('bcrypthash', '$2a$10$XBh/YmF0F/BqfiD51E.jzuYNnDx2u.pZ2IEvXxrTimz', 'manager'),
+('chira', '$2a$10$jXZyA/.VqS/l/MNqXawP4.sSmfpVbdhoF3vJNR44nL/aYHiuKgPuK', 'Child'),
+('chirath', '$2a$10$AU6G9yD4KQvoHiDDZN2O4OxZ7whOkXT3Q9b/OPcL9u0sIMhscsO1W', 'Child'),
+('Chirathchild', '$2a$10$Ci8vIPrjo6ZHmGZQH4x5fupxWq5e0zXI/oSlQAGH3NUxSDl/z/Nli', 'Child'),
+('ChirathchildChirathchild', '$2a$10$IwMhpxE0vVncsS26KInpfO7W.reeasL1HUoNBJ1y1jgoTvy15uccm', 'Child'),
+('chirathD', '$2a$10$pckUfBlBuvifQco/STbWm.aOMw9BUBZwLmrkMpoVT1sLiWfPdFtGm', 'Child'),
 ('comcom', 'comcom', 'company'),
 ('comcomcom', '$2a$10$LyQeR4hnpW9MXbwDddXS/.W.D/sP5KA9GbTmzpH8kawCoaMy2aGAq', 'company'),
 ('company', 'company', 'company'),
@@ -1482,6 +1508,7 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('us1erusernsme', 'us1erusernsme', 'child'),
 ('wronghash', 'wronghash', 'manager'),
 ('wronghashwronghash', 'wronghashwronghash', 'manager'),
+('wso3', '$2a$10$b1duTHhkPMVqo9k1aE9lFe2gxy6gq3Oj418FvNvpUlhqk2irCdLOO', 'company'),
 ('xxxxxxxxx', '$2a$10$99aF0pOBUXlO2nlW91zhtuGsw9p9bpKZhzIfEjrdw0eB92gZ97fxG', 'individual'),
 ('yasithU', '$2a$10$oUOhGL1M48fTWAKmgDSmeu7yaiHiBa1cahP9THum0YSlnvf7EoMi2', 'company');
 
@@ -1745,6 +1772,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('0bf65022-5bb1-40bd-8e4d-dfcb0483f9f9', 5, 'Adult'),
 ('0d40e644-f', 10, 'Child'),
 ('11582f45-9', 10, 'Child'),
+('14362427-5c17-468b-b03e-2d25b1498f40', 5, 'Child'),
 ('1c1b237b-4', 10, 'Child'),
 ('1ef40eb6-7', 10, 'Senior'),
 ('1f925ffc-f', 5, 'Teen'),
@@ -1764,6 +1792,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('5328e043-1', 10, 'Child'),
 ('58614937-36b5-4548-960a-9c78bebf789d', 4, 'Adult'),
 ('6b1bbc44-0', 10, 'Child'),
+('6bda27ce-83b7-4d5c-8ca8-89b436b261e9', 5, 'Child'),
 ('6dbb04b7-b', 10, 'Adult'),
 ('70c57223-5', 10, 'Adult'),
 ('7246bace-b', 10, 'Teen'),
@@ -1793,6 +1822,7 @@ INSERT INTO `savingsaccount` (`accountNum`, `withdrawlsRemaining`, `accountType`
 ('d820d84e-a', 10, 'Teen'),
 ('d8c4e353-0', 10, 'Child'),
 ('dc6ed29e-f', 10, 'Senior'),
+('deadc196-d5b2-48da-a70e-e1fe949a5c6f', 5, 'Child'),
 ('e22b718c-e', 5, 'Child'),
 ('e3a43b9d-b', 10, 'Adult'),
 ('e68cb367-0', 10, 'Teen'),
