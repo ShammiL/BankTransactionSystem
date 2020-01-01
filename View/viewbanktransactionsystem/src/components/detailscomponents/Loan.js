@@ -13,18 +13,23 @@ export class Loan extends Component {
     componentDidMount() {
         console.log(this.props.content)
         var content = this.props.content == '' ? "all" : this.props.content
-        if (this.props.type == "manager")
+        if (this.props.type == "manager") {
             console.log("http://localhost:5000/loan/getByCustomerId/" + content)
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + content).then((res) => {
-            this.setState({ loans: res.data })
-            console.log(this.state.loans)
-        })
-        if (this.props.customerID !== '')
+            axios.get("http://localhost:5000/loan/getByCustomerId/" + content).then((res) => {
+                this.setState({ loans: res.data })
+                console.log(this.state.loans)
+
+
+            })
+        }
+        if (this.props.customerID !== '') {
             console.log("CUSTOMER", "http://localhost:5000/loan/getByCustomerId/" + this.props.username)
-        axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.username).then((res) => {
-            this.setState({ loans: res.data })
-            console.log(this.state.loans)
-        })
+            axios.get("http://localhost:5000/loan/getByCustomerId/" + this.props.username).then((res) => {
+                this.setState({ loans: res.data })
+                console.log(this.state.loans)
+            })
+        }
+
     }
 
 

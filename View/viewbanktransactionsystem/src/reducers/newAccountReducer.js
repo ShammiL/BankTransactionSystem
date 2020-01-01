@@ -4,7 +4,7 @@ import { TYPE_NEW_ACCOUNT_DETAILS, ACCOUNT_CREATE_ERROR, ACCOUNT_CHECKING_CREATE
 const initialState = {
     accountID: '',
     amount: '',
-    fdtype: '',
+    fdtype: 'A',
     branchID: '',
     customerID: '',
     accountType: 'Adult',

@@ -12,17 +12,21 @@ export class Account extends Component {
 
 
     componentDidMount() {
-        if (this.props.employeeID !== '')
+        if (this.props.employeeID !== '') {
             axios.get("http://localhost:5000/accounts").then((res) => {
                 this.setState({ accounts: res.data })
                 console.log(this.state.accounts)
             })
-        if (this.props.customerID !== '')
+        }
+
+        if (this.props.customerID !== '') {
             console.log("CUSTOMER", "http://localhost:5000/account/" + this.props.customerID)
-        axios.get("http://localhost:5000/account/" + this.props.customerID).then((res) => {
-            this.setState({ accounts: res.data })
-            console.log(this.state.accounts)
-        })
+            axios.get("http://localhost:5000/account/" + this.props.customerID).then((res) => {
+                this.setState({ accounts: res.data })
+                console.log(this.state.accounts)
+            })
+        }
+
     }
 
 
@@ -30,6 +34,7 @@ export class Account extends Component {
         const items = this.state.accounts.map((item, key) =>
             <SingleAccount
                 key={key}
+                username={item.username}
                 customerID={item.customerID}
                 balance={item.balance}
                 accountNum={item.accountNum}

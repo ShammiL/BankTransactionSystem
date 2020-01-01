@@ -31,6 +31,7 @@ export default class singleLoan extends Component {
         return (
             <div>
                 <p>Account Number: {this.props.accountNum}</p>
+                <p>Customer: {this.props.username}</p>
                 <p>Customer ID: {this.props.customerID}</p>
                 <p>Account Balance (LKR): {this.props.balance}</p>
                 <p>Branch: {this.props.branch}</p>
