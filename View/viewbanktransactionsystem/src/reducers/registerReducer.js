@@ -18,7 +18,8 @@ const initialState = {
     salary: [''],
     designation: ['manager'],
     branchID: [''],
-    existError: ''
+    existError: '',
+    guardianID: ['']
 }
 
 export default function (state = initialState, action) {

@@ -9,9 +9,9 @@ class IndividualCustomerRegister extends Component {
     submit = e => {
         e.preventDefault();
         var details = {
-            firstName: this.props.firstName[0],
-            lastName: this.props.lastName[0],
-            nic: this.props.nic[0],
+            firstname: this.props.firstName[0],
+            lastname: this.props.lastName[0],
+            NIC: this.props.nic[0],
             email: this.props.email[0],
             username: this.props.username[0],
             password: this.props.password[0],
@@ -20,7 +20,8 @@ class IndividualCustomerRegister extends Component {
             streetName: this.props.streetName[0],
             city: this.props.city[0],
             companyName: this.props.companyName[0],
-            type: this.props.type[0]
+            type: this.props.type[0],
+            guardianID: this.props.guardianID[0]
         }
         // console.log(details)
         this.props.fetchRegisteredUser({ details });
@@ -33,21 +34,25 @@ class IndividualCustomerRegister extends Component {
                 <form onSubmit={this.submit}>
                     <input type="radio" name="type" value="individual" onChange={this.change} defaultChecked /> Person
                     <input type="radio" name="type" value="company" onChange={this.change} /> Company
-                    {this.props.type[0] == "individual" ? <div>
+                    <input type="radio" name="type" value="Child" onChange={this.change} /> Child
+
+                    {this.props.type[0] == "individual" || this.props.type[0] == "Child" ? <div>
                         <h5>First Name: </h5>
                         <input onChange={this.change} name="firstName" type="text" placeholder="FirstName" />
                         <h5>Last Name: </h5>
                         <input onChange={this.change} name="lastName" type="text" />
-                        <h5>NIC: </h5>
-                        <input onChange={this.change} name="nic" type="text" />
+                        {this.props.type[0] == "individual" ?
+                            <div><h5>NIC: </h5>
+                                <input onChange={this.change} name="nic" type="text" /></div> : ''}
                     </div> : <div>
                             <h5>Company Name: </h5>
                             <input onChange={this.change} name="companyName" type="text" />
                         </div>
                     }
+                    {this.props.type[0] != "Child" ?
+                        <div><h5>Email: </h5>
+                            <input onChange={this.change} name="email" type="text" /></div> : ''}
 
-                    <h5>Email: </h5>
-                    <input onChange={this.change} name="email" type="text" />
                     <h5>Username: </h5>
                     <input onChange={this.change} name="username" type="text" />
                     <h5>Password: </h5>
@@ -61,6 +66,9 @@ class IndividualCustomerRegister extends Component {
                     <h5>City: </h5>
                     <input onChange={this.change} name="city" type="text" />
                     <h1></h1>
+                    {this.props.type[0] == "Child" ?
+                        <div><h5>guardian NIC: </h5>
+                            <input onChange={this.change} name="guardianID" type="text" /></div> : ''}
                     <button>Register</button>
                 </form>
                 <div>
@@ -85,7 +93,9 @@ const mapStatesToProps = state => ({
     companyName: state.registerReducer.companyName,
     type: state.registerReducer.type,
     code: state.registerReducer.code,
-    existError: state.registerReducer.existError
+    existError: state.registerReducer.existError,
+    guardianID: state.registerReducer.guardianID
+
 
 })
 const mapActionToProps = {

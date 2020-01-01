@@ -304,7 +304,6 @@ exports.createSavingAccount = (req, res) => {
                         })
                     }
                     else {
-
                         if (accountType != "Child") {
                             procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, '')
                                 .then((result) => {
@@ -328,7 +327,6 @@ exports.createSavingAccount = (req, res) => {
 
                                     }
                                     else {
-                                        var guardianID = guardian[0].customerID
                                         childModel.getById(customerID).then((child) => {
                                             if (child.length <= 0) {
                                                 res.send({
@@ -338,7 +336,7 @@ exports.createSavingAccount = (req, res) => {
                                             }
                                             else {
                                                 console.log(child)
-                                                console.log(accountType)
+                                                console.log(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
 
                                                 procedures.createAccountCustomer(req.body.accountID, type, accountType, customerID, 0, 0, branch[0].branchID, 0, guardian[0].customerID)
                                                     .then((result) => {

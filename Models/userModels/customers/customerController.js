@@ -116,8 +116,8 @@ exports.insert = (req, res) => {
 
                         IndividualCustomerViewModel.getByUsername({ "NIC": req.body.details.guardianID }).then((result) => {
 
-                            console.log(result[0][0])
-                            if (result <= 0) {
+                            console.log("GUARDIAN", result[0])
+                            if (result[0] <= 0) {
                                 res.send({
                                     "success": "Guardian doesn't exists",
                                     "code": 204
@@ -126,7 +126,7 @@ exports.insert = (req, res) => {
                             else {
 
                                 customerProcedures.childCustomerLogin(
-                                    req.body.customerID, req.body.details.firstName, req.body.details.lastName, null, result[0][0].phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
+                                    req.body.customerID, req.body.details.firstname, req.body.details.lastname, null, req.body.details.phoneNumber, req.body.details.buildingNumber, req.body.details.streetName, req.body.details.city, req.body.details.username, req.body.details.password, req.body.details.type, req.body.details.guardianID
 
                                 )
                                     .then((result) => {
