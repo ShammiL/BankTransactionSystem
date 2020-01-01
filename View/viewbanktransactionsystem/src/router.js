@@ -28,6 +28,10 @@ import simpleDashPage from './components/otherComponents/dashpage'
 import Loans from './components/detailscomponents/Loan'
 import Requests from './components/detailscomponents/Request'
 import changeInterest from './components/ManagerComponents/changeInterestRates'
+import Manager from "./Router/managerRouter"
+import Employee from "./Router/EmployeeRouter"
+import Customer from "./Router/CustomerRouter"
+
 
 class router extends Component {
     render() {
@@ -36,6 +40,23 @@ class router extends Component {
             console.log(token)
             this.props.fetchLoggedUser(token)
         }
+        console.log(this.props.userType)
+        if (this.props.userType == "manager") {
+            var items1 = <div>
+                <Manager />
+                {/* <Employee /> */}
+            </div>
+
+        }
+        else if (this.props.userType == "individual" || this.props.userType == "company") {
+            var items1 = <div>
+                <Customer />
+            </div>
+
+        }
+        else {
+            var items1 = <Employee />
+        }
         return (
             <div>
 
@@ -43,29 +64,13 @@ class router extends Component {
                     <AppBar />
                     <Route exact path="/" component={Dashpage} />
                     <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/customer/register/individual" component={IndividualCustomerRegister} />
-                    <Route exact path="/employee/register" component={EmployeeRegister} />
-                    <Route exact path="/register" component={Register} />
                     <Route exact path="/home" component={Home} />
-                    <Route exact path="/employee/offlinewithdrawal" component={OfflineWithdrawal}></Route>
-                    <Route exact path="/employee/offlinedeposit" component={offlineDeposite}></Route>
-                    <Route exact path="/employee/onlineTransfer" component={OnlineTransfer}></Route>
-                    <Route exact path="/employee/createFd" component={createFd}></Route>
-                    <Route exact path="/employee/createCheckingaccount" component={createchecking}></Route>
-                    <Route exact path="/employee/createsavingaccount" component={createsaving}></Route>
-                    <Route exact path="/employee/paymonthlyinstallement" component={paymonthlyinstallment}></Route>
-                    <Route exact path="/user/changePassword" component={ResetPassword}></Route>
-                    <Route exact path="/employee/requestofflineloan" component={requestofflineloan}></Route>
-                    <Route exact path="/manager/viewLoanDetails" component={ViewLoan}></Route>
-                    <Route exact path="/accounts/viewAccountDetails" component={ViewAccount}></Route>
-                    <Route exact path="/manager/view/allAlTransactions" component={ViewTrans}></Route>
-                    <Route exact path="/customer/viewAccount" component={ViewAccounts}></Route>
-                    {/* <Route exact path="/customer/viewLoan" component={ViewLoans}></Route> */}
-                    <Route exact path="/cusomer/online/loanRequest" component={OnlineLoan}></Route>
                     <Route exact path="/simpledashpage" component={simpleDashPage}></Route>
-                    <Route exact path="/loan/getLoans" component={Loans}></Route>
-                    <Route exact path="/manager/LoanRequests" component={Requests}></Route>
-                    <Route exact path="/manager/changeInterest" component={changeInterest}></Route>
+
+                    {items1}
+
+
+
 
                 </BrowserRouter>
 
@@ -74,8 +79,14 @@ class router extends Component {
         )
     }
 }
+const mapStatesToProps = state => ({
+
+    userType: state.activeUser.type
+
+})
 const mapActionToProps = {
-    fetchLoggedUser: fetchLoggedUser
+    fetchLoggedUser: fetchLoggedUser,
+
 }
 
-export default connect(null, mapActionToProps)(router)
+export default connect(mapStatesToProps, mapActionToProps)(router)
