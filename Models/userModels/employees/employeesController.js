@@ -637,8 +637,16 @@ exports.offlineTransfer = (req,res) => {
 
                             else{
                                 procedures.onlineTransfer(
-                                    receipt
-                                )
+                                    reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
+                                    ).then((result)=> {
+                                        if(result) {
+                                            res.send({
+                                                "success" : "Transaction Success",
+                                                "code" : 200
+                                            })
+                                        }
+                                    })
+                                
                             }
                         }
                     })
