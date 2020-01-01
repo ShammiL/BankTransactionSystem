@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2019 at 06:32 PM
+-- Generation Time: Jan 01, 2020 at 08:59 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -71,6 +71,9 @@ end$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `atmwithdrawalAccount` (IN `receiptNum` VARCHAR(60), IN `amount` DECIMAL(10,2), IN `accountNumber` VARCHAR(150), IN `date` DATE, IN `time` TIME, IN `bal` DECIMAL(10,2), IN `ATMID_` VARCHAR(150), IN `atmbal` DECIMAL(10,2))  NO SQL
 BEGIN
 set AUTOCOMMIT = 0;
+
+set date = CURRENT_DATE;
+set time = CURRENT_TIME;
     	insert into receipt(receiptNum,amount,accountNum,date_,time_) values(receiptNum,amount,accountNumber,date,time);
         insert into withdrawalreceipt(receiptNum) values(receiptNum);
     	UPDATE account SET balance = bal where accountNum =accountNumber;
@@ -107,6 +110,9 @@ end$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `createFDaccount` (IN `accountNum` VARCHAR(100), IN `amount` DECIMAL(10,2), IN `FDNumber` VARCHAR(150), IN `dateDeposited` DATE, IN `FDType` VARCHAR(50))  NO SQL
 BEGIN
     set AUTOCOMMIT = 0;
+    
+    set dateDeposited = CURRENT_DATE;
+    
     if amount = null THEN
     	set amount = 0;
     end if;
@@ -169,6 +175,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `makeOfflineDeposite` (IN `reciptnum
 BEGIN
 	set AUTOCOMMIT = 0;
     
+    set date_ = CURRENT_DATE;
+set time_ = CURRENT_TIME;
+    
     insert into receipt(receiptNum,amount,accountNum,date_,time_)values(reciptnumber,amount,accountID,date_,time_);
     insert into depositreceipt(receiptNum) values(reciptnumber);
     UPDATE account SET balance = bal where accountNum =accountID;
@@ -194,6 +203,9 @@ end$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `onlineTransfer` (IN `receiptNum` VARCHAR(140), IN `amount` DECIMAL(10,2), IN `accountNumber` VARCHAR(150), IN `date` DATE, IN `time` TIME, IN `receivingAccountID` VARCHAR(150), IN `sen` DECIMAL(8,2), IN `rec` DECIMAL(8,2))  NO SQL
 BEGIN
 set AUTOCOMMIT = 0;
+
+set date = CURRENT_DATE;
+set time = CURRENT_TIME;
     	insert into receipt(receiptNum,amount,accountNum,date_,time_) values(receiptNum,amount,accountNumber,date,time);
              insert into transferreceipt(receiptNum,receivingAccountID) values(receiptNum,receivingAccountID);
         UPDATE account SET balance = sen where accountNum =accountNumber;
@@ -219,6 +231,8 @@ end$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `withdrawalAccount` (IN `receiptNum` VARCHAR(60), IN `amount` DECIMAL(10,2), IN `accountNumber` VARCHAR(150), IN `date` DATE, IN `time` TIME, IN `bal` DECIMAL(10,2), IN `branchID` VARCHAR(150))  NO SQL
 BEGIN
 set AUTOCOMMIT = 0;
+set date = CURRENT_DATE;
+set time = CURRENT_TIME;
     	insert into receipt(receiptNum,amount,accountNum,date_,time_) values(receiptNum,amount,accountNumber,date,time);
         insert into withdrawalreceipt(receiptNum) values(receiptNum);
     	UPDATE account SET balance = bal where accountNum =accountNumber;
@@ -292,7 +306,7 @@ BEGIN
     	end if;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `checkLateLoans` (`id` INT) RETURNS VARCHAR(11) CHARSET latin1 NO SQL
+CREATE DEFINER=`root`@`localhost` FUNCTION `checkLateLoans` (`id` VARCHAR(100)) RETURNS VARCHAR(11) CHARSET latin1 NO SQL
 BEGIN
 
 declare currentyear int;
@@ -416,6 +430,20 @@ return res;
     
 END$$
 
+CREATE DEFINER=`root`@`localhost` FUNCTION `closingFD` (`num` VARCHAR(100), `duration` INT, `date_` VARCHAR(20)) RETURNS INT(11) NO SQL
+BEGIN
+
+declare boolen int;
+declare cal  int;
+
+set cal = 12*(YEAR(CURRENT_DATE)-YEAR(date_)) + MONTH(CURRENT_DATE)-MONTH(date_);
+set boolen = 0;
+if(cal>=duration) THEN
+set boolen = 1;
+end if;
+return boolen;
+END$$
+
 CREATE DEFINER=`root`@`localhost` FUNCTION `depositOnlineLoantoFD` (`FDNumber_` VARCHAR(150), `amount_` DECIMAL(10,2)) RETURNS DECIMAL(10,2) NO SQL
 BEGIN
 
@@ -485,13 +513,13 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('07748765-0', '98d1f210-8', '0.00', '1', 0),
 ('0bf65022-5bb1-40bd-8e4d-dfcb0483f9f9', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '1', 1),
 ('0d40e644-f', '98d1f210-8', '0.00', '2', 0),
-('1', 'b192b124-4', '112000.00', '1', 0),
+('1', 'b192b124-4', '108798.00', '1', 0),
 ('11582f45-9', '8116275a-c', '0.00', '1', 0),
 ('14681e95-5', 'a8f0ee6c-a', '44000.00', '2', 0),
 ('1c1b237b-4', '98d1f210-8', '0.00', '1', 0),
 ('1ef40eb6-7', '45880c14-a', '10154.30', '2', 0),
 ('1f925ffc-f', '98d1f210-8', '0.00', '2', 0),
-('2', 'b192b124-4', '4000.00', '1', 0),
+('2', 'b192b124-4', '4077.91', '1', 0),
 ('22', '66b1811b-f', '101423.50', '1', 0),
 ('23', '66b1811b-f', '152.15', '1', 0),
 ('25', '66b1811b-f', '0.00', '1', 0),
@@ -522,11 +550,11 @@ INSERT INTO `account` (`accountNum`, `customerID`, `balance`, `branchID`, `close
 ('7c2eb52a-e', '98d1f210-8', '0.00', '2', 0),
 ('7dba3606-d4d5-4bb7-949f-d4f460ce4347', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '1', 0),
 ('8', '45880c14-a', '222.00', '1', 0),
-('80594641-9f89-4a15-b9f0-fd5a4e9741f3', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1031.00', '1', 0),
+('80594641-9f89-4a15-b9f0-fd5a4e9741f3', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1038.49', '1', 0),
 ('806d7376-3', '98d1f210-8', '0.00', '1', 0),
 ('8854cc2a-9', '45880c14-a', '1011.90', '2', 0),
 ('8e618b31-fa6d-4e6e-a690-3b4bdc159be0', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '1', 0),
-('9', '45880c14-a', '176000.00', '1', 0),
+('9', '45880c14-a', '302124.09', '1', 0),
 ('90291d50-5', '98d1f210-8', '0.00', '1', 0),
 ('91b8b215-1', '0e9d215f-f646-4cef-8ec0-5e2a3625661a', '0.00', '2', 0),
 ('96be1130-a4ab-4eb3-aa14-d03a9592d40d', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '0.00', '4', 0),
@@ -688,6 +716,7 @@ INSERT INTO `bankwithdrawl` (`receiptNum`, `branchID`) VALUES
 ('3e907dfd-e452-4333-9eac-90f09ebe5961', '1'),
 ('423d4a32-ac60-41fd-a0a2-01c0d84be507', '1'),
 ('468ee361-d78a-4a6a-b873-9e97e2bbda2a', '1'),
+('484f4360-7dc2-46a3-8d48-18632f56b2a0', '1'),
 ('50bbe1d2-67da-4ea4-88cc-99a7b11b1e88', '1'),
 ('57796705-dcfc-416e-a0f0-7e63eed9970b', '1'),
 ('59143c7d-4b6c-48f9-a9fb-694a87ab700d', '1'),
@@ -854,6 +883,7 @@ INSERT INTO `companycustomer` (`customerID`, `name`) VALUES
 ('24f03325-0162-4d46-815a-95ecf128344f', 'cuspopocuspopocuspopocusp'),
 ('2e25389b-b962-450c-821d-daf08cf1c089', 'managerRegisteracomemploy'),
 ('424626e4-f', 'company'),
+('435081e2-f811-47d8-814a-8bacadc9160d', ''),
 ('76804595-c59e-4cd9-a37d-bee1c8df1e53', ''),
 ('8ea5c8ff-c420-46e6-8a90-0c1f177d438d', 'companywronghash'),
 ('9da9da53-476f-4545-b782-17b156a3773e', 'comcomcom'),
@@ -897,6 +927,7 @@ INSERT INTO `customer` (`customerID`, `email`, `username`, `phoneNumber`, `build
 ('2e25389b-b962-450c-821d-daf08cf1c089', 'managerRegisteracomemployeee', 'managerRegisteracomemployeee', '', '', '', ''),
 ('392063fe-01a9-42d9-9abd-1563b135a050', 'managerRegisteraindiemployeee', 'managerRegisteraindiemployeee', '', '', '', ''),
 ('424626e4-f', 'company', 'company', 'company', 'company', 'company', 'company'),
+('435081e2-f811-47d8-814a-8bacadc9160d', 'sasinducompany', 'sasinducompany', 'sasinducompany', 'sasinducompany', 'sasinducompany', 'sasinducompany'),
 ('45880c14-a', 'fdfdfdfd', 'dilshara', '', '', '', ''),
 ('47a013c3-6a65-4f9c-aa70-301dace37fc2', 'cuspopocuspopocuspopo', 'cuspopocuspopocuspopo', '', '', '', ''),
 ('48557dc3-5b32-4982-9d4a-ebb0975376ad', 'sasindu', 'sasindu', 'sasindu', 'sasindu', 'sasindu', 'sasindu'),
@@ -969,6 +1000,7 @@ INSERT INTO `depositreceipt` (`receiptNum`) VALUES
 ('021c7a57-ec8c-455e-bc4e-e911964f88bd'),
 ('09baaa25-bb1b-4ff1-a9b6-0c9820879f99'),
 ('5422f8df-ced2-4b52-95d0-e7cd6b179bba'),
+('54d1a478-e60c-4ffe-9276-a956592a5ff4'),
 ('c34da4ea-3201-4fab-97db-493e2e8c49cd'),
 ('sdswqdqwd211212312');
 
@@ -1005,6 +1037,7 @@ INSERT INTO `employee` (`employeeID`, `firstName`, `lastName`, `username`, `emai
 ('0ce37e5b-3', 'employeemanager', 'employeemanager', 'employeemanager', 'employeemanager', 'emplo', 'employeemanager', 'employeemanager', 'employeemanager', 'employeeman', 'manager', '0.00', '1'),
 ('0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'shammi', 'shammi', 'shammi', 'shammi', 'shamm', 'shammi', 'shammi', 'shammi', 'shammi', 'manager', '0.00', '1'),
 ('19619307-1', 'balee', 'updatedlee', 'updatedlee', 'updatedlee', 'updat', 'updatedlee', 'updatedlee', 'updatedlee', 'updatedlee', 'manager', '550.00', '1'),
+('1c3f6d52-c80e-47a4-a864-d1c56498f816', 'otherEmployee', 'otherEmployee', 'otherEmployee', 'otherEmployee', 'other', 'otherEmployee', 'otherEmployee', 'otherEmployee', 'otherEmploy', 'manager', '20000.00', '2'),
 ('1cb9a6d1-7b9b-45da-bf11-eb0613fe6aa7', 'namernamernamer', 'namernamernamer', 'namernamernamer', 'namernamernamer', 'namer', 'namernamernamer', 'namernamernamer', 'namernamernamer', 'namernamern', 'manager', '0.00', '1'),
 ('1ebaa105-4a15-4909-860b-91192431cbe7', 'namer', '', 'namer', 'namer', '', '', '', '', '', 'manager', '0.00', '1'),
 ('3351d711-d19d-490d-a636-11f621567d2c', '112212121212', '', '112212121212', '112212121212', '', '', '', '', '', 'manager', '999999.99', '2'),
@@ -1056,6 +1089,7 @@ CREATE TABLE `fdaccountdetails` (
 ,`accountNum` varchar(100)
 ,`amount` decimal(11,2)
 ,`dateDeposited` varchar(20)
+,`closed` tinyint(1)
 ,`duration` int(11)
 ,`interest` decimal(4,2)
 );
@@ -1071,36 +1105,39 @@ CREATE TABLE `fixeddeposit` (
   `accountNum` varchar(100) DEFAULT NULL,
   `amount` decimal(11,2) DEFAULT NULL,
   `dateDeposited` varchar(20) DEFAULT NULL,
-  `FDType` varchar(150) DEFAULT NULL
+  `FDType` varchar(150) DEFAULT NULL,
+  `closed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `fixeddeposit`
 --
 
-INSERT INTO `fixeddeposit` (`FDNumber`, `accountNum`, `amount`, `dateDeposited`, `FDType`) VALUES
-('2', '2', '102.00', '2019-12-16', 'A'),
-('2b83defa-d', '9', '204.32', '2019-12-16', 'C'),
-('3', '9', '306.48', '2019-12-16', 'B'),
-('333', '9', '2.05', '2019-12-16', 'C'),
-('3333', '22', '9.26', '2019-12-16', 'A'),
-('456a9bbc-6', '9', '1000.00', '2019-12-16', 'C'),
-('5d02e6da-3', '9', '42017.90', NULL, 'C'),
-('67268873-b', '22', '36.16', '2019-12-16', 'A'),
-('728b2cc7-5', '22', '0.00', '2019-12-16', 'B'),
-('7f2de1f1-d305-4d55-ac41-96b9a3364ba6', '2', '10000.00', NULL, 'B'),
-('8b9cc458-4', '9', '46.70', NULL, 'C'),
-('8c374e7f-5', '9', '36307.96', '2019-12-16', 'A'),
-('96b43baf-5', '9', '42.18', '2019-12-16', 'C'),
-('d12a2614-2', '22', '0.00', '2019-12-16', 'C'),
-('d145b0f6-faa6-47a7-ab50-8c48d99cd65c', '9', '786.00', NULL, 'B'),
-('d4e9715a-6', '9', '0.07', '2019-12-16', 'C'),
-('e487e6cc-4', '9', '5186.36', '2019-12-16', 'C'),
-('e50fb9b2-0', '9', '386.01', NULL, 'C'),
-('f603148e-2', '9', '46.70', NULL, 'C'),
-('fcab1351-c', '22', '5091.63', '2019-12-16', 'A'),
-('sadffr45rr', '9', '4.99', '2019-12-16', 'B'),
-('sasindu', '80594641-9f89-4a15-b9f0-fd5a4e9741f3', '1000.00', NULL, 'C');
+INSERT INTO `fixeddeposit` (`FDNumber`, `accountNum`, `amount`, `dateDeposited`, `FDType`, `closed`) VALUES
+('2', '2', '102.00', '2019-12-30', 'A', 0),
+('2b83defa-d', '9', '204.32', '2019-12-30', 'C', 0),
+('3', '9', '306.48', '2017-12-30', 'B', 1),
+('333', '9', '2.05', '2019-12-30', 'C', 0),
+('3333', '22', '9.26', '2019-12-30', 'A', 0),
+('456a9bbc-6', '9', '1000.00', '2019-12-30', 'C', 0),
+('5d02e6da-3', '9', '42017.90', '2019-12-30', 'C', 0),
+('67268873-b', '22', '36.16', '2019-12-30', 'A', 0),
+('728b2cc7-5', '22', '0.00', '2019-12-30', 'B', 0),
+('7f2de1f1-d305-4d55-ac41-96b9a3364ba6', '2', '10000.00', '2019-12-30', 'B', 0),
+('8b9cc458-4', '9', '46.70', '2019-12-30', 'C', 0),
+('8c374e7f-5', '9', '36307.96', '2019-12-30', 'A', 0),
+('96b43baf-5', '9', '42.18', '2019-12-30', 'C', 0),
+('ac00b4f7-39db-47a4-bb19-30770ecbcc95', '2', '3001.00', '2019-12-30', 'B', 0),
+('d12a2614-2', '22', '0.00', '2019-12-30', 'C', 0),
+('d145b0f6-faa6-47a7-ab50-8c48d99cd65c', '9', '786.00', '2019-12-30', 'B', 0),
+('d4e9715a-6', '9', '0.07', '2019-12-30', 'C', 0),
+('e487e6cc-4', '9', '5186.36', '2019-12-30', 'C', 0),
+('e50fb9b2-0', '9', '386.01', '2019-12-30', 'C', 0),
+('ef1d8bdc-cb47-46e2-a424-b64af50b8c8a', '2', '19980107.00', '2019-12-30', 'B', 0),
+('f603148e-2', '9', '46.70', '2019-12-30', 'C', 0),
+('fcab1351-c', '22', '5091.63', '2019-12-30', 'A', 0),
+('sadffr45rr', '9', '4.99', '2019-12-30', 'B', 0),
+('sasindu', '80594641-9f89-4a15-b9f0-fd5a4e9741f3', '1000.00', '2019-12-30', 'C', 0);
 
 -- --------------------------------------------------------
 
@@ -1235,7 +1272,7 @@ CREATE TABLE `loan` (
   `customerID` varchar(100) DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
   `dateTaken` date DEFAULT NULL,
-  `monthlyInstallment` decimal(8,2) DEFAULT NULL,
+  `monthlyInstallment` decimal(10,2) DEFAULT NULL,
   `duration` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1244,31 +1281,40 @@ CREATE TABLE `loan` (
 --
 
 INSERT INTO `loan` (`loanNum`, `customerID`, `amount`, `dateTaken`, `monthlyInstallment`, `duration`) VALUES
-('1', '424626e4-f', '1000.00', '2018-10-05', '10.00', 5),
-('1234', '45880c14-a', '100.00', '0000-00-00', '5.00', 8),
-('15', '66b1811b-f', '20500.00', '0000-00-00', '100.00', 5),
-('16', '66b1811b-f', '10000.00', '0000-00-00', '100.00', 5),
-('21c736a4-229c-4d51-8f12-2cd00460c8a1', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '21.00', NULL, '1000.00', 3),
-('2c0774af-9cdb-4644-9dab-79190bcc8731', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '400.00', NULL, '500.00', 5),
-('58a39bb6-a36d-48dc-aa89-e2d881a0ddcd', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '500.00', NULL, '1000.00', 3),
-('65c135b9-a6de-483e-ac05-05bfb98c9049', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10.00', NULL, '1000.00', 3),
-('7336b980-3', '45880c14-a', '1.00', NULL, '100.00', 5),
-('7fb2e437-4dc1-4a60-aa1f-2674dbd4807e', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10000.00', NULL, '500.00', 5),
-('83f8a67c-9', '45880c14-a', '6000.00', NULL, '1000.00', 3),
-('b2718bda-29bc-4ad1-9249-618f3b858e73', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '500.00', NULL, '1000.00', 3),
-('ba77e160-1', '45880c14-a', '1000.00', NULL, '100.00', 5),
-('bccb9309-5', '66b1811b-f', '60000.00', NULL, '1000.00', 3),
-('c58d7e24-c4bc-4563-b9e4-182ece5854c6', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '786687.00', NULL, '500.00', 5),
-('dc5abe64-b', '66b1811b-f', '66.00', NULL, '500.00', 5),
-('dfe022de-3', '45880c14-a', '1.00', NULL, '100.00', 5),
-('e489c7dc-9', '1', '0.00', NULL, '500.00', 5),
-('f57c3c10-0', '66b1811b-f', '50000.00', NULL, '500.00', 5),
-('fee0ae6d-6', '66b1811b-f', '50000.00', NULL, '500.00', 5),
-('FIFTHTRY', '45880c14-a', '8000.00', '0000-00-00', '111.00', 2),
-('FIRSTONLIN', '45880c14-a', '6000.00', '0000-00-00', '1000.00', 5),
-('SECONDTRY', '45880c14-a', '6000.00', '0000-00-00', '1000.00', 0),
-('SIXTH', '66b1811b-f', '100000.00', '0000-00-00', '3.00', 0),
-('ThirdTRY', '45880c14-a', '6000.00', '0000-00-00', '112.00', 2);
+('01b763cd-b15f-428f-a00d-8e08f174ef6a', '66b1811b-f', '400.00', '2019-12-30', '89.00', 5),
+('02fa4423-746a-4b15-9d9d-b7f5a50ccfe8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '19980107.00', '2019-12-30', '999999.99', 5),
+('035bd22f-ede0-450e-9a96-5b3985a80de8', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1.75', '2019-12-30', '0.65', 3),
+('1', '424626e4-f', '1000.00', '2019-11-30', '10.00', 5),
+('1234', '45880c14-a', '100.00', '2019-11-30', '5.00', 8),
+('15', '66b1811b-f', '20500.00', '2019-12-30', '100.00', 5),
+('16', '66b1811b-f', '10000.00', '2019-12-30', '100.00', 5),
+('21c736a4-229c-4d51-8f12-2cd00460c8a1', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '21.00', '2019-12-30', '1000.00', 3),
+('27e9ecf3-653e-482c-91b0-95ef9d58099e', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1.00', '2019-12-30', '1000.00', 3),
+('2c0774af-9cdb-4644-9dab-79190bcc8731', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '400.00', '2019-12-30', '500.00', 5),
+('3f463ee6-e8f5-4003-a816-35f89fbb308d', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '2.01', '2019-12-30', '1000.00', 3),
+('563e00f6-cba2-464f-aec2-c90290276789', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1751.00', '2019-12-30', '500.00', 5),
+('58a39bb6-a36d-48dc-aa89-e2d881a0ddcd', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '500.00', '2019-12-30', '1000.00', 3),
+('65c135b9-a6de-483e-ac05-05bfb98c9049', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10.00', '2019-12-30', '1000.00', 3),
+('7336b980-3', '45880c14-a', '1.00', '2019-12-30', '100.00', 5),
+('7fb2e437-4dc1-4a60-aa1f-2674dbd4807e', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '10000.00', '2019-12-30', '500.00', 5),
+('83f8a67c-9', '45880c14-a', '6000.00', '2019-12-30', '1000.00', 3),
+('918f284b-0268-4a12-ac1a-6dc27769be79', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1.00', '2019-12-30', '1000.00', 3),
+('93bddd3e-86bd-496a-9d71-e7d18aafcc57', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '1.73', '2019-12-30', '0.64', 3),
+('9b9731b7-4ec9-4edb-9ddf-4e44a8c8cb04', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '108991.00', '2019-12-30', '24196.00', 5),
+('b2718bda-29bc-4ad1-9249-618f3b858e73', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '500.00', '2019-12-30', '1000.00', 3),
+('ba77e160-1', '45880c14-a', '1000.00', '2019-12-30', '100.00', 5),
+('bccb9309-5', '66b1811b-f', '60000.00', '2019-12-30', '1000.00', 3),
+('c58d7e24-c4bc-4563-b9e4-182ece5854c6', '48557dc3-5b32-4982-9d4a-ebb0975376ad', '786687.00', '2019-12-30', '500.00', 5),
+('dc5abe64-b', '66b1811b-f', '66.00', '2019-12-30', '500.00', 5),
+('dfe022de-3', '45880c14-a', '1.00', '2019-12-30', '100.00', 5),
+('e489c7dc-9', '1', '0.00', '2019-12-30', '500.00', 5),
+('f57c3c10-0', '66b1811b-f', '50000.00', '2019-12-30', '500.00', 5),
+('fee0ae6d-6', '66b1811b-f', '50000.00', '2019-12-30', '500.00', 5),
+('FIFTHTRY', '45880c14-a', '8000.00', '2019-12-30', '111.00', 2),
+('FIRSTONLIN', '45880c14-a', '6000.00', '2019-12-30', '1000.00', 5),
+('SECONDTRY', '45880c14-a', '6000.00', '2019-12-30', '1000.00', 0),
+('SIXTH', '66b1811b-f', '100000.00', '2019-12-30', '3.00', 0),
+('ThirdTRY', '45880c14-a', '6000.00', '2019-12-30', '112.00', 2);
 
 -- --------------------------------------------------------
 
@@ -1293,26 +1339,32 @@ CREATE TABLE `loanrequest` (
 --
 
 INSERT INTO `loanrequest` (`requestID`, `description`, `amount`, `date_`, `approved`, `loanOfficerID`, `approvedBy`, `branchID`, `customerID`) VALUES
-('020efc52-5e22-4302-b766-8c0ae125b664', 'Why this not working', '400.00', NULL, 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('0938a13d-8b9b-46b7-8f85-37f065f09f08', 'asdewqzxc', '786687.00', NULL, 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '2', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('1094b21d-bd43-486d-80f8-756db4b8fbd9', 'TodayTestOne', '10000.00', NULL, 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('19d90dbc-8', 'req.body.details.description', '50000.00', '0000-00-00', 1, '7f177d91-c', 'mamama', '1', '66b1811b-f'),
-('2', '222', '0.00', NULL, NULL, NULL, NULL, NULL, NULL),
-('2b2b0511-2', 'description', '0.00', '0000-00-00', 1, '7f177d91-c', 'mamama', '1', '1'),
-('3f731fed-4', 'need for a loan', '400.00', '0000-00-00', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
-('4535a94b-4', 'need for a loan', '400.00', '0000-00-00', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
-('51c78299-6b94-49f3-b9d5-084091efdfc4', 'test1', '10000.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('628df724-8f10-4c74-8bdc-28e6f7f0623f', 'TodayTestOne', '10000.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', 'b192b124-4'),
-('63cbbc97-80a7-4807-b755-2143a4faf512', 'tets', '67876.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('7ae2a15b-6244-4b78-ab43-2ec2df6cd8e9', 'tets 2', '1.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('8ed46ddb-1', 'description', '0.00', '0000-00-00', 0, '7f177d91-c', '7f177d91-c', '1', '1'),
-('b06f5187-a84d-44b3-95d4-811e77d275fc', 'test1', '10000.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('b4b7ad53-0', 'need hurry a loan', '400.00', NULL, 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
-('ba8c5203-0985-4c40-90ca-0424328392a7', 'Not Approved Yet', '10000.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('d34729dd-5', 'need for a loan', '400.00', NULL, 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
-('f2fd8c16-2', 'description', '0.00', '0000-00-00', 0, '7f177d91-c', '7f177d91-c', '1', '1'),
-('f3f5c7f4-4332-4935-ae9a-35acd9744ad1', 'test1', '10000.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
-('ff461bae-0ca7-46e5-8263-e0053a403279', 'check', '981189.00', NULL, 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad');
+('020efc52-5e22-4302-b766-8c0ae125b664', 'Why this not working', '400.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('0938a13d-8b9b-46b7-8f85-37f065f09f08', 'asdewqzxc', '786687.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '2', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('1094b21d-bd43-486d-80f8-756db4b8fbd9', 'TodayTestOne', '10000.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('19d90dbc-8', 'req.body.details.description', '50000.00', '2019-12-30', 1, '7f177d91-c', 'mamama', '1', '66b1811b-f'),
+('2', '222', '0.00', '2019-12-30', 1, NULL, NULL, NULL, NULL),
+('27d32a9f-a6dc-4d21-a7fc-d10c5aec76a2', 'I am going to ..', '1751.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('2b2b0511-2', 'description', '0.00', '2019-12-30', 1, '7f177d91-c', 'mamama', '1', '1'),
+('3f731fed-4', 'need for a loan', '400.00', '2019-12-30', 1, '19619307-1', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '66b1811b-f'),
+('4535a94b-4', 'need for a loan', '400.00', '2019-12-30', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
+('456548eb-eb6c-4e5f-ba80-e750084b73df', 'shammmi anith paththta', '108991.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('51c78299-6b94-49f3-b9d5-084091efdfc4', 'test1', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('59bf5fc3-292d-469e-8896-6225a03bd87b', NULL, '0.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '1'),
+('5fffc90a-824d-439a-b3ea-8015174b89ed', NULL, '0.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '1'),
+('628df724-8f10-4c74-8bdc-28e6f7f0623f', 'TodayTestOne', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', 'b192b124-4'),
+('63cbbc97-80a7-4807-b755-2143a4faf512', 'tets', '67876.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('7ae2a15b-6244-4b78-ab43-2ec2df6cd8e9', 'tets 2', '1.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('81dd3594-a373-49d4-be88-826bbe4863bc', 'shammi bday', '19980107.00', '2019-12-30', 1, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('8ed46ddb-1', 'description', '0.00', '2019-12-30', 0, '7f177d91-c', '7f177d91-c', '1', '1'),
+('a766e7fa-2726-4aeb-bec8-28b9ce64b8fd', NULL, '0.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '1'),
+('b06f5187-a84d-44b3-95d4-811e77d275fc', 'test1', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('b4b7ad53-0', 'need hurry a loan', '400.00', '2019-12-30', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
+('ba8c5203-0985-4c40-90ca-0424328392a7', 'Not Approved Yet', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('d34729dd-5', 'need for a loan', '400.00', '2019-12-30', 0, '19619307-1', '7f177d91-c', '1', '66b1811b-f'),
+('f2fd8c16-2', 'description', '0.00', '2019-12-30', 0, '7f177d91-c', '7f177d91-c', '1', '1'),
+('f3f5c7f4-4332-4935-ae9a-35acd9744ad1', 'test1', '10000.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', '7f177d91-c', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad'),
+('ff461bae-0ca7-46e5-8263-e0053a403279', 'check', '981189.00', '2019-12-30', 0, '0d02cd47-25db-40cd-9123-16a8a18f5f8f', 'Not Approved Yet', '1', '48557dc3-5b32-4982-9d4a-ebb0975376ad');
 
 -- --------------------------------------------------------
 
@@ -1377,6 +1429,7 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('newcheckCus', '$2a$10$acmktZ/mfq4R05FErnELN.nlnMn/N.VtbrmETpssanXJloF/Rn.KS', 'individual'),
 ('nikanEmployee', 'nikanEmployee', 'accountant'),
 ('nikanEmployee11111', 'nikanEmployee1', 'accountant'),
+('otherEmployee', '$2a$10$njghlGe6QvZhZ8JN0c77qOATcQraT766vFo6QkbJTnODeKfNXhHTS', 'other'),
 ('pany', 'pany', 'pany'),
 ('panycusreg', 'panycusreg', 'company'),
 ('prerson', 'prerson', 'individual'),
@@ -1385,6 +1438,7 @@ INSERT INTO `login` (`username`, `password`, `accessType`) VALUES
 ('req.body.username', 'req.body.password', 'accountant'),
 ('sasindu', '$2a$10$roAooAjjYl1CgR9Y0b1ng.Nd0ARZhcYOs/ygVQFORB2FgMOwOgqRi', 'individual'),
 ('sasindu111', '$2a$10$6tyrhq62ep6Fj0JQcARYl.V3RAU8Abr2q6KyBjeLL/aayFCeMbg6S', 'individual'),
+('sasinducompany', '$2a$10$JQ/qkHPlA89zCVbHbQPTFu3rHN1HZ7GlwhWySN0.Zz19tN9fjfQYS', 'company'),
 ('sasindusasindu', '$2a$10$hNlPLEXvgjoK5QwDzSc3l.kKkQiFMbbPU0MPJsPPcL8P3SQYoTLba', 'company'),
 ('sasindusasindusasindu', '$2a$10$w.g11qBbZ7xoMlkSpvEWv.scwA0/gdVYA8mXi2APLZfRT3e.k2QjO', 'individual'),
 ('sasindu______', '$2a$10$N.5kGWwoXpEkymUBatEA6uop3Ktjvw8AuiygatSUOI689d/glgamO', 'manager'),
@@ -1426,6 +1480,7 @@ INSERT INTO `manager` (`employeeID`) VALUES
 ('0ce37e5b-3'),
 ('0d02cd47-25db-40cd-9123-16a8a18f5f8f'),
 ('19619307-1'),
+('1c3f6d52-c80e-47a4-a864-d1c56498f816'),
 ('1cb9a6d1-7b9b-45da-bf11-eb0613fe6aa7'),
 ('1ebaa105-4a15-4909-860b-91192431cbe7'),
 ('3351d711-d19d-490d-a636-11f621567d2c'),
@@ -1473,8 +1528,8 @@ CREATE TABLE `monthlyinstallment` (
 --
 
 INSERT INTO `monthlyinstallment` (`paymentID`, `loanNum`, `month`, `year`, `datePaid`) VALUES
-('85da1c3f-a61f-4', '1', '01', '', NULL),
-('f9d9f809-7491-4', '1234', '02', '1997', NULL);
+('5d76abd8-a3c5-4', '1234', '02', '2019', '2019-12-30'),
+('6cd838db-76b9-4', '1234', '01', '2019', '2019-12-30');
 
 -- --------------------------------------------------------
 
@@ -1500,7 +1555,11 @@ INSERT INTO `offlineloan` (`loanNumber`, `requestID`) VALUES
 ('dc5abe64-b', '19d90dbc-8'),
 ('f57c3c10-0', '19d90dbc-8'),
 ('fee0ae6d-6', '19d90dbc-8'),
-('e489c7dc-9', '2b2b0511-2');
+('563e00f6-cba2-464f-aec2-c90290276789', '27d32a9f-a6dc-4d21-a7fc-d10c5aec76a2'),
+('e489c7dc-9', '2b2b0511-2'),
+('01b763cd-b15f-428f-a00d-8e08f174ef6a', '3f731fed-4'),
+('9b9731b7-4ec9-4edb-9ddf-4e44a8c8cb04', '456548eb-eb6c-4e5f-ba80-e750084b73df'),
+('02fa4423-746a-4b15-9d9d-b7f5a50ccfe8', '81dd3594-a373-49d4-be88-826bbe4863bc');
 
 -- --------------------------------------------------------
 
@@ -1530,9 +1589,14 @@ INSERT INTO `onlineloan` (`loanNum`, `FDNumber`) VALUES
 ('ThirdTRY', '333'),
 ('SIXTH', '3333'),
 ('bccb9309-5', '67268873-b'),
+('035bd22f-ede0-450e-9a96-5b3985a80de8', 'sasindu'),
 ('21c736a4-229c-4d51-8f12-2cd00460c8a1', 'sasindu'),
+('27e9ecf3-653e-482c-91b0-95ef9d58099e', 'sasindu'),
+('3f463ee6-e8f5-4003-a816-35f89fbb308d', 'sasindu'),
 ('58a39bb6-a36d-48dc-aa89-e2d881a0ddcd', 'sasindu'),
 ('65c135b9-a6de-483e-ac05-05bfb98c9049', 'sasindu'),
+('918f284b-0268-4a12-ac1a-6dc27769be79', 'sasindu'),
+('93bddd3e-86bd-496a-9d71-e7d18aafcc57', 'sasindu'),
 ('b2718bda-29bc-4ad1-9249-618f3b858e73', 'sasindu');
 
 -- --------------------------------------------------------
@@ -1554,31 +1618,38 @@ CREATE TABLE `receipt` (
 --
 
 INSERT INTO `receipt` (`receiptNum`, `amount`, `accountNum`, `date_`, `time_`) VALUES
-('021c7a57-ec8c-455e-bc4e-e911964f88bd', '1000.00', '1', '0000-00-00', '00:00:00'),
-('09baaa25-bb1b-4ff1-a9b6-0c9820879f99', '400.00', '9', '0000-00-00', '00:00:00'),
-('0e546860-1241-423d-856f-5b0d44b308d9', '1000.00', '2', NULL, NULL),
-('1d2cdac7-76fc-471c-b644-ffdf22dcf93c', '100.00', '9', '0000-00-00', '00:00:00'),
-('26faca64-f36c-4f86-954e-1136ac9b2396', '100.00', '9', '0000-00-00', '00:00:00'),
-('32323sdssafds', '100.00', '9', '0000-00-00', '00:00:00'),
-('52b62af5-b08a-40f6-9b01-55b778093d7a', '1000.00', '2', NULL, NULL),
-('5422f8df-ced2-4b52-95d0-e7cd6b179bba', '10000.00', '1', '0000-00-00', '00:00:00'),
-('57f9c451-f7e3-45ac-9ec8-f5ae23520c14', '1000.00', '1', NULL, NULL),
-('699af9db-2914-4322-a2fe-702c5dfde4ff', '1000.00', '1', NULL, NULL),
-('8a1c0d7f-f447-4dc2-9e03-803a10e279e2', '5000.00', '2', '0000-00-00', '00:00:00'),
-('9677d97d-9510-4c93-a9e8-d5c32082a2b9', '1000.00', '1', '0000-00-00', '00:00:00'),
-('978a327f-de24-42a4-819d-c8337149558f', '1000.00', '9', '0000-00-00', '00:00:00'),
-('b103ecb1-cf88-44a7-a266-789ea5bb5939', '1000.00', '2', NULL, NULL),
-('bdac7c0f-1dc1-441d-99ee-7706e9a8c67c', '100.00', '9', '0000-00-00', '00:00:00'),
-('c05270ea-7cc8-4cf3-8187-223130c1d1b1', '100.00', '9', '0000-00-00', '00:00:00'),
-('c34da4ea-3201-4fab-97db-493e2e8c49cd', '1000.00', '1', '0000-00-00', '00:00:00'),
-('ca6f89c3-8d1c-4519-bc34-c471e293f006', '1000.00', '9', '0000-00-00', '00:00:00'),
-('dasdasdadsqrf4', '10000.00', '9', '0000-00-00', '00:00:00'),
-('dd762b70-2255-47e2-83c8-139de053f530', '10000.00', '9', '0000-00-00', '00:00:00'),
-('f17cb51f-b171-4f9a-9056-4ac8272f44f1', '1000.00', '9', '0000-00-00', '00:00:00'),
-('f25062b5-9c83-4779-a952-ff1396b120fe', '1000.00', '9', '0000-00-00', '00:00:00'),
-('f2847faf-734c-4724-86c6-1fdb9c808ff8', '10000.00', '9', '0000-00-00', '00:00:00'),
-('nowshouldbecorrect', '1.00', '9', '0000-00-00', '00:00:00'),
-('sdswqdqwd211212312', '10000.00', '9', '0000-00-00', '00:00:00');
+('021c7a57-ec8c-455e-bc4e-e911964f88bd', '1000.00', '1', '2019-12-29', '23:51:33'),
+('09baaa25-bb1b-4ff1-a9b6-0c9820879f99', '400.00', '9', '2019-11-29', '23:51:33'),
+('0e546860-1241-423d-856f-5b0d44b308d9', '1000.00', '2', '2019-12-29', '23:51:33'),
+('1d2cdac7-76fc-471c-b644-ffdf22dcf93c', '100.00', '9', '2019-12-29', '23:51:33'),
+('26faca64-f36c-4f86-954e-1136ac9b2396', '100.00', '9', '2019-12-29', '23:51:33'),
+('2fca546d-6b6e-46c1-9c8a-c303d8ea2fc2', '11.00', '2', NULL, NULL),
+('32323sdssafds', '100.00', '9', '2019-12-29', '23:51:33'),
+('484f4360-7dc2-46a3-8d48-18632f56b2a0', '2000.00', '1', '2019-12-30', '18:57:36'),
+('52b62af5-b08a-40f6-9b01-55b778093d7a', '1000.00', '2', '2019-12-29', '23:51:33'),
+('5422f8df-ced2-4b52-95d0-e7cd6b179bba', '10000.00', '1', '2019-10-29', '23:51:33'),
+('54d1a478-e60c-4ffe-9276-a956592a5ff4', '125000.00', '9', '2019-10-30', '19:03:14'),
+('57f9c451-f7e3-45ac-9ec8-f5ae23520c14', '1000.00', '1', '2019-12-29', '23:51:33'),
+('699af9db-2914-4322-a2fe-702c5dfde4ff', '1000.00', '1', '2019-12-29', '23:51:33'),
+('6dfe8852-cb84-4675-afbd-6177183981f5', '1.09', '2', '2019-12-30', '19:18:20'),
+('8a1c0d7f-f447-4dc2-9e03-803a10e279e2', '5000.00', '2', '2019-12-29', '23:51:33'),
+('9677d97d-9510-4c93-a9e8-d5c32082a2b9', '1000.00', '1', '2019-12-29', '23:51:33'),
+('978a327f-de24-42a4-819d-c8337149558f', '1000.00', '9', '2019-12-29', '23:51:33'),
+('b103ecb1-cf88-44a7-a266-789ea5bb5939', '1000.00', '2', '2019-12-29', '23:51:33'),
+('b60ef5b2-8ef6-4efa-8358-526ccdc64736', '90.00', '1', '2019-12-30', '19:17:15'),
+('b6a87d3b-4cc5-4a09-aa1c-83294dba11fb', '1.00', '1', '2019-12-30', '20:18:40'),
+('bdac7c0f-1dc1-441d-99ee-7706e9a8c67c', '100.00', '9', '2019-12-29', '23:51:33'),
+('c05270ea-7cc8-4cf3-8187-223130c1d1b1', '100.00', '9', '2019-12-29', '23:51:33'),
+('c34da4ea-3201-4fab-97db-493e2e8c49cd', '1000.00', '1', '2019-12-29', '23:51:33'),
+('ca6f89c3-8d1c-4519-bc34-c471e293f006', '1000.00', '9', '2019-12-29', '23:51:33'),
+('dasdasdadsqrf4', '10000.00', '9', '2019-12-29', '23:51:33'),
+('dc740ea7-22c3-4586-a55f-d9317ab2567d', '1111.00', '1', '2019-12-30', '20:09:25'),
+('dd762b70-2255-47e2-83c8-139de053f530', '10000.00', '9', '2019-12-29', '23:51:33'),
+('f17cb51f-b171-4f9a-9056-4ac8272f44f1', '1000.00', '9', '2019-12-29', '23:51:33'),
+('f25062b5-9c83-4779-a952-ff1396b120fe', '1000.00', '9', '2019-12-29', '23:51:33'),
+('f2847faf-734c-4724-86c6-1fdb9c808ff8', '10000.00', '9', '2019-12-29', '23:51:33'),
+('nowshouldbecorrect', '1.00', '9', '2019-12-29', '23:51:33'),
+('sdswqdqwd211212312', '10000.00', '9', '2019-12-29', '23:51:33');
 
 -- --------------------------------------------------------
 
@@ -1718,7 +1789,12 @@ INSERT INTO `transferreceipt` (`receiptNum`, `receivingAccountID`) VALUES
 ('dasdasdadsqrf4', '1'),
 ('nowshouldbecorrect', '1'),
 ('57f9c451-f7e3-45ac-9ec8-f5ae23520c14', '2'),
-('699af9db-2914-4322-a2fe-702c5dfde4ff', '2');
+('699af9db-2914-4322-a2fe-702c5dfde4ff', '2'),
+('b60ef5b2-8ef6-4efa-8358-526ccdc64736', '2'),
+('2fca546d-6b6e-46c1-9c8a-c303d8ea2fc2', '9'),
+('6dfe8852-cb84-4675-afbd-6177183981f5', '9'),
+('b6a87d3b-4cc5-4a09-aa1c-83294dba11fb', '9'),
+('dc740ea7-22c3-4586-a55f-d9317ab2567d', '9');
 
 -- --------------------------------------------------------
 
@@ -1771,6 +1847,7 @@ INSERT INTO `withdrawalreceipt` (`receiptNum`) VALUES
 ('1d2cdac7-76fc-471c-b644-ffdf22dcf93c'),
 ('26faca64-f36c-4f86-954e-1136ac9b2396'),
 ('32323sdssafds'),
+('484f4360-7dc2-46a3-8d48-18632f56b2a0'),
 ('8a1c0d7f-f447-4dc2-9e03-803a10e279e2'),
 ('9677d97d-9510-4c93-a9e8-d5c32082a2b9'),
 ('978a327f-de24-42a4-819d-c8337149558f'),
@@ -1830,7 +1907,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `fdaccountdetails`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fdaccountdetails`  AS  select `fixeddeposit`.`FDType` AS `FDType`,`fixeddeposit`.`FDNumber` AS `FDNumber`,`fixeddeposit`.`accountNum` AS `accountNum`,`fixeddeposit`.`amount` AS `amount`,`fixeddeposit`.`dateDeposited` AS `dateDeposited`,`fixeddeposittype`.`duration` AS `duration`,`fixeddeposittype`.`interest` AS `interest` from (`fixeddeposit` join `fixeddeposittype` on((`fixeddeposit`.`FDType` = `fixeddeposittype`.`FDType`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fdaccountdetails`  AS  select `fixeddeposit`.`FDType` AS `FDType`,`fixeddeposit`.`FDNumber` AS `FDNumber`,`fixeddeposit`.`accountNum` AS `accountNum`,`fixeddeposit`.`amount` AS `amount`,`fixeddeposit`.`dateDeposited` AS `dateDeposited`,`fixeddeposit`.`closed` AS `closed`,`fixeddeposittype`.`duration` AS `duration`,`fixeddeposittype`.`interest` AS `interest` from (`fixeddeposit` join `fixeddeposittype` on((`fixeddeposit`.`FDType` = `fixeddeposittype`.`FDType`))) ;
 
 -- --------------------------------------------------------
 
@@ -1894,7 +1971,9 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`accountNum`);
+  ADD PRIMARY KEY (`accountNum`),
+  ADD KEY `index_name` (`customerID`),
+  ADD KEY `customerAccount` (`accountNum`,`customerID`);
 
 --
 -- Indexes for table `accounttype`
@@ -1940,7 +2019,8 @@ ALTER TABLE `checkingaccount`
 --
 ALTER TABLE `child`
   ADD KEY `guardianID` (`guardianID`),
-  ADD KEY `customerID` (`customerID`) USING BTREE;
+  ADD KEY `customerID` (`customerID`) USING BTREE,
+  ADD KEY `guardian` (`guardianID`);
 
 --
 -- Indexes for table `childcustomer`
@@ -1959,7 +2039,8 @@ ALTER TABLE `companycustomer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customerID`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `customerlogin`
@@ -1980,7 +2061,10 @@ ALTER TABLE `depositreceipt`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`employeeID`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `branchID` (`branchID`);
+  ADD KEY `branchID` (`branchID`),
+  ADD KEY `designation` (`designation`),
+  ADD KEY `employeeusername` (`email`),
+  ADD KEY `nic` (`NIC`);
 
 --
 -- Indexes for table `employeelogin`
@@ -1995,7 +2079,9 @@ ALTER TABLE `employeelogin`
 ALTER TABLE `fixeddeposit`
   ADD PRIMARY KEY (`FDNumber`),
   ADD KEY `accountNum` (`accountNum`),
-  ADD KEY `FDType` (`FDType`);
+  ADD KEY `FDType` (`FDType`),
+  ADD KEY `fixaccount` (`accountNum`),
+  ADD KEY `fixate` (`dateDeposited`);
 
 --
 -- Indexes for table `fixeddeposittype`
@@ -2007,14 +2093,17 @@ ALTER TABLE `fixeddeposittype`
 -- Indexes for table `individualcustomer`
 --
 ALTER TABLE `individualcustomer`
-  ADD PRIMARY KEY (`customerID`);
+  ADD PRIMARY KEY (`customerID`),
+  ADD KEY `individualcustomernic` (`NIC`);
 
 --
 -- Indexes for table `loan`
 --
 ALTER TABLE `loan`
   ADD PRIMARY KEY (`loanNum`),
-  ADD KEY `customerID` (`customerID`);
+  ADD KEY `customerID` (`customerID`),
+  ADD KEY `loancustomer` (`customerID`),
+  ADD KEY `datetakenloan` (`dateTaken`);
 
 --
 -- Indexes for table `loanrequest`
@@ -2030,7 +2119,8 @@ ALTER TABLE `loanrequest`
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `loginuser` (`username`,`password`(767));
 
 --
 -- Indexes for table `manager`
@@ -2043,7 +2133,9 @@ ALTER TABLE `manager`
 --
 ALTER TABLE `monthlyinstallment`
   ADD PRIMARY KEY (`paymentID`),
-  ADD KEY `loanNum` (`loanNum`);
+  ADD KEY `loanNum` (`loanNum`),
+  ADD KEY `month` (`month`),
+  ADD KEY `year` (`year`);
 
 --
 -- Indexes for table `offlineloan`
@@ -2064,7 +2156,11 @@ ALTER TABLE `onlineloan`
 --
 ALTER TABLE `receipt`
   ADD PRIMARY KEY (`receiptNum`),
-  ADD KEY `accountNum` (`accountNum`);
+  ADD KEY `accountNum` (`accountNum`),
+  ADD KEY `receiptaccount` (`accountNum`),
+  ADD KEY `receiptdate` (`date_`),
+  ADD KEY `receipttime` (`time_`),
+  ADD KEY `receiptdatetime` (`date_`,`time_`);
 
 --
 -- Indexes for table `reports`
@@ -2077,14 +2173,16 @@ ALTER TABLE `reports`
 --
 ALTER TABLE `savingsaccount`
   ADD PRIMARY KEY (`accountNum`),
-  ADD KEY `accountType` (`accountType`);
+  ADD KEY `accountType` (`accountType`),
+  ADD KEY `savingsaccount` (`accountType`);
 
 --
 -- Indexes for table `transferreceipt`
 --
 ALTER TABLE `transferreceipt`
   ADD PRIMARY KEY (`receiptNum`),
-  ADD KEY `receivingAccountID` (`receivingAccountID`);
+  ADD KEY `receivingAccountID` (`receivingAccountID`),
+  ADD KEY `receiver` (`receivingAccountID`);
 
 --
 -- Indexes for table `withdrawalreceipt`
@@ -2243,11 +2341,13 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `Upload_FD_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 00:57:18' ON COMPLETION NOT PRESERVE ENABLE DO update fdaccountdetails set amount = amount+amount*interest/36500$$
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_FD_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2020-01-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO update fdaccountdetails set amount = amount+amount*interest/36500 where closed =0$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `Upload_Saving_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2019-12-18 01:18:34' ON COMPLETION NOT PRESERVE ENABLE DO update viewallsavingaccountsdetails set balance = balance+balance*interest/36500$$
+CREATE DEFINER=`root`@`localhost` EVENT `closeFD_event` ON SCHEDULE EVERY 1 MONTH STARTS '2019-12-31 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO update fdaccountdetails set closed = 1 where closingFD(FDNumber,duration,dateDeposited)$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `updateWithdrawalsRemaining` ON SCHEDULE EVERY 1 MONTH STARTS '2019-12-27 16:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE savingsaccount SET `withdrawlsRemaining` = 5$$
+CREATE DEFINER=`root`@`localhost` EVENT `Upload_Saving_Interest` ON SCHEDULE EVERY 1 DAY STARTS '2020-01-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO update viewallsavingaccountsdetails set balance = balance+balance*interest/36500$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `updateWithdrawalsRemaining` ON SCHEDULE EVERY 1 MONTH STARTS '2020-01-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE savingsaccount SET `withdrawlsRemaining` = 5$$
 
 DELIMITER ;
 COMMIT;

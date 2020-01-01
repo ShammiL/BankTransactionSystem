@@ -5,9 +5,11 @@ exports.routesConfig = function (app) {
         transController.getAllEmployee
     ]);
 
-        app.get('/manager/transactionView/:type', [
-            transController.getAllManager
-        ]);
+    app.get('/manager/transactionView/:type', [
+        transController.getAllManager
+    ]);
+    app.post('/manager/report/:type', [
+        transController.getReport
+    ]);
 
-    
 }

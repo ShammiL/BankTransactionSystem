@@ -23,5 +23,29 @@ exports.getAllT = () => {
 
 };
 
+exports.getByDateD = (date__) => {
+
+    return Db.getByColumn(table1, { "column": "date_", "body": date__ }).then((results) => {
+
+        return results;
+    });
+
+};
+exports.getByDateW = (date__) => {
+
+    return Db.getByColumn(table2, { "column": "date_", "body": date__ }).then((results) => {
+
+        return results;
+    });
+
+};
+exports.getByDateT = (date__) => {
+
+    return Db.getByColumn(table3, { "column": "date_", "body": date__ }).then((results) => {
+
+        return results;
+    });
+
+};
 
 

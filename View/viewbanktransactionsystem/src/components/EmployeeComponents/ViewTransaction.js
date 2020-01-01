@@ -8,8 +8,10 @@ export class ViewTransaction extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "search": 'deposit',
-            transactions: []
+            search: 'deposit',
+            transactions: [],
+            report: 'transaction',
+            content: ''
         }
     }
 
@@ -24,11 +26,21 @@ export class ViewTransaction extends Component {
 
     submit = e => {
         e.preventDefault();
-        axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
-            this.setState({
-                transactions: res.data
+        console.log("http://localhost:5000/manager/report/" + this.state.search)
+
+        if (this.state.report == 'report')
+            axios.post("http://localhost:5000/manager/report/" + this.state.search, { date: this.state.content }).then((res) => {
+                console.log("http://localhost:5000/manager/report/" + this.state.search)
+                this.setState({
+                    transactions: res.data
+                })
             })
-        })
+        else
+            axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
+                this.setState({
+                    transactions: res.data
+                })
+            })
     }
     change = e => {
         this.setState({
@@ -36,8 +48,26 @@ export class ViewTransaction extends Component {
         })
 
     }
+    reportchange = e => {
+        this.setState({
+            report: 'report'
+        })
+    }
+    Transactionchange = e => {
+        this.setState({
+            report: 'transaction'
+        })
+    }
+    content = e => {
+        this.setState({
+            content: e.target.value
+        })
+    }
 
     render() {
+        const today = new Date();
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        // console.log(this.state)
         const items = this.state.transactions.map((item, key) =>
             <SingleTransaction
                 key={key}
@@ -51,6 +81,9 @@ export class ViewTransaction extends Component {
         return (
             <div>
                 <form onSubmit={this.submit}>
+                    <button onClick={this.reportchange}>Report</button>
+                    <button onClick={this.Transactionchange}>Transaction</button>
+                    {this.state.report == 'report' ? <input type="date" required onChange={this.content} name="report" /> : ''}
                     <h5>Accountholder type: </h5>
                     <input type="radio" name="type" value="deposit" onChange={this.change} defaultChecked /> Deposit Transactions
                         <input type="radio" name="type" value="withdrawal" onChange={this.change} /> Withdrawal Transactions
