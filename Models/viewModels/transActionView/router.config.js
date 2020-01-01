@@ -11,5 +11,8 @@ exports.routesConfig = function (app) {
     app.post('/manager/report/:type', [
         transController.getReport
     ]);
+    app.post('/manager/monthlyreport/:type', [
+        transController.getMonthReport
+    ]);
 
 }

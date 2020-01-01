@@ -63,6 +63,16 @@ async function getByColumn(table, param) {
     console.log("Select * from " + table + " where " + param.column + "= ?")
     return result[0];
 }
+async function getByTwoColumn(table, param) {
+    console.log("PARAMaarf", param)
+    const result = await mysqlConnection.query("Select * from " + table + " where " + param.column1 + "= ? AND  " + param.column2 + "= ?", [param.body1, param.body2]);
+
+    if (result.length < 1) {
+        throw new Error('Error occur when try to get data by filtering ' + param.body);
+    }
+    console.log("Select * from " + table + " where " + param.column + "= ?")
+    return result[0];
+}
 
 
 async function getColumnResults(table, columns, param) {
@@ -157,4 +167,5 @@ module.exports.delete = deleteAdata;
 module.exports.update = updateAdata;
 module.exports.updatedata = update;
 module.exports.getColumns = getColumnResults;
+module.exports.getByTwoColumn = getByTwoColumn;
 

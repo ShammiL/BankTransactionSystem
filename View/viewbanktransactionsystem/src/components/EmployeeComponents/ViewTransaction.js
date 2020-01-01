@@ -11,7 +11,9 @@ export class ViewTransaction extends Component {
             search: 'deposit',
             transactions: [],
             report: 'transaction',
-            content: ''
+            content: '',
+            month: '01',
+            year: ''
         }
     }
 
@@ -35,12 +37,18 @@ export class ViewTransaction extends Component {
                     transactions: res.data
                 })
             })
+        if (this.state.report == 'monthly')
+            axios.post("http://localhost:5000/manager/monthlyreport/" + this.state.search, { month: this.state.month, year: this.state.year }).then((res) => {
+                this.setState({
+                    transactions: res.data
+                })
+            })
         else
             axios.get("http://localhost:5000/employee/transactionView/" + this.state.search).then((res) => {
                 this.setState({
                     transactions: res.data
                 })
-            })
+            })//manager/monthlyreport/:type
     }
     change = e => {
         this.setState({
@@ -63,6 +71,21 @@ export class ViewTransaction extends Component {
             content: e.target.value
         })
     }
+    month = e => {
+        this.setState({
+            month: e.target.value
+        })
+    }
+    year = e => {
+        this.setState({
+            year: e.target.value
+        })
+    }
+    monthlyreportchange = e => {
+        this.setState({
+            report: 'monthly'
+        })
+    }
 
     render() {
         const today = new Date();
@@ -81,9 +104,38 @@ export class ViewTransaction extends Component {
         return (
             <div>
                 <form onSubmit={this.submit}>
-                    <button onClick={this.reportchange}>Report</button>
-                    <button onClick={this.Transactionchange}>Transaction</button>
+                    <button onClick={this.monthlyreportchange}>Monthly Report</button>
+                    <button onClick={this.reportchange}>Daily Report</button>
+                    <button onClick={this.Transactionchange}>All Transactions</button>
                     {this.state.report == 'report' ? <input type="date" required onChange={this.content} name="report" /> : ''}
+                    {this.state.report == 'monthly' ? <table>
+                        <tr>
+                            <th>Year: </th>
+                            <th>Month: </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input onChange={this.year} type="text" name="year" placeholder="Enter Year: " />
+                            </td>
+                            <td>
+                                <select name="month" onChange={this.month}>
+                                    <option value="01">Jan</option>
+                                    <option value="02">Feb</option>
+                                    <option value="03">Mar</option>
+                                    <option value="04">Apr</option>
+                                    <option value="05">May</option>
+                                    <option value="06">Jun</option>
+                                    <option value="07">Jul</option>
+                                    <option value="08">Aug</option>
+                                    <option value="09">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table> : ''}
+
                     <h5>Accountholder type: </h5>
                     <input type="radio" name="type" value="deposit" onChange={this.change} defaultChecked /> Deposit Transactions
                         <input type="radio" name="type" value="withdrawal" onChange={this.change} /> Withdrawal Transactions
