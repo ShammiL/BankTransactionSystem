@@ -621,8 +621,8 @@ exports.offlineTransfer = (req,res) => {
                 }
 
                 else{
-                    var sendBalance = parseFloat(result[0].balance) + parseFloat(amount)
-                    var recBalance = parseFloat(result_[0].balance) - parseFloat(amount)
+                    var sendBalance = parseFloat(result[0].balance) - parseFloat(amount)
+                    var recBalance = parseFloat(result_[0].balance) + parseFloat(amount)
                     savingViewModel.getByID(account).then((details) => {
                         if(details.length > 0){
                             console.log("min",details[0].minimumAmount)
@@ -647,6 +647,27 @@ exports.offlineTransfer = (req,res) => {
                                         }
                                     })
                                 
+                            }
+                        }
+
+                        else{
+                            if(sendBalance<0){
+                                res.send({
+                                    "success" : "Insufficient balance",
+                                    "code" : 204
+                                })
+                            }
+                            else{
+                                procedures.onlineTransfer(
+                                    reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
+                                ).then((result){
+                                    if(result){
+                                        res.send({
+                                            "success" : "Transaction Success",
+                                            "code" : 200
+                                        })
+                                    }
+                                })
                             }
                         }
                     })
