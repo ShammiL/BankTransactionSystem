@@ -600,80 +600,92 @@ exports.createFD = (req, res) => {
 
 exports.offlineTransfer = (req,res) => {
     var reciptnumber = uuidv4()
+    var customerUsername = req.body.details.customerName
     var amount = req.body.details.amount
     var account = req.body.details.accountID
     var recAccount = req.body.details.recievingAccountID
 
     accountModel.getByID(account).then((result) => {
-        if(result <= 0) {
+        console.log(result)
+        if(result.length <= 0) {
         res.send({
             "success" : "sender account not found",
             "code" : 204
         })
     }
         else{
-            
-            accountModel.getByID(recAccount).then((result_) => {
-                if(result_ <= 0){
-                    res.send({
-                        "success": "Receiver Account not found",
-                        "code": 204
-                    })
-                }
-
-                else{
-                    var sendBalance = parseFloat(result[0].balance) - parseFloat(amount)
-                    var recBalance = parseFloat(result_[0].balance) + parseFloat(amount)
-                    savingViewModel.getByID(account).then((details) => {
-                        if(details.length > 0){
-                            console.log("min",details[0].minimumAmount)
-                            console.log("Receiver balance:",recBalance)
-                            console.log("sender balance:", sendBalance)
-                            if(sendBalance<details[0].minimumAmount){
-                                res.send({
-                                    "success" : "Insufficient balance",
-                                    "code" : 204
-                                })
-                            }
-
-                            else{
-                                procedures.onlineTransfer(
-                                    reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
-                                    ).then((result)=> {
-                                        if(result) {
-                                            res.send({
-                                                "success" : "Transaction Success",
-                                                "code" : 200
-                                            })
-                                        }
-                                    })
-                                
-                            }
+            CustomerModel.getByUsername(customerUsername).then((cusDetail) => {
+                if(cusDetail[0].customerID == customerUsername){
+                    accountModel.getByID(recAccount).then((result_) => {
+                        if(result_ <= 0){
+                            res.send({
+                                "success": "Receiver Account not found",
+                                "code": 204
+                            })
                         }
-
+        
                         else{
-                            if(sendBalance<0){
-                                res.send({
-                                    "success" : "Insufficient balance",
-                                    "code" : 204
-                                })
-                            }
-                            else{
-                                procedures.onlineTransfer(
-                                    reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
-                                ).then((result)=>{
-                                    if(result){
+                            var sendBalance = parseFloat(result[0].balance) - parseFloat(amount)
+                            var recBalance = parseFloat(result_[0].balance) + parseFloat(amount)
+                            savingViewModel.getByID(account).then((details) => {
+                                if(details.length > 0){
+                                    console.log("min",details[0].minimumAmount)
+                                    console.log("Receiver balance:",recBalance)
+                                    console.log("sender balance:", sendBalance)
+                                    if(sendBalance<details[0].minimumAmount){
                                         res.send({
-                                            "success" : "Transaction Success",
-                                            "code" : 200
+                                            "success" : "Insufficient balance",
+                                            "code" : 204
                                         })
                                     }
-                                })
-                            }
+        
+                                    else{
+                                        procedures.onlineTransfer(
+                                            reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
+                                            ).then((result)=> {
+                                                if(result) {
+                                                    res.send({
+                                                        "success" : "Transaction Success",
+                                                        "code" : 200
+                                                    })
+                                                }
+                                            })
+                                        
+                                    }
+                                }
+        
+                                else{
+                                    if(sendBalance<0){
+                                        res.send({
+                                            "success" : "Insufficient balance",
+                                            "code" : 204
+                                        })
+                                    }
+                                    else{
+                                        procedures.onlineTransfer(
+                                            reciptnumber, amount, account, null, null, recAccount, sendBalance, recBalance
+                                        ).then((result)=>{
+                                            if(result){
+                                                res.send({
+                                                    "success" : "Transaction Success",
+                                                    "code" : 200
+                                                })
+                                            }
+                                        })
+                                    }
+                                }
+                            })
                         }
+                    })
+                }
+                else{
+                    res.send({
+                        "success" : "Account and customer username does not match",
+                        "code" : 204
                     })
                 }
             })
+            
         }
 })
 }
